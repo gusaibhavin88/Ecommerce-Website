@@ -1,13 +1,17 @@
 import ProductModel from "../model/productModel.js";
+import ErrorHandler from "../utilities/errorHandler.js";
+import CatchAsyncErros from "../middleware/catchAsyncErrors.js";
+import Apifeatures from "../utilities/apiFeatures.js";
 
-export const getAllProduct = async (req, resp, next) => {
-  let products = await ProductModel.find();
+export const getAllProduct = CatchAsyncErros(async (req, resp, next) => {
+  const apifeatures = new Apifeatures(ProductModel.find(), req.query)
+    .search()
+    .filter();
+  const products = await apifeatures.query;
+
   try {
     if (!products) {
-      resp.status(400).json({
-        success: false,
-        message: "Products Not Found",
-      });
+      return next(new ErrorHandler("Products Not Found", 401));
     } else {
       resp.status(200).json({
         success: true,
@@ -18,17 +22,15 @@ export const getAllProduct = async (req, resp, next) => {
   } catch (error) {
     resp.status(500).json({ success: false, message: error.message });
   }
-};
+});
 
-export const createProduct = async (req, resp) => {
+export const createProduct = CatchAsyncErros(async (req, resp, next) => {
   const { name } = req.body;
 
   let product = await ProductModel.findOne({ name: name });
 
   if (product) {
-    resp
-      .status(401)
-      .json({ success: false, message: "Product name already exist" });
+    return next(new ErrorHandler("Product name already exist", 401));
   } else {
     product = await ProductModel.create(req.body);
     resp.status(200).json({
@@ -41,18 +43,16 @@ export const createProduct = async (req, resp) => {
   } catch (error) {
     resp.status(500).json({ success: false, message: error.message });
   }
-};
+});
 
-export const updateProduct = async (req, resp) => {
+export const updateProduct = CatchAsyncErros(async (req, resp, next) => {
   const { id } = req.params;
 
   try {
     let product = await ProductModel.findById(id);
 
     if (!product) {
-      return resp
-        .status(404)
-        .json({ success: false, message: "Product not found" });
+      return next(new ErrorHandler("Product not found", 401));
     }
 
     const updatedProduct = await ProductModel.findByIdAndUpdate(id, req.body, {
@@ -68,18 +68,16 @@ export const updateProduct = async (req, resp) => {
   } catch (error) {
     resp.status(500).json({ success: false, message: error.message });
   }
-};
+});
 
-export const getProduct = async (req, resp, next) => {
+export const getProduct = CatchAsyncErros(async (req, resp, next) => {
   const { id } = req.params;
 
   try {
     let product = await ProductModel.findById(id);
 
     if (!product) {
-      return resp
-        .status(404)
-        .json({ success: false, message: "Product not found" });
+      return next(new ErrorHandler("Product not found", 401));
     }
 
     resp.status(200).json({
@@ -90,28 +88,22 @@ export const getProduct = async (req, resp, next) => {
   } catch (error) {
     resp.status(500).json({ success: false, message: error.message });
   }
-};
+});
 
-export const deleteProduct = async (req, resp) => {
+export const deleteProduct = CatchAsyncErros(async (req, resp, next) => {
   const { id } = req.params;
 
-  try {
-    let product = await ProductModel.findById(id);
+  let product = await ProductModel.findById(id);
 
-    if (!product) {
-      return resp
-        .status(404)
-        .json({ success: false, message: "Product not found" });
-    }
-
-    product = await ProductModel.deleteOne({ _id: id });
-
-    resp.status(200).json({
-      success: true,
-      data: product,
-      message: "Product deleted successfully",
-    });
-  } catch (error) {
-    resp.status(500).json({ success: false, message: error.message });
+  if (!product) {
+    return next(new ErrorHandler("Product not found", 401));
   }
-};
+
+  product = await ProductModel.deleteOne({ _id: id });
+
+  resp.status(200).json({
+    success: true,
+    data: product,
+    message: "Product deleted successfully",
+  });
+});

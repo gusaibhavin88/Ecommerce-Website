@@ -1,8 +1,9 @@
-import ErrorMiddleware from "../middleware/error.js";
-
-function ErrorHandler(message, statusCode) {
-  const error = new ErrorHandler(message, statusCode);
-  return error;
+class ErrorHandler extends Error {
+  constructor(message, statusCode) {
+    super(message);
+    this.statusCode = statusCode;
+    Error.captureStackTrace(this, this.constructor);
+  }
 }
 
 export default ErrorHandler;
