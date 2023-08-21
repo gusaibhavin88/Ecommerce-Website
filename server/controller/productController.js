@@ -4,23 +4,23 @@ import CatchAsyncErros from "../middleware/catchAsyncErrors.js";
 import Apifeatures from "../utilities/apiFeatures.js";
 
 export const getAllProduct = CatchAsyncErros(async (req, resp, next) => {
+  const resultPerPages = 5;
   const apifeatures = new Apifeatures(ProductModel.find(), req.query)
     .search()
-    .filter();
+    .filter()
+    .pagination(resultPerPages);
   const products = await apifeatures.query;
+  const productCount = await ProductModel.countDocuments();
 
-  try {
-    if (!products) {
-      return next(new ErrorHandler("Products Not Found", 401));
-    } else {
-      resp.status(200).json({
-        success: true,
-        data: products,
-        message: "Products fetched successfully",
-      });
-    }
-  } catch (error) {
-    resp.status(500).json({ success: false, message: error.message });
+  if (!products) {
+    return next(new ErrorHandler("Products Not Found", 401));
+  } else {
+    resp.status(200).json({
+      success: true,
+      data: products,
+      message: "Products fetched successfully",
+      productCount,
+    });
   }
 });
 

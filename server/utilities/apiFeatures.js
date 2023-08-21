@@ -20,16 +20,20 @@ class ApiFeatures {
 
   filter() {
     const queryCopy = { ...this.queryStr };
-
     // Remove some fields for filtering
     const removeFields = ["keyword", "page", "limit"];
     removeFields.forEach((key) => delete queryCopy[key]);
 
     // Filter by Price and Rating
-    let queryStr = JSON.stringify(queryCopy);
+    let queryStr = JSON.stringify(queryCopy); // will stringify Key
     queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, (key) => `$${key}`);
-
     this.query = this.query.find(JSON.parse(queryStr));
+    return this;
+  }
+  pagination(resultPerPages) {
+    const currentPage = Number(this.queryStr.page) || 1;
+    const skip = resultPerPages * currentPage - 1;
+    this.query = this.query.limit(resultPerPages).skip(skip);
     return this;
   }
 }
