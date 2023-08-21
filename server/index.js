@@ -1,9 +1,11 @@
 import bodyParser from "body-parser";
 import cors from "cors";
-import router from "./router/productRouter.js";
+import productRouter from "./router/productRouter.js";
+import userRouter from "./router/userRouter.js";
 import ErrorMiddleware from "./middleware/error.js";
 import app from "./app.js";
 import connectDataBase from "./dataBase.js";
+import cookieParser from "cookie-parser";
 
 //Handling  Uncaught Error
 process.on("uncaughtException", (err) => {
@@ -18,6 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true, limit: "30mb" }));
 
 //Cors
 app.use(cors());
+app.use(cookieParser());
 
 connectDataBase();
 
@@ -36,7 +39,8 @@ process.on("unhandledRejection", (err) => {
 });
 
 // Routes Import
-app.use("/api/v1", router);
+app.use("/api/v1", productRouter);
+app.use("/api/v1", userRouter);
 
 //Middleware
 app.use(ErrorMiddleware);

@@ -10,7 +10,9 @@ const ErrorMiddleware = (err, req, resp, next) => {
     err = new ErrorHander(message, 400);
   }
 
-  resp.status(err.statusCode).json({ success: false, message: err.message });
+  resp
+    .status(err.statusCode)
+    .json({ success: false, message: err.message, stack: err.stack });
 };
 
 export default ErrorMiddleware;
