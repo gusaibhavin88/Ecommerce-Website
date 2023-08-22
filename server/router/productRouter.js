@@ -13,15 +13,30 @@ import {
 
 const router = express.Router();
 
-router.get(
-  "/products",
+router.get("/products", getAllProduct);
+router.post(
+  "/product/new",
   isAuthenticated,
   authorizeRoles("admin"),
-  getAllProduct
+  createProduct
 );
-router.post("/product/new", createProduct);
-router.put("/product/:id", updateProduct);
-router.get("/product/:id", getProduct);
-router.delete("/product/:id", deleteProduct);
+router.put(
+  "/product/:id",
+  isAuthenticated,
+  authorizeRoles("admin"),
+  updateProduct
+);
+router.get(
+  "/product/:id",
+  isAuthenticated,
+  authorizeRoles("admin"),
+  getProduct
+);
+router.delete(
+  "/product/:id",
+  isAuthenticated,
+  authorizeRoles("admin"),
+  deleteProduct
+);
 
 export default router;

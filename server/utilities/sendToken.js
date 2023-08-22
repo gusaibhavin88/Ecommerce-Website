@@ -3,7 +3,9 @@ export const sendToken = async (resp, statuscode, user, message) => {
     const token = user.getJWTToken();
     const options = {
       httpOnly: true,
-      expires: new Date(Date.now() + process.env.JWT_EXPIRE_COOKIE * 60 * 60),
+      expires: new Date(
+        Date.now() + process.env.JWT_EXPIRE_COOKIE * 24 * 60 * 60 * 1000
+      ),
     };
     const { password, ...otherdetails } = user._doc;
     resp

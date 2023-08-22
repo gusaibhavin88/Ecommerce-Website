@@ -26,6 +26,7 @@ export const getAllProduct = CatchAsyncErros(async (req, resp, next) => {
 
 export const createProduct = CatchAsyncErros(async (req, resp, next) => {
   const { name } = req.body;
+  req.body.user = req.user;
 
   let product = await ProductModel.findOne({ name: name });
 
