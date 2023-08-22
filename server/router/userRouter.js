@@ -1,14 +1,22 @@
 import express from "express";
 import {
   createUser,
+  deleteUser,
   forgotPassword,
+  getAllUsers,
+  getUser,
   getUserDetails,
   loginUser,
   logoutUser,
   resetPassword,
   updatePassword,
+  updateProfile,
 } from "../controller/userController.js";
-import { isAuthenticated } from "../middleware/isAuthenticated.js";
+import {
+  authorizeRoles,
+  isAuthenticated,
+} from "../middleware/isAuthenticated.js";
+import { createProductReview } from "../controller/productController.js";
 
 const router = express.Router();
 
@@ -19,8 +27,22 @@ router.get("/logout", logoutUser);
 router.post("/password/forgot", forgotPassword);
 router.put("/password/reset/:token", resetPassword);
 router.get("/me", isAuthenticated, getUserDetails);
-router.put("/update", isAuthenticated, updatePassword);
-// router.get("/product/:id", getProduct);
+router.put("/updatepassword", isAuthenticated, updatePassword);
+router.put("/updateprofile", isAuthenticated, updateProfile);
+router.get("/getusers", isAuthenticated, authorizeRoles("admin"), getAllUsers);
+router.get(
+  "/admin/users/:id",
+  isAuthenticated,
+  authorizeRoles("admin"),
+  getUser
+);
+router.delete(
+  "/deleteuser/:id",
+  isAuthenticated,
+  authorizeRoles("admin"),
+  deleteUser
+);
+router.put("/createreview", isAuthenticated, createProductReview);
 // router.delete("/product/:id", deleteProduct);
 
 export default router;

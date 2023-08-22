@@ -152,3 +152,60 @@ export const updatePassword = CatchAsyncErros(async (req, res, next) => {
   await user.save();
   sendToken(res, 200, user, "User password has been successfully updated");
 });
+
+// Update Profile
+
+export const updateProfile = CatchAsyncErros(async (req, resp, next) => {
+  const newUserData = {
+    name: req.body.name,
+    email: req.body.email,
+    role: req.body.role,
+  };
+
+  const user = await UserModel.findByIdAndUpdate(req.user._id, newUserData, {
+    new: true,
+    runValidators: true,
+  });
+
+  resp.status(200).json({
+    success: true,
+    message: "User profile has been successfully updated",
+  });
+});
+
+//Get Single User
+
+export const getUser = CatchAsyncErros(async (req, resp, next) => {
+  const user = await UserModel.findById(req.params.id);
+
+  resp.status(200).json({
+    success: true,
+    data: user,
+    message: "User fetched successfully",
+  });
+});
+
+//Get All User
+
+export const getAllUsers = CatchAsyncErros(async (req, resp, next) => {
+  const users = await UserModel.find();
+
+  resp.status(200).json({
+    success: true,
+    data: users,
+    message: "All users fetched successfully",
+  });
+});
+
+// Update User -- Admin
+
+export const deleteUser = CatchAsyncErros(async (req, resp, next) => {
+  const user = await UserModel.findById(req.params.id);
+  if (!user) {
+    return next(new ErrorHandler("User not Found", 400));
+  }
+  await user.remove();
+  resp
+    .status(200)
+    .json({ message: true, message: "User deleted successfully" });
+});
