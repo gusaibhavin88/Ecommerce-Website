@@ -11,7 +11,7 @@ export const createUser = CatchAsyncErros(async (req, resp, next) => {
   let user = await UserModel.findOne({ email: email });
 
   if (user) {
-    return next(new ErrorHandler("Username already exists", 401));
+    return next(new ErrorHandler("Email already exists", 401));
   } else {
     user = await UserModel.create({
       name,
@@ -31,6 +31,21 @@ export const createUser = CatchAsyncErros(async (req, resp, next) => {
       message: "User created successfully",
     });
   }
+});
+
+export const getUserDetails = CatchAsyncErros(async (req, resp, next) => {
+  const id = req.user._id;
+  let user = await UserModel.findById(id);
+
+  if (!user) {
+    return next(new ErrorHandler("User not found", 401));
+  }
+
+  resp.status(200).json({
+    success: true,
+    data: user,
+    message: "User fetched successfully",
+  });
 });
 
 export const loginUser = CatchAsyncErros(async (req, resp, next) => {
@@ -119,5 +134,21 @@ export const resetPassword = CatchAsyncErros(async (req, res, next) => {
 
   await user.save();
 
-  sendToken(res, 200, user, "User password has been successfully changed");
+  sendToken(res, 200, user, "User password has been successfully reset");
+});
+
+export const updatePassword = CatchAsyncErros(async (req, res, next) => {
+  const user = await UserModel.findById(req.user._id);
+
+  const ismatch = await user.comparePassword(req.body.oldPassword);
+
+  if (!ismatch) {
+    return next(new ErrorHandler("Old password is incorrect", 400));
+  }
+  if (req.body.oldPassword !== req.body.confirmOldPassword) {
+    return next(new ErrorHandler("Passwords do not match", 400));
+  }
+  user.password = req.body.newPassword;
+  await user.save();
+  sendToken(res, 200, user, "User password has been successfully updated");
 });
