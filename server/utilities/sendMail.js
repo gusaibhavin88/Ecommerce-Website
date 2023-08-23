@@ -6,14 +6,14 @@ export const sendMail = async (email, subject, message) => {
     host: "smtp.ethereal.email",
     port: 587,
     auth: {
-      user: "may.waelchi@ethereal.email",
-      pass: "ZWjb1wAUZYMAzWmEwZ",
+      user: "royce86@ethereal.email",
+      pass: "jgYRuskAxTgTgWVAst",
     },
   });
 
   // Define the email content
   const mailOptions = {
-    from: "may.waelchi@ethereal.email", // Sender address
+    from: "royce86@ethereal.email", // Sender address
     to: email, // List of recipients - Ensure email is a valid email address
     subject: subject, // Subject line
     text: message, // Plain text body

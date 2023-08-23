@@ -6,6 +6,7 @@ import ErrorMiddleware from "./middleware/error.js";
 import app from "./app.js";
 import connectDataBase from "./dataBase.js";
 import cookieParser from "cookie-parser";
+import orderRouter from "./router/orderRouter.js";
 
 //Handling  Uncaught Error
 process.on("uncaughtException", (err) => {
@@ -41,6 +42,7 @@ process.on("unhandledRejection", (err) => {
 // Routes Import
 app.use("/api/v1", productRouter);
 app.use("/api/v1", userRouter);
+app.use("/api/v1", orderRouter);
 
 //Middleware
 app.use(ErrorMiddleware);
