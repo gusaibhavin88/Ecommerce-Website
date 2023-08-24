@@ -1,0 +1,35 @@
+.footer {
+  display: flex;
+  background-color: #5d193b;
+  margin-top: 50vh;
+  padding: 2rem;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+}
+
+.leftFooter {
+  text-align: center;
+  width: 30%;
+  border: 10ps solid red;
+  cursor: pointer;
+}
+
+.middleFooter {
+  text-align: center;
+  cursor: pointer;
+  width: 30%;
+}
+.middleFooter h1 {
+  font-size: 20px;
+  color: red;
+}
+
+.rightFooter {
+  text-align: center;
+  cursor: pointer;
+  width: 30%;
+}
+.rightFooter h4 {
+  font-size: 15px;
+}/*# sourceMappingURL=footer.css.map */
