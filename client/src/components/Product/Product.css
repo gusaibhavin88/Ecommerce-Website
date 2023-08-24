@@ -1,0 +1,15 @@
+.productList {
+  display: flex;
+  flex-direction: row;
+  padding: 2rem;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 1rem;
+}
+.productCard {
+  transition: transform 0.2s; /* Animation */
+  cursor: pointer;
+}
+.productCard:hover {
+  transform: scale(1.1);
+}
