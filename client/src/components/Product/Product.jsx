@@ -3,33 +3,44 @@ import Box from "@mui/material/Box";
 import Rating from "@mui/material/Rating";
 import "./product.css";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
 const Product = ({ product }) => {
   return (
     <>
-      <Card sx={{ maxWidth: 345 }} className="productCard">
-        <CardMedia
-          sx={{ height: 140 }}
-          image={product.images[0].url}
-          title="green iguana"
-        />
-        <CardContent>
+      <Card sx={{ maxWidth: 345 }} className="productCard" key={product._id}>
+        {product &&
+          product.image.map((img) => {
+            return (
+              <CardMedia
+                sx={{ height: 140 }}
+                image={img?.url ? img.url : ""}
+                title="green iguana"
+              />
+            );
+          })}
+
+        <CardContent className="productCardInner">
           <Typography gutterBottom variant="h5" component="div">
             {product.name}
           </Typography>
           <Box
+            style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
             sx={{
               "& > legend": { mt: 2 },
             }}
           >
-            <div style={{ display: "flex" }}>
-              <Rating name="no-value" value={null} defaultValue={2.5}></Rating>
-              <Typography component="legend">200 Reviews</Typography>
+            <div style={{ display: "flex", gap: "1rem" }}>
+              <Rating
+                name="no-value"
+                value={product.rating}
+                defaultValue={2.5}
+              ></Rating>
+              <Typography component="legend">
+                {product.reviews.length} Reviews
+              </Typography>
             </div>
 
             <h3>

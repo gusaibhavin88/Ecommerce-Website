@@ -7,8 +7,14 @@
   gap: 1rem;
 }
 .productCard {
+  display: flex;
+  flex-direction: column;
   transition: transform 0.2s; /* Animation */
   cursor: pointer;
+}
+.productCard > .productCardInner {
+  display: flex;
+  flex-direction: column;
 }
 .productCard:hover {
   transform: scale(1.1);
