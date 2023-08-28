@@ -6,6 +6,7 @@ import Footer from "./components/Layout/Footer/Footer";
 import Home from "./components/Home/Home.jsx";
 import ProductDetails from "./components/ProductDetails/ProductDetails.jsx";
 import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 
 const App = () => {
   useEffect(() => {

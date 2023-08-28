@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../../Redux/Product/ProductAction";
 import ReactLoading from "react-loading";
 import { useSnackbar } from "../context/SnackbarContext";
+import { Button } from "@mui/material";
 
 const Home = () => {
   const { handleClick, handleClose } = useSnackbar();
@@ -24,15 +25,8 @@ const Home = () => {
     fetchAllPoducts();
   }, []);
 
-  // useEffect(() => {
-  //   if (error) {
-  //     handleClick("error", error);
-  //   }
-  // }, [error]);
-
   const handleShowCustomSnackbar = (e) => {
     e.preventDefault();
-    // Call the openSnackbar function from the context with 'success' severity and a custom message
     handleClick("error", "This is a custom success message!");
   };
 
@@ -49,22 +43,26 @@ const Home = () => {
             <h2>Welcome to Ecommerce</h2>
             <h2>Find Amazing Products Below</h2>
             <a href="#container">
-              <button>
-                <div>
-                  <p style={{ fontWeight: "bold" }}> Scroll</p> <MouseIcon />
-                </div>
+              <button class="btn btn-primary" type="submit">
+                <MouseIcon />
+                Button
               </button>
             </a>
           </div>
           <div className="homeHeading">
             <h2>Featured Product</h2>
           </div>
-          <button onClick={handleShowCustomSnackbar}>ggsgsdg</button>
-          <div className="conatiner" id="container">
-            {products &&
-              products.map((product, index) => {
-                return <Product product={product} key={product._id} />;
-              })}
+          <div
+            className="conatiner"
+            id="container"
+            style={{
+              padding: "1rem",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Product products={products} />;
           </div>
         </>
       )}

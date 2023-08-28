@@ -5,6 +5,9 @@ import "./index.css";
 import { Provider } from "react-redux";
 import store from "./Store.jsx";
 import { SnackbarProvider } from "./components/context/SnackbarContext.jsx";
+{
+  /* The following line can be included in your src/index.js or App.js file */
+}
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>

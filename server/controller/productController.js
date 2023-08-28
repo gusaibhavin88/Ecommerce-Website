@@ -4,7 +4,7 @@ import CatchAsyncErros from "../middleware/catchAsyncErrors.js";
 import Apifeatures from "../utilities/apiFeatures.js";
 
 export const getAllProduct = CatchAsyncErros(async (req, resp, next) => {
-  const resultPerPages = 5;
+  const { resultPerPages } = req.body;
   const apifeatures = new Apifeatures(ProductModel.find(), req.query)
     .search()
     .filter()

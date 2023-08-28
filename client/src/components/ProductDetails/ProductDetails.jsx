@@ -1,62 +1,116 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchproductDetails } from "../../Redux/Product/ProductAction";
 import { useParams } from "react-router-dom";
-import {
-  Container,
-  Paper,
-  Typography,
-  Button,
-  Card,
-  CardContent,
-  CardMedia,
-  Grid,
-} from "@mui/material";
+import Carousel from "react-bootstrap/Carousel";
+import "./ProductDetails.css";
+import Card from "react-bootstrap/Card";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import Rating from "@mui/material/Rating";
+import Button from "@mui/material/Button";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 
 const ProductDetails = () => {
-  const { product, status, loading, error } = useSelector(
-    (state) => state.products
-  );
-  console.log(product);
+  const [quantity, setQuantity] = useState(0);
+  const { product } = useSelector((state) => state.products);
   const params = useParams();
   const dispatch = useDispatch();
+  console.log(product);
+
   useEffect(() => {
     dispatch(fetchproductDetails(params.id));
   }, [dispatch, params.id]);
+
+  const handleIncrement = () => {
+    setQuantity(quantity + 1);
+  };
+
+  const handleDecrement = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  };
+
   return (
-    <>
-      <Container maxWidth="md">
-        <Paper elevation={3} style={{ padding: "20px" }}>
-          <Grid container spacing={3}>
-            <Carousel index={0}>
-              {product.image.map((imageUrl, index) => (
-                <CarouselItem key={index}>
-                  <img src={imageUrl.url} alt={`Image ${index}`} />
-                  <Typography variant="caption">{`Image ${
-                    index + 1
-                  }`}</Typography>
-                </CarouselItem>
-              ))}
+    <div
+      style={{
+        padding: "2rem 10rem ",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <Row xs={1} md={1} className="g-4">
+        <Col>
+          <Card style={{ gap: "0.5rem" }}>
+            <Carousel data-bs-theme="dark">
+              {product.image &&
+                product.image.map((img) => {
+                  return (
+                    <Carousel.Item>
+                      <img
+                        className="d-block w-100"
+                        src={img.url}
+                        alt="First slide"
+                      />
+                    </Carousel.Item>
+                  );
+                })}
             </Carousel>
-            {/* <Grid item xs={12} md={6}></Grid> */}
-            <Grid item xs={12} md={6}>
-              <Typography variant="h4" gutterBottom>
+            <Card.Body>
+              <Card.Title class="fs-3" style={{ fontWeight: "bold" }}>
                 {product.name}
-              </Typography>
-              <Typography variant="body1" gutterBottom>
-                {product.description}
-              </Typography>
-              <Typography variant="h6" gutterBottom>
-                Price: ${product.price}
-              </Typography>
-              <Button variant="contained" color="primary">
-                Add to Cart
-              </Button>
-            </Grid>
-          </Grid>
-        </Paper>
-      </Container>
-    </>
+              </Card.Title>
+              <Card.Text class="text-secondary">{`Product Id :${product._id} `}</Card.Text>
+              <div style={{ borderTop: "1px solid #7a7d7b" }}></div>
+              <div style={{ display: "flex" }}>
+                <Rating
+                  name="no-value"
+                  value={product.rating}
+                  defaultValue={2.5}
+                ></Rating>
+                <Card.Text class="text-secondary">
+                  &nbsp; ({product?.reviews?.length} &nbsp;Reviews)
+                </Card.Text>
+              </div>
+
+              <Card.Text style={{ fontWeight: "bold" }} class="fs-5">
+                ${product.price}
+              </Card.Text>
+              <div style={{ borderBottom: "1px solid #7a7d7b" }}></div>
+              <div
+                style={{
+                  marginTop: "1rem",
+                  gap: "0.5rem",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <Button
+                  variant="outlined"
+                  startIcon={<RemoveIcon />}
+                  onClick={handleDecrement}
+                ></Button>
+                <span>{quantity}</span>
+                <Button
+                  variant="outlined"
+                  startIcon={<AddIcon />}
+                  onClick={handleIncrement}
+                ></Button>
+              </div>
+              <Card.Text class="text-secondary">
+                <span style={{ fontWeight: "bold" }}>Description : </span>
+                {`${product.description} `}
+              </Card.Text>
+              <button class="btn btn-primary" type="submit">
+                Submit Review
+              </button>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </div>
   );
 };
 
