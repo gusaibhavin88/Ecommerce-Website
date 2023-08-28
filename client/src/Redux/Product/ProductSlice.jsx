@@ -1,9 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchproducts } from "./ProductAction";
+import { fetchProducts } from "./ProductAction";
+import { fetchproductDetails } from "./ProductAction";
 
 // Define the initial state
 const initialState = {
   products: [],
+  product: {},
   status: "idle",
   error: null,
   loading: false,
@@ -16,16 +18,30 @@ const productSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchproducts.pending, (state) => {
+      .addCase(fetchProducts.pending, (state) => {
         state.status = "loading";
         state.loading = true;
       })
-      .addCase(fetchproducts.fulfilled, (state, action) => {
+      .addCase(fetchProducts.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.products = action.payload.data;
         state.loading = false;
       })
-      .addCase(fetchproducts.rejected, (state, action) => {
+      .addCase(fetchProducts.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+        state.loading = false;
+      })
+      .addCase(fetchproductDetails.pending, (state) => {
+        state.status = "loading";
+        state.loading = true;
+      })
+      .addCase(fetchproductDetails.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.product = action.payload.data;
+        state.loading = false;
+      })
+      .addCase(fetchproductDetails.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
         state.loading = false;

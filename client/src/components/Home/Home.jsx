@@ -2,26 +2,39 @@ import React, { useEffect } from "react";
 import "./Home.css";
 import MouseIcon from "@mui/icons-material/Mouse";
 import Product from "../Product/Product";
-import { logo } from "../../assets";
 import MetaData from "../Layout/MetaData";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchproducts } from "../../Redux/Product/ProductAction";
+import { fetchProducts } from "../../Redux/Product/ProductAction";
 import ReactLoading from "react-loading";
+import { useSnackbar } from "../context/SnackbarContext";
 
 const Home = () => {
+  const { handleClick, handleClose } = useSnackbar();
+
   const dispatch = useDispatch();
   const { products, status, loading, error } = useSelector(
     (state) => state.products
   );
-  console.log(loading);
 
   const fetchAllPoducts = () => {
-    dispatch(fetchproducts());
+    dispatch(fetchProducts());
   };
 
   useEffect(() => {
     fetchAllPoducts();
   }, []);
+
+  // useEffect(() => {
+  //   if (error) {
+  //     handleClick("error", error);
+  //   }
+  // }, [error]);
+
+  const handleShowCustomSnackbar = (e) => {
+    e.preventDefault();
+    // Call the openSnackbar function from the context with 'success' severity and a custom message
+    handleClick("error", "This is a custom success message!");
+  };
 
   return (
     <>
@@ -46,6 +59,7 @@ const Home = () => {
           <div className="homeHeading">
             <h2>Featured Product</h2>
           </div>
+          <button onClick={handleShowCustomSnackbar}>ggsgsdg</button>
           <div className="conatiner" id="container">
             {products &&
               products.map((product, index) => {

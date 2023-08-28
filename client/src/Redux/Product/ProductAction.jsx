@@ -1,11 +1,20 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { getAllProducts } from "../../Api/ProductRequest";
+import { getAllProducts, getProductDetails } from "../../Api/ProductRequest";
 
 // Async thunk for fetching posts
-export const fetchproducts = createAsyncThunk("fetchproducts", async () => {
+export const fetchProducts = createAsyncThunk("fetchProducts", async () => {
   const response = await getAllProducts(); // Call your API function here
   return response.data; // Assuming the response contains data field with posts
 });
+export const fetchproductDetails = createAsyncThunk(
+  "fetchproductDetails",
+  async (id) => {
+    console.log(id);
+    const response = await getProductDetails(id); // Call your API function here
+    console.log(response);
+    return response.data; // Assuming the response contains data field with posts
+  }
+);
 
 // export const createTask = createAsyncThunk(
 //   "tasks/createTask",

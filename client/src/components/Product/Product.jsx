@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 import Rating from "@mui/material/Rating";
 import "./product.css";
@@ -6,11 +6,27 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
+import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { fetchproductDetails } from "../../Redux/Product/ProductAction";
 
 const Product = ({ product }) => {
+  const dispatch = useDispatch();
+  const params = useParams();
+  const navigate = useNavigate();
+  const handleProductDetails = (id) => {
+    navigate(`/products/${id}`);
+  };
+
   return (
     <>
-      <Card sx={{ maxWidth: 345 }} className="productCard" key={product._id}>
+      <Card
+        sx={{ maxWidth: 345 }}
+        className="productCard"
+        key={product._id}
+        onClick={() => handleProductDetails(product._id)}
+      >
         {product &&
           product.image.map((img) => {
             return (

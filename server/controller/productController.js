@@ -72,7 +72,7 @@ export const updateProduct = CatchAsyncErros(async (req, resp, next) => {
 });
 
 export const getProduct = CatchAsyncErros(async (req, resp, next) => {
-  const productId = await ProductModel.findById(req.query.id);
+  const productId = await ProductModel.findById(req.params.id);
   try {
     let product = await ProductModel.findById(productId);
 

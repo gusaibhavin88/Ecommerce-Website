@@ -28,7 +28,7 @@ router.put(
   updateProduct
 );
 router.get(
-  "/product",
+  "/product/:id",
   // isAuthenticated,
   // authorizeRoles("admin"),
   getProduct
