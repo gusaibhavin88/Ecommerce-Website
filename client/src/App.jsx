@@ -7,6 +7,8 @@ import Home from "./components/Home/Home.jsx";
 import ProductDetails from "./components/ProductDetails/ProductDetails.jsx";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
+import SignIn from "./components/Auth/SignIn";
+import AllProducts from "./components/AllProducts/AllProducts";
 
 const App = () => {
   useEffect(() => {
@@ -21,6 +23,8 @@ const App = () => {
       <div style={{ height: "100vh" }}>
         <Header />
         <Routes>
+          <Route exact path="/login" element={<SignIn />} />
+          <Route exact path="/products" element={<AllProducts />} />
           <Route exact path="/" element={<Home />} />
           <Route exact path="/products/:id" element={<ProductDetails />} />
         </Routes>

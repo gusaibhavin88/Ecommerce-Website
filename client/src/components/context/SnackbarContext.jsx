@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext } from "react";
-import CustomisedSnackbar from "./CustomisedSnackbar";
+import CustomisedSnackbar from "../Snackbar/CustomisedSnackbar";
 import { useSelector } from "react-redux";
 
 const SnackbarContext = createContext();

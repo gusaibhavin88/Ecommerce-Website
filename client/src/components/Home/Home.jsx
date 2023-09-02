@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../../Redux/Product/ProductAction";
 import ReactLoading from "react-loading";
 import { useSnackbar } from "../context/SnackbarContext";
-import { Button } from "@mui/material";
+import { NavLink } from "react-router-dom";
 
 const Home = () => {
   const { handleClick, handleClose } = useSnackbar();
@@ -16,6 +16,7 @@ const Home = () => {
   const { products, status, loading, error } = useSelector(
     (state) => state.products
   );
+  console.log(products);
 
   const fetchAllPoducts = () => {
     dispatch(fetchProducts());
@@ -48,6 +49,12 @@ const Home = () => {
                 Button
               </button>
             </a>
+            <NavLink to="/products">
+              <button class="btn btn-primary" type="submit">
+                <MouseIcon />
+                products
+              </button>
+            </NavLink>
           </div>
           <div className="homeHeading">
             <h2>Featured Product</h2>
@@ -62,7 +69,7 @@ const Home = () => {
               justifyContent: "center",
             }}
           >
-            <Product products={products} />;
+            <Product products={products} />
           </div>
         </>
       )}

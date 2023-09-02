@@ -1,6 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchProducts } from "./ProductAction";
-import { fetchproductDetails } from "./ProductAction";
+import {
+  createProductReview,
+  fetchProducts,
+  fetchproductDetails,
+} from "./ProductAction";
 
 // Define the initial state
 const initialState = {
@@ -9,6 +12,7 @@ const initialState = {
   status: "idle",
   error: null,
   loading: false,
+  productCount: 0,
 };
 
 // Create a slice
@@ -26,6 +30,7 @@ const productSlice = createSlice({
         state.status = "succeeded";
         state.products = action.payload.data;
         state.loading = false;
+        state.productCount = action.payload.productCount;
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.status = "failed";
@@ -42,6 +47,20 @@ const productSlice = createSlice({
         state.loading = false;
       })
       .addCase(fetchproductDetails.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+        state.loading = false;
+      })
+      .addCase(createProductReview.pending, (state) => {
+        state.status = "loading";
+        state.loading = true;
+      })
+      .addCase(createProductReview.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.product = action.payload.data;
+        state.loading = false;
+      })
+      .addCase(createProductReview.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
         state.loading = false;

@@ -11,13 +11,13 @@ import Rating from "@mui/material/Rating";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import ReviewDialog from "../Dialogs/ReviewDialog";
 
 const ProductDetails = () => {
   const [quantity, setQuantity] = useState(0);
   const { product } = useSelector((state) => state.products);
   const params = useParams();
   const dispatch = useDispatch();
-  console.log(product);
 
   useEffect(() => {
     dispatch(fetchproductDetails(params.id));
@@ -36,7 +36,7 @@ const ProductDetails = () => {
   return (
     <div
       style={{
-        padding: "2rem 10rem ",
+        padding: "2rem 5rem",
         alignItems: "center",
         justifyContent: "center",
       }}
@@ -103,9 +103,7 @@ const ProductDetails = () => {
                 <span style={{ fontWeight: "bold" }}>Description : </span>
                 {`${product.description} `}
               </Card.Text>
-              <button class="btn btn-primary" type="submit">
-                Submit Review
-              </button>
+              <ReviewDialog />
             </Card.Body>
           </Card>
         </Col>

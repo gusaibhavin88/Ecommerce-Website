@@ -16,7 +16,6 @@ import {
   authorizeRoles,
   isAuthenticated,
 } from "../middleware/isAuthenticated.js";
-import { createProductReview } from "../controller/productController.js";
 
 const router = express.Router();
 
@@ -42,7 +41,5 @@ router.delete(
   authorizeRoles("admin"),
   deleteUser
 );
-router.put("/createreview", isAuthenticated, createProductReview);
-// router.delete("/product/:id", deleteProduct);
 
 export default router;

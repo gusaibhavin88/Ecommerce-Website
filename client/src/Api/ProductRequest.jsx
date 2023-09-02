@@ -15,4 +15,5 @@ const API = axios.create({
 
 export const getAllProducts = () => API.get("/products");
 export const getProductDetails = (id) => API.get(`/product/${id}`);
+export const productReview = (formdata) => API.put("/createreview", formdata);
 // export const getAllProducts = () => API.get("/products");

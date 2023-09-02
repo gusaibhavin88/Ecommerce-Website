@@ -1,6 +1,7 @@
 import express from "express";
 import {
   createProduct,
+  createProductReview,
   deleteProduct,
   deleteReview,
   getAllProduct,
@@ -40,5 +41,7 @@ router.delete(
   deleteProduct
 );
 router.delete("/reviews", isAuthenticated, deleteReview);
+router.put("/createreview", isAuthenticated, createProductReview);
+// router.delete("/product/:id", deleteProduct);
 
 export default router;

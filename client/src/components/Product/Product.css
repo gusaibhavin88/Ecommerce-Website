@@ -19,3 +19,10 @@
 .productCard:hover {
   transform: scale(1.1);
 }
+
+.seeallproduct {
+  cursor: pointer;
+}
+.seeallproduct:hover {
+  color: rgb(115, 115, 232);
+}
