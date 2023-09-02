@@ -31,12 +31,9 @@ class ApiFeatures {
   }
 
   pagination(resultPerPage) {
-    console.log(resultPerPage);
-    console.log(this.queryStr.page);
     const currentPage = Number(this.queryStr.page) || 1;
     const skip = resultPerPage * (currentPage - 1);
     this.query = this.query.skip(skip).limit(resultPerPage);
-
     return this;
   }
 }

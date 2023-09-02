@@ -31,3 +31,16 @@
   display: flex;
   justify-content: center;
 }
+
+/* Style the active page item */
+.page-item.pageItemActive {
+  background-color: green; /* Set the background color to green */
+  border-color: green; /* Set the border color to green */
+  color: white; /* Set the text color to white */
+}
+
+/* Style the active page link within the active item */
+.page-item.pageItemActive .page-link.pageLinkActive {
+  color: white; /* Set the text color to white */
+  background: green;
+}

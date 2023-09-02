@@ -10,12 +10,12 @@ export const getAllProduct = CatchAsyncErros(async (req, resp, next) => {
   const apifeatures = new Apifeatures(ProductModel.find(), req.query)
     .search()
     .filter();
-
-  let products = await apifeatures.query;
-  let filteredProducts = products.length;
+  // Calculate the filtered product count before pagination
+  const filteredProducts = await ProductModel.countDocuments(apifeatures.query);
 
   apifeatures.pagination(resultPerPages);
-  products = await apifeatures.query;
+
+  const products = await apifeatures.query;
 
   if (!products) {
     return next(new ErrorHandler("Products Not Found", 401));

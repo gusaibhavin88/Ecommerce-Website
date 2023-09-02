@@ -13,23 +13,24 @@ const API = axios.create({
 // Async thunk for fetching posts
 export const fetchProducts = createAsyncThunk(
   "fetchProducts",
-  async ({ keyword = "", currentPage = 1, price = [0, 25000] }) =>
-    // category,
-    // ratings = 0
-    {
-      // let link = `/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}`;
-      let link = `/products?keyword=${keyword}&price[gte]=${price[0]}&price[lte]=${price[1]}`;
-      if (currentPage > 1) {
-        link = `/products?page=${currentPage}`;
-      }
-      // if (category) {
-      //   link = `/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&category=${category}&ratings[gte]=${ratings}`;
-      // }
-      // const link = `/products?price[gte]=${price[0]}&price[lte]=${price[1]}&`;
-      // const link = `/products?keyword=chips`;
-      const response = await API.get(link); // Call your API function here
-      return response.data; // Assuming the response contains data field with posts
+  async ({
+    keyword = "",
+    currentPage = 1,
+    price = [0, 25000],
+    rating = 0,
+    category = "",
+  }) => {
+    let link = `/products?keyword=${keyword}&price[gte]=${price[0]}&price[lte]=${price[1]}&rating[gte]=${rating}&page=${currentPage}`;
+    if (category === "Reset") {
+      link = `/products?keyword=${keyword}&price[gte]=${price[0]}&price[lte]=${price[1]}&rating[gte]=${rating}&page=${currentPage}`;
     }
+    if (category && category !== "Reset") {
+      link = `/products?keyword=${keyword}&price[gte]=${price[0]}&price[lte]=${price[1]}&rating[gte]=${rating}&page=${currentPage}&category=${category}`;
+    }
+
+    const response = await API.get(link); // Call your API function here
+    return response.data; // Assuming the response contains data field with posts
+  }
 );
 export const fetchproductDetails = createAsyncThunk(
   "fetchproductDetails",

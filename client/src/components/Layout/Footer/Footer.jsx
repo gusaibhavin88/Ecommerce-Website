@@ -1,51 +1,44 @@
 import React from "react";
 import "./footer.css";
-import { applestore } from "../../../assets";
-import { playStore } from "../../../assets";
+import { applestore, playStore } from "../../../assets";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
 const Footer = () => {
   return (
-    <div className="footer">
-      <div className="leftFooter">
-        <h4>DOWNLOAD OUR APP</h4>
-        <p>Download App for Android and IOS mobile phone </p>
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <a href="">
-            {" "}
-            <img src={playStore} alt="" />
+    <footer className="footer">
+      <div className="footer-column">
+        <h2>Download Our App</h2>
+        <p>Download the app for Android and iOS devices</p>
+        <div className="app-download-links">
+          <a href="#">
+            <img src={playStore} alt="Play Store" />
           </a>
-          <a href="">
-            {" "}
-            <img src={applestore} alt="" />
+          <a href="#">
+            <img src={applestore} alt="App Store" />
           </a>
         </div>
       </div>
-      <div className="middleFooter">
-        <h1>Ecommerce</h1>
-        <h4>High Quality is our first priority</h4>
-        <h4>High Quality is our first priority</h4>
+      <div className="footer-column">
+        <h1 style={{ color: "brown" }}>Ecommerce</h1>
+        <p>High Quality is our first priority</p>
       </div>
-      <div className="rightFooter">
-        <h1 style={{ fontSize: "1rem" }}>Follow Us</h1>
-        <div
-          className="rightFooterLinks"
-          style={{ display: "flex", flexDirection: "row", color: "white" }}
-        >
-          <a href="">
+      <div className="footer-column">
+        <h2>Follow Us</h2>
+        <div className="social-icons">
+          <a href="#" target="_blank" rel="noopener noreferrer">
             <FacebookIcon style={{ color: "white" }} />
           </a>
-          <a href="">
+          <a href="#" target="_blank" rel="noopener noreferrer">
             <InstagramIcon style={{ color: "white" }} />
           </a>
-          <a href="">
+          <a href="#" target="_blank" rel="noopener noreferrer">
             <LinkedInIcon style={{ color: "white" }} />
           </a>
         </div>
       </div>
-    </div>
+    </footer>
   );
 };
 

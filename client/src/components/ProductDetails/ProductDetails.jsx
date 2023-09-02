@@ -65,11 +65,8 @@ const ProductDetails = () => {
               <Card.Text class="text-secondary">{`Product Id :${product._id} `}</Card.Text>
               <div style={{ borderTop: "1px solid #7a7d7b" }}></div>
               <div style={{ display: "flex" }}>
-                <Rating
-                  name="no-value"
-                  value={product.rating}
-                  defaultValue={2.5}
-                ></Rating>
+                <Rating name="read-only" value={product.rating} readOnly />
+
                 <Card.Text class="text-secondary">
                   &nbsp; ({product?.reviews?.length} &nbsp;Reviews)
                 </Card.Text>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "../Product/Product.css";
 import { useNavigate } from "react-router-dom";
 import Card from "react-bootstrap/Card";
@@ -14,7 +14,7 @@ import { fetchProducts } from "../../Redux/Product/ProductAction";
 
 const AllProducts = () => {
   const dispatch = useDispatch();
-  const [currentPage, setCurrentPage] = useState("");
+  const [currentPage, setCurrentPage] = useState(null);
   const {
     products,
     status,
@@ -24,8 +24,6 @@ const AllProducts = () => {
     filteredCount,
     resultPerPages,
   } = useSelector((state) => state.products);
-  let count = filteredCount;
-  console.log(filteredCount);
 
   const setCurrentPageNo = (e) => {
     setCurrentPage(e);
@@ -38,7 +36,7 @@ const AllProducts = () => {
 
   useEffect(() => {
     if (currentPage) {
-      dispatch(fetchProducts({ keyword: "", currentPage: currentPage }));
+      dispatch(fetchProducts({ currentPage: currentPage }));
     }
   }, [dispatch, currentPage]);
 
@@ -65,7 +63,7 @@ const AllProducts = () => {
             justifyContent: "center",
           }}
         >
-          <Row xs={2} md={4} className="g-4">
+          <Row xs={2} md={3} className="g-4">
             {products &&
               products.map((item, idx) => (
                 <Col key={idx} onClick={() => handleProductDetails(item._id)}>
@@ -76,11 +74,7 @@ const AllProducts = () => {
                         {item.name}
                       </Card.Title>
                       <div style={{ display: "flex" }}>
-                        <Rating
-                          name="no-value"
-                          value={products.rating}
-                          defaultValue={2.5}
-                        ></Rating>
+                        <Rating name="read-only" value={item.rating} readOnly />
                         <Card.Text>
                           &nbsp; ({item.reviews.length} &nbsp;Reviews)
                         </Card.Text>
@@ -96,11 +90,13 @@ const AllProducts = () => {
         </div>
       </div>
       <div className="pagination">
-        {resultPerPages < productCount && (
+        {resultPerPages < productCount && filteredCount > 0 && (
           <Pagination
-            activePage={currentPage}
+            activePage={currentPage === null ? 1 : currentPage}
             itemsCountPerPage={resultPerPages}
-            totalItemsCount={filteredCount}
+            totalItemsCount={
+              productCount > filteredCount ? filteredCount : productCount
+            }
             onChange={setCurrentPageNo}
             nextPageText="Next"
             prevPageText="Prev"

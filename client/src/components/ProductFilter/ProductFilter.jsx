@@ -5,6 +5,7 @@ import "./ProductFilter.css";
 import { fetchProducts } from "../../Redux/Product/ProductAction";
 import { useDispatch } from "react-redux";
 import SearchBar from "../SearchBar/SearchBar";
+import debounce from "lodash/debounce"; // Import the debounce function
 
 function valuetext(value) {
   return `${value}°C`;
@@ -13,8 +14,8 @@ function valuetext(value) {
 const ProductFilter = () => {
   const dispatch = useDispatch();
   const [priceValue, setPriceValue] = useState([0, 25000]);
-  const [ratingValue, setRatingValue] = useState([0, 25000]);
-  const [category, setCategory] = useState(["Laptop"]);
+  const [ratingValue, setRatingValue] = useState(0);
+  const [category, setCategory] = useState("");
 
   const catagory = [
     "Laptop",
@@ -32,19 +33,25 @@ const ProductFilter = () => {
     setRatingValue(newValue);
   };
   const handleChangeCategory = (e) => (newValue) => {
-    console.log(newValue);
     e.preventDefault();
     setCategory(String(newValue)); // Convert newValue to a string
-    console.log(newValue);
   };
 
-  useEffect(() => {
-    setTimeout(() => {
+  // Use debounce to delay the API request
+  const delayedFetchProducts = debounce(
+    (keyword, currentPage, price, rating, category) => {
       dispatch(
-        fetchProducts({ keyword: "", currentPage: 1, price: priceValue })
+        fetchProducts({ keyword, currentPage, price, rating, category })
       );
-    }, 1000);
-  }, [dispatch, priceValue, ratingValue, category]);
+    },
+    1000 // Delay time in milliseconds
+  );
+
+  useEffect(() => {
+    delayedFetchProducts("", 1, priceValue, ratingValue, category);
+    // Cancel the debounce function if priceValue or ratingValue changes again within 1 second
+    return () => delayedFetchProducts.cancel();
+  }, [priceValue, ratingValue, category]);
 
   return (
     <div className="productfilter">
@@ -67,15 +74,16 @@ const ProductFilter = () => {
         valueLabelDisplay="auto"
         getAriaValueText={valuetext}
         min={0}
-        max={25000}
+        max={5}
       />
       <h6>Description</h6>
       <div className="catagery">
         {catagory &&
-          catagory.map((item) => {
+          [...catagory, "Reset"].map((item) => {
             return (
               <span
                 className="filterBtn"
+                style={item === "Reset" ? { color: "red" } : null}
                 onClick={() => setCategory(String(item))}
               >
                 {item}
