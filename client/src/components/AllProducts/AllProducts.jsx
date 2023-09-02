@@ -14,10 +14,18 @@ import { fetchProducts } from "../../Redux/Product/ProductAction";
 
 const AllProducts = () => {
   const dispatch = useDispatch();
-  const [currentPage, setCurrentPage] = useState(1);
-  const { products, status, loading, error, productCount } = useSelector(
-    (state) => state.products
-  );
+  const [currentPage, setCurrentPage] = useState("");
+  const {
+    products,
+    status,
+    loading,
+    error,
+    productCount,
+    filteredCount,
+    resultPerPages,
+  } = useSelector((state) => state.products);
+  let count = filteredCount;
+  console.log(filteredCount);
 
   const setCurrentPageNo = (e) => {
     setCurrentPage(e);
@@ -29,7 +37,7 @@ const AllProducts = () => {
   };
 
   useEffect(() => {
-    if (currentPage > 1) {
+    if (currentPage) {
       dispatch(fetchProducts({ keyword: "", currentPage: currentPage }));
     }
   }, [dispatch, currentPage]);
@@ -87,20 +95,24 @@ const AllProducts = () => {
           </Row>
         </div>
       </div>
-      <Pagination
-        activePage={currentPage}
-        itemsCountPerPage={4}
-        totalItemsCount={productCount}
-        onChange={setCurrentPageNo}
-        nextPageText="Next"
-        prevPageText="Prev"
-        firstPageText="1st"
-        lastPageText="Last"
-        itemClass="page-item"
-        linkClass="page-link"
-        activeClass="pageItemActive"
-        activeLinkClass="pageLinkActive"
-      />
+      <div className="pagination">
+        {resultPerPages < productCount && (
+          <Pagination
+            activePage={currentPage}
+            itemsCountPerPage={resultPerPages}
+            totalItemsCount={filteredCount}
+            onChange={setCurrentPageNo}
+            nextPageText="Next"
+            prevPageText="Prev"
+            firstPageText="1st"
+            lastPageText="Last"
+            itemClass="page-item"
+            linkClass="page-link"
+            activeClass="pageItemActive"
+            activeLinkClass="pageLinkActive"
+          />
+        )}
+      </div>
     </div>
   );
 };

@@ -31,6 +31,8 @@ const productSlice = createSlice({
         state.products = action.payload.data;
         state.loading = false;
         state.productCount = action.payload.productCount;
+        state.filteredCount = action.payload.filteredProducts;
+        state.resultPerPages = action.payload.resultPerPages;
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.status = "failed";

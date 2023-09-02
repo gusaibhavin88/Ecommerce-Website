@@ -1,7 +1,7 @@
 .footer {
   display: flex;
   background-color: #5d193b;
-  margin-top: 50vh;
+  margin-top: 1rem;
   padding: 2rem;
   justify-content: space-between;
   align-items: center;
@@ -57,4 +57,4 @@
   display: flex;
   gap: 10px;
   align-self: center;
-}/*# sourceMappingURL=footer.css.map */
+} /*# sourceMappingURL=footer.css.map */

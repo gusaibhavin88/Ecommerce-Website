@@ -19,7 +19,7 @@ const Home = () => {
   console.log(products);
 
   const fetchAllPoducts = () => {
-    dispatch(fetchProducts());
+    dispatch(fetchProducts({ keyword: "", currentPage: 1, price: [0, 25000] }));
   };
 
   useEffect(() => {

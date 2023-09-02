@@ -23,7 +23,7 @@ const Product = ({ products }) => {
   };
 
   // useEffect(() => {
-  //   dispatch(fetchProducts("", currentPage));
+  //   dispatch(fetchProducts());
   // }, []);
 
   return (

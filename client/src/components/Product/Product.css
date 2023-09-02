@@ -26,3 +26,8 @@
 .seeallproduct:hover {
   color: rgb(115, 115, 232);
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+}

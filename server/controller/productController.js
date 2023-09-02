@@ -4,13 +4,18 @@ import CatchAsyncErros from "../middleware/catchAsyncErrors.js";
 import Apifeatures from "../utilities/apiFeatures.js";
 
 export const getAllProduct = CatchAsyncErros(async (req, resp, next) => {
-  const resultPerPages = 5;
+  const resultPerPages = 8;
+  const productCount = await ProductModel.countDocuments();
+
   const apifeatures = new Apifeatures(ProductModel.find(), req.query)
     .search()
-    .filter()
-    .pagination(resultPerPages);
-  const products = await apifeatures.query;
-  const productCount = await ProductModel.countDocuments();
+    .filter();
+
+  let products = await apifeatures.query;
+  let filteredProducts = products.length;
+
+  apifeatures.pagination(resultPerPages);
+  products = await apifeatures.query;
 
   if (!products) {
     return next(new ErrorHandler("Products Not Found", 401));
@@ -20,6 +25,8 @@ export const getAllProduct = CatchAsyncErros(async (req, resp, next) => {
       data: products,
       message: "Products fetched successfully",
       productCount,
+      filteredProducts,
+      resultPerPages,
     });
   }
 });

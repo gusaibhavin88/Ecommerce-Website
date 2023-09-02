@@ -39,7 +39,11 @@ const ProductFilter = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchProducts({ keyword: "", currentPage: 1, price: priceValue }));
+    setTimeout(() => {
+      dispatch(
+        fetchProducts({ keyword: "", currentPage: 1, price: priceValue })
+      );
+    }, 1000);
   }, [dispatch, priceValue, ratingValue, category]);
 
   return (
