@@ -11,10 +11,13 @@ import ProductFilter from "../ProductFilter/ProductFilter";
 import SearchBar from "../SearchBar/SearchBar";
 import Pagination from "react-js-pagination";
 import { fetchProducts } from "../../Redux/Product/ProductAction";
+import { useSnackbar } from "../context/SnackbarContext";
+import { clearError } from "../../Redux/Product/ProductSlice";
 
 const AllProducts = () => {
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(null);
+  const { handleClick, handleClose } = useSnackbar();
   const {
     products,
     status,
@@ -35,10 +38,14 @@ const AllProducts = () => {
   };
 
   useEffect(() => {
+    if (error) {
+      handleClick("error", error);
+      dispatch(clearError());
+    }
     if (currentPage) {
       dispatch(fetchProducts({ currentPage: currentPage }));
     }
-  }, [dispatch, currentPage]);
+  }, [dispatch, currentPage, error]);
 
   return (
     <div>
@@ -63,7 +70,7 @@ const AllProducts = () => {
             justifyContent: "center",
           }}
         >
-          <Row xs={2} md={3} className="g-4">
+          <Row xs={2} md={4} className="g-4">
             {products &&
               products.map((item, idx) => (
                 <Col key={idx} onClick={() => handleProductDetails(item._id)}>

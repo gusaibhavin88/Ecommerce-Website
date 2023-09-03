@@ -19,8 +19,8 @@ export default function SearchBar() {
   //   useEffect(() => {}, [dispatch, searchTerm]);
 
   const searchKeyWord = () => {
-    dispatch(fetchProducts({ keyword: searchTerm }));
-    setSearchTerm("");
+    const searchWord = searchTerm.replace(/\s/g, "");
+    dispatch(fetchProducts({ keyword: searchWord }));
   };
 
   return (

@@ -19,7 +19,11 @@ const initialState = {
 const productSlice = createSlice({
   name: "products",
   initialState,
-  reducers: {},
+  reducers: {
+    clearError: (state) => {
+      state.error = null; // Clear the error by returning null or an empty string
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchProducts.pending, (state) => {
@@ -106,12 +110,5 @@ const productSlice = createSlice({
 });
 
 export default productSlice.reducer;
-
+export const { clearError } = productSlice.actions; // Export the clearError action
 // Export the async thunks to use in components
-
-<img
-  src="//www.html.am/images/image-codes/milford_sound_t.jpg"
-  width="225"
-  height="151"
-  alt="Photo of Milford Sound in New Zealand"
-/>;
