@@ -9,6 +9,8 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 import SignIn from "./components/Auth/SignIn";
 import AllProducts from "./components/AllProducts/AllProducts";
+import Login from "./components/LoginPage/LogIn";
+import PageNotFound from "./components/PageNotFound/PageNotFound";
 
 const App = () => {
   useEffect(() => {
@@ -23,10 +25,11 @@ const App = () => {
       <div style={{ height: "100vh" }}>
         <Header />
         <Routes>
-          <Route exact path="/login" element={<SignIn />} />
+          <Route exact path="/login" element={<Login />} />
           <Route exact path="/products" element={<AllProducts />} />
           <Route exact path="/" element={<Home />} />
           <Route exact path="/products/:id" element={<ProductDetails />} />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
         <Footer />
       </div>

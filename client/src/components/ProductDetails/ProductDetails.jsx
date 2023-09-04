@@ -100,6 +100,21 @@ const ProductDetails = () => {
                 <span style={{ fontWeight: "bold" }}>Description : </span>
                 {`${product.description} `}
               </Card.Text>
+              <Card.Text class="text-secondary">
+                <span style={{ fontWeight: "bold", cursor: "pointer" }}>
+                  Status :{" "}
+                </span>
+                <span
+                  style={{
+                    cursor: "pointer",
+                    ...(product.stock > 0
+                      ? { color: "green", fontWeight: "bold" }
+                      : { color: "red", fontWeight: "bold" }),
+                  }}
+                >
+                  {`${product.stock > 0 ? "In Stock" : "Out of Stock"} `}
+                </span>
+              </Card.Text>
               <ReviewDialog />
             </Card.Body>
           </Card>

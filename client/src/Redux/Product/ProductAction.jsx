@@ -10,7 +10,7 @@ const API = axios.create({
   baseURL: "http://localhost:5000/api/v1",
 });
 
-// Async thunk for fetching posts
+// fetchProducts;
 export const fetchProducts = createAsyncThunk(
   "fetchProducts",
   async ({
@@ -21,10 +21,10 @@ export const fetchProducts = createAsyncThunk(
     category = "",
   }) => {
     let link = `/products?keyword=${keyword}&price[gte]=${price[0]}&price[lte]=${price[1]}&rating[gte]=${rating}&page=${currentPage}`;
-    if (category === "Reset") {
+    if (category === "Reset Filter") {
       link = `/products?keyword=${keyword}&price[gte]=${price[0]}&price[lte]=${price[1]}&rating[gte]=${rating}&page=${currentPage}`;
     }
-    if (category && category !== "Reset") {
+    if (category && category !== "Reset Filter") {
       link = `/products?keyword=${keyword}&price[gte]=${price[0]}&price[lte]=${price[1]}&rating[gte]=${rating}&page=${currentPage}&category=${category}`;
     }
 
@@ -32,6 +32,8 @@ export const fetchProducts = createAsyncThunk(
     return response.data; // Assuming the response contains data field with posts
   }
 );
+
+// fetchproductDetails
 export const fetchproductDetails = createAsyncThunk(
   "fetchproductDetails",
   async (id) => {
@@ -40,6 +42,7 @@ export const fetchproductDetails = createAsyncThunk(
   }
 );
 
+// createProductReview
 export const createProductReview = createAsyncThunk(
   "createreview",
   async (formdata) => {

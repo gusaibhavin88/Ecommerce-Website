@@ -21,6 +21,7 @@ const ProductFilter = () => {
   const [priceValue, setPriceValue] = useState([0, 25000]);
   const [ratingValue, setRatingValue] = useState(0);
   const [category, setCategory] = useState("");
+  const [activeCatagaryIndex, setActiveCatagaryIndex] = useState("");
 
   const catagory = [
     "Laptop",
@@ -92,14 +93,22 @@ const ProductFilter = () => {
         <h4>Description</h4>
         <div className="catagery">
           {catagory &&
-            [...catagory, "Reset"].map((item) => {
+            [...catagory, "Reset Filter"].map((item, index) => {
               return (
                 <span
+                  key={index}
                   className="filterBtn"
-                  style={item === "Reset" ? { color: "red" } : null}
+                  style={
+                    item === "Reset Filter"
+                      ? { color: "red", fontWeight: "bold" }
+                      : activeCatagaryIndex === index
+                      ? { color: "green", fontWeight: "500" }
+                      : { color: "black" } // Default color if not active
+                  }
                   onClick={() => {
                     setCategory(String(item));
-                    toggleColor(this);
+                    // toggleColor(this);
+                    setActiveCatagaryIndex(index);
                   }}
                 >
                   {item}

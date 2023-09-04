@@ -126,12 +126,15 @@ export const createProductReview = CatchAsyncErros(async (req, resp, next) => {
     name: req.user.name,
     comment,
   };
+  console.log(review);
 
   const product = await ProductModel.findById(productId);
 
   const isReviewed = product.reviews.find(
     (rev) => rev.user.toString() === req.user._id.toString()
   );
+
+  console.log("first");
 
   if (isReviewed) {
     product.reviews.forEach((rev) => {
