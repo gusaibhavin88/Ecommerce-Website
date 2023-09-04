@@ -3,7 +3,7 @@ import { loginUserAction } from "./AuthAction";
 
 // Define the initial state
 const initialState = {
-  isAuthenticalted: false,
+  isAuthenticated: false,
   status: "idle",
   error: null,
   loading: false,
@@ -25,17 +25,17 @@ const authSlice = createSlice({
         state.loading = true;
       })
       .addCase(loginUserAction.fulfilled, (state, action) => {
+        console.log(action);
         state.status = "succeeded";
         state.products = action.payload.data;
         state.loading = false;
-        state.isAuthenticalted = true;
+        state.isAuthenticated = true;
       })
       .addCase(loginUserAction.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
-        console.log(action);
         state.loading = false;
-        state.isAuthenticalted = false;
+        state.isAuthenticated = false;
       });
   },
 });

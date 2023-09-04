@@ -1,16 +1,16 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Header from "./components/Layout/Header/Header";
 import WebFont from "webfontloader";
-import Footer from "./components/Layout/Footer/Footer";
-import Home from "./components/Home/Home.jsx";
-import ProductDetails from "./components/ProductDetails/ProductDetails.jsx";
+import Home from "./components/Pages/Home/Home";
+import ProductDetails from "./components/Pages/ProductDetails/ProductDetails.jsx";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
-import SignIn from "./components/Auth/SignIn";
-import AllProducts from "./components/AllProducts/AllProducts";
-import Login from "./components/LoginPage/LogIn";
-import PageNotFound from "./components/PageNotFound/PageNotFound";
+import AllProducts from "./components/Pages/AllProducts/AllProducts";
+import Login from "./components/Pages/LoginPage/LogIn";
+import PageNotFound from "./components/Pages/PageNotFound/PageNotFound";
+import { PrivateRoute } from "./components/Auth/PrivateRoute";
+import WebLayout from "./components/Auth/WebLayout";
+import SignUp from "./components/Pages/Register/Register";
 
 const App = () => {
   useEffect(() => {
@@ -20,18 +20,44 @@ const App = () => {
       },
     });
   }, []);
+
   return (
     <Router>
       <div style={{ height: "100vh" }}>
-        <Header />
         <Routes>
+          <Route element={<PrivateRoute />}>
+            <Route
+              exact
+              path="/"
+              element={
+                <WebLayout>
+                  <Home />
+                </WebLayout>
+              }
+            />
+            <Route
+              exact
+              path="/products"
+              element={
+                <WebLayout>
+                  <AllProducts />
+                </WebLayout>
+              }
+            />
+            <Route
+              exact
+              path="/products/:id"
+              element={
+                <WebLayout>
+                  <ProductDetails />
+                </WebLayout>
+              }
+            />
+          </Route>
           <Route exact path="/login" element={<Login />} />
-          <Route exact path="/products" element={<AllProducts />} />
-          <Route exact path="/" element={<Home />} />
-          <Route exact path="/products/:id" element={<ProductDetails />} />
+          <Route exact path="/register" element={<SignUp />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
-        <Footer />
       </div>
     </Router>
   );

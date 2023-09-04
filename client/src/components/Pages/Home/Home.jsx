@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import "./Home.css";
 import MouseIcon from "@mui/icons-material/Mouse";
-import Product from "../Product/Product";
-import MetaData from "../Layout/MetaData";
+import Product from "../../Product/Product";
+import MetaData from "../../Layout/MetaData";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "../../Redux/Product/ProductAction";
+import { fetchProducts } from "../../../Redux/Product/ProductAction";
 import ReactLoading from "react-loading";
-import { useSnackbar } from "../context/SnackbarContext";
+import { useSnackbar } from "../../context/SnackbarContext";
 import { NavLink } from "react-router-dom";
 
 const Home = () => {
@@ -16,7 +16,6 @@ const Home = () => {
   const { products, status, loading, error } = useSelector(
     (state) => state.products
   );
-  console.log(products);
 
   const fetchAllPoducts = () => {
     dispatch(fetchProducts({ keyword: "", currentPage: 1, price: [0, 25000] }));

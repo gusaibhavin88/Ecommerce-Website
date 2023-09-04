@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import "../Product/Product.css";
+import "../../Product/Product.css";
 import { useNavigate } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
@@ -7,12 +7,12 @@ import Row from "react-bootstrap/Row";
 import Rating from "@mui/material/Rating";
 import Slider from "@mui/material/Slider";
 import { useDispatch, useSelector } from "react-redux";
-import ProductFilter from "../ProductFilter/ProductFilter";
-import SearchBar from "../SearchBar/SearchBar";
+import ProductFilter from "../../ProductFilter/ProductFilter";
+import SearchBar from "../../SearchBar/SearchBar";
 import Pagination from "react-js-pagination";
-import { fetchProducts } from "../../Redux/Product/ProductAction";
-import { useSnackbar } from "../context/SnackbarContext";
-import { clearError } from "../../Redux/Product/ProductSlice";
+import { fetchProducts } from "../../../Redux/Product/ProductAction";
+import { useSnackbar } from "../../context/SnackbarContext";
+import { clearError } from "../../../Redux/Product/ProductSlice";
 
 const AllProducts = () => {
   const dispatch = useDispatch();

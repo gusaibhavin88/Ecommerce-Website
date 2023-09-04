@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchproductDetails } from "../../Redux/Product/ProductAction";
+import { fetchproductDetails } from "../../../Redux/Product/ProductAction";
 import { useParams } from "react-router-dom";
 import Carousel from "react-bootstrap/Carousel";
 import "./ProductDetails.css";
@@ -11,7 +11,7 @@ import Rating from "@mui/material/Rating";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-import ReviewDialog from "../Dialogs/ReviewDialog";
+import ReviewDialog from "../../Dialogs/ReviewDialog";
 
 const ProductDetails = () => {
   const [quantity, setQuantity] = useState(0);

@@ -9,7 +9,6 @@ export const loginUserAction = createAsyncThunk(
       const response = await logInUser(formData); // Call your API function here
       return response; // Assuming the response contains data field with posts
     } catch (error) {
-      console.log(error);
       throw error.response.data; // Assuming the response contains data field with posts
     }
   }
