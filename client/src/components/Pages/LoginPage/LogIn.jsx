@@ -7,7 +7,7 @@ import { useSnackbar } from "../../context/SnackbarContext";
 import { clearError } from "../../../Redux/Auth/AuthSlice";
 import "../LoginPage/LogIn.css";
 import ReactLoading from "react-loading";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -96,9 +96,12 @@ export default function Login() {
                       <div className="mt-3">
                         <p className="mb-0  text-center">
                           Don't have an account?{" "}
-                          <a href="{''}" className="text-primary fw-bold">
+                          <NavLink
+                            className="text-primary fw-bold"
+                            to="/register"
+                          >
                             Sign Up
-                          </a>
+                          </NavLink>
                         </p>
                       </div>
                     </div>

@@ -7,11 +7,13 @@ import app from "./app.js";
 import connectDataBase from "./dataBase.js";
 import cookieParser from "cookie-parser";
 import orderRouter from "./router/orderRouter.js";
+import cloudinary from "cloudinary";
+import fileUpload from "express-fileupload";
 
 //Handling  Uncaught Error
 process.on("uncaughtException", (err) => {
   console.log(`Error : ${err.message}`);
-  console.log("Shutting down the server due to Handling  Uncaught Error");
+  console.log("Shutting down the server due to Handling  Uncaught Error"); // THis must be at the top
 });
 
 // parse application/json
@@ -22,8 +24,15 @@ app.use(bodyParser.urlencoded({ extended: true, limit: "30mb" }));
 //Cors
 app.use(cors());
 app.use(cookieParser());
+app.use(fileUpload());
 
 connectDataBase();
+// Configure Cloudinary credentials
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
+});
 
 // Start the server
 const server = app.listen(process.env.PORT, () =>

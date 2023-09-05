@@ -13,6 +13,7 @@ import Pagination from "react-js-pagination";
 import { fetchProducts } from "../../../Redux/Product/ProductAction";
 import { useSnackbar } from "../../context/SnackbarContext";
 import { clearError } from "../../../Redux/Product/ProductSlice";
+import { profile } from "../../../assets";
 
 const AllProducts = () => {
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ const AllProducts = () => {
     filteredCount,
     resultPerPages,
   } = useSelector((state) => state.products);
+  const { user } = useSelector((state) => state.auth);
 
   const setCurrentPageNo = (e) => {
     setCurrentPage(e);
@@ -50,6 +52,11 @@ const AllProducts = () => {
   return (
     <div>
       <div className="homeHeading">
+        <img
+          className="profileimg"
+          src={user?.avatar ? user.avatar?.url.toString() : profile}
+          alt=""
+        />
         <h2>Products</h2>
       </div>
       <div

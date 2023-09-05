@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loginUserAction } from "./AuthAction";
+import { loginUserAction, registerUserAction } from "./AuthAction";
 
 // Define the initial state
 const initialState = {
@@ -7,6 +7,7 @@ const initialState = {
   status: "idle",
   error: null,
   loading: false,
+  user: null,
 };
 
 // Create a slice
@@ -30,8 +31,26 @@ const authSlice = createSlice({
         state.products = action.payload.data;
         state.loading = false;
         state.isAuthenticated = true;
+        state.user = action.payload.data.user;
       })
       .addCase(loginUserAction.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+        state.loading = false;
+        state.isAuthenticated = false;
+      })
+      .addCase(registerUserAction.pending, (state) => {
+        state.status = "loading";
+        state.loading = true;
+      })
+      .addCase(registerUserAction.fulfilled, (state, action) => {
+        console.log(action);
+        state.status = "succeeded";
+        state.products = action.payload.data;
+        state.loading = false;
+        state.isAuthenticated = true;
+      })
+      .addCase(registerUserAction.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
         state.loading = false;

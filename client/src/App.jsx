@@ -10,7 +10,7 @@ import Login from "./components/Pages/LoginPage/LogIn";
 import PageNotFound from "./components/Pages/PageNotFound/PageNotFound";
 import { PrivateRoute } from "./components/Auth/PrivateRoute";
 import WebLayout from "./components/Auth/WebLayout";
-import SignUp from "./components/Pages/Register/Register";
+import Register from "./components/Pages/Register/Register";
 
 const App = () => {
   useEffect(() => {
@@ -55,7 +55,7 @@ const App = () => {
             />
           </Route>
           <Route exact path="/login" element={<Login />} />
-          <Route exact path="/register" element={<SignUp />} />
+          <Route exact path="/register" element={<Register />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </div>

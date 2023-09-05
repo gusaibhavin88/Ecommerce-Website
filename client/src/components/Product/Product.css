@@ -22,6 +22,7 @@
 
 .seeallproduct {
   cursor: pointer;
+  font-size: 1.2rem;
 }
 .seeallproduct:hover {
   color: rgb(115, 115, 232);
@@ -43,4 +44,11 @@
 .page-item.pageItemActive .page-link.pageLinkActive {
   color: white; /* Set the text color to white */
   background: green;
+}
+
+.profileimg {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }

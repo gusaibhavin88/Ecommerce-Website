@@ -16,6 +16,7 @@ const Home = () => {
   const { products, status, loading, error } = useSelector(
     (state) => state.products
   );
+  const { user } = useSelector((state) => state.auth);
 
   const fetchAllPoducts = () => {
     dispatch(fetchProducts({ keyword: "", currentPage: 1, price: [0, 25000] }));

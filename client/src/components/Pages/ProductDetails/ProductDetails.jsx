@@ -12,6 +12,7 @@ import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import ReviewDialog from "../../Dialogs/ReviewDialog";
+import Review from "../../Review/Review";
 
 const ProductDetails = () => {
   const [quantity, setQuantity] = useState(0);
@@ -36,7 +37,7 @@ const ProductDetails = () => {
   return (
     <div
       style={{
-        padding: "2rem 5rem",
+        padding: "2rem 20rem",
         alignItems: "center",
         justifyContent: "center",
       }}
@@ -116,6 +117,10 @@ const ProductDetails = () => {
                 </span>
               </Card.Text>
               <ReviewDialog />
+              <div className="homeHeading">
+                <h2>Reviews</h2>
+              </div>
+              <Review />
             </Card.Body>
           </Card>
         </Col>

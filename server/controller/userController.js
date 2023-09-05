@@ -4,11 +4,17 @@ import UserModel from "../model/userModel.js";
 import { sendToken } from "../utilities/sendToken.js";
 import { sendMail } from "../utilities/sendMail.js";
 import crypto from "crypto";
+import cloudinary from "cloudinary";
 
 export const createUser = CatchAsyncErros(async (req, resp, next) => {
   const { name, email, password } = req.body;
 
   let user = await UserModel.findOne({ email: email });
+  const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+    folder: "Ecommerce-Site/Avatars",
+    width: 150,
+    crop: "scale",
+  });
 
   if (user) {
     return next(new ErrorHandler("Email already exists", 401));
@@ -18,8 +24,8 @@ export const createUser = CatchAsyncErros(async (req, resp, next) => {
       email,
       password,
       avatar: {
-        public_id: "hdhdh",
-        url: "iui",
+        public_id: myCloud.public_id,
+        url: myCloud.secure_url,
       },
     });
 

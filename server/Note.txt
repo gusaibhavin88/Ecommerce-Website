@@ -1,0 +1,6 @@
+//  Cloudinery Note
+
+> npm i cloudiner npm i express fileupload 
+> import clodiner in index.js and configure it 
+> app.use fileuploads
+> use Cloudinery in controller and provide folder path 
