@@ -3,6 +3,7 @@ export const sendToken = async (resp, statuscode, user, message) => {
     const token = user.getJWTToken();
     const options = {
       httpOnly: true,
+      path: "/",
       expires: new Date(
         Date.now() + process.env.JWT_EXPIRE_COOKIE * 24 * 60 * 60 * 1000
       ),

@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loginUserAction, registerUserAction } from "./AuthAction";
+import {
+  getMyProfile,
+  loginUserAction,
+  registerUserAction,
+} from "./AuthAction";
 
 // Define the initial state
 const initialState = {
@@ -26,11 +30,9 @@ const authSlice = createSlice({
         state.loading = true;
       })
       .addCase(loginUserAction.fulfilled, (state, action) => {
-        console.log(action);
         state.status = "succeeded";
-        state.products = action.payload.data;
         state.loading = false;
-        state.isAuthenticated = true;
+        state.isAuthenticated = false;
         state.user = action.payload.data.user;
       })
       .addCase(loginUserAction.rejected, (state, action) => {
@@ -44,13 +46,29 @@ const authSlice = createSlice({
         state.loading = true;
       })
       .addCase(registerUserAction.fulfilled, (state, action) => {
-        console.log(action);
         state.status = "succeeded";
-        state.products = action.payload.data;
         state.loading = false;
         state.isAuthenticated = true;
+        state.user = action.payload.data.user;
       })
       .addCase(registerUserAction.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+        state.loading = false;
+        state.isAuthenticated = false;
+      })
+      .addCase(getMyProfile.pending, (state) => {
+        state.status = "loading";
+        state.loading = true;
+      })
+      .addCase(getMyProfile.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.loading = false;
+        state.isAuthenticated = true;
+        console.log(action);
+        state.user = action.payload.data.user;
+      })
+      .addCase(getMyProfile.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
         state.loading = false;

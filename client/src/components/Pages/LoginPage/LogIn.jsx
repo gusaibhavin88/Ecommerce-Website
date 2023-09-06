@@ -18,8 +18,6 @@ export default function Login() {
     (state) => state.auth
   );
 
-  console.log(isAuthenticated);
-
   const onSubmit = (data) => {
     dispatch(loginUserAction(data));
   };

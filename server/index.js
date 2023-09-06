@@ -21,9 +21,17 @@ app.use(bodyParser.json({ extended: true, limit: "30mb" }));
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true, limit: "30mb" }));
 
-//Cors
-app.use(cors());
 app.use(cookieParser());
+
+//Cors
+app.use(
+  "*",
+  cors({
+    origin: true,
+    credentials: true, // Allow cookies to be sent and received
+  })
+);
+
 app.use(fileUpload());
 
 connectDataBase();

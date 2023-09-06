@@ -11,9 +11,14 @@ import PageNotFound from "./components/Pages/PageNotFound/PageNotFound";
 import { PrivateRoute } from "./components/Auth/PrivateRoute";
 import WebLayout from "./components/Auth/WebLayout";
 import Register from "./components/Pages/Register/Register";
+import { getMyProfile } from "./Redux/Auth/AuthAction";
+import { useDispatch } from "react-redux";
 
 const App = () => {
+  const dispatch = useDispatch();
+
   useEffect(() => {
+    // dispatch(getMyProfile());
     WebFont.load({
       google: {
         families: ["Robot", "Droid sans", "Chilanka"],

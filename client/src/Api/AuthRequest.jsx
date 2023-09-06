@@ -6,4 +6,5 @@ const API = axios.create({
 
 export const logInUser = (formData) => API.post("/login", formData);
 export const registerUser = (formData) => API.post("/register", formData);
+export const getMyProfile = () => API.get("/me");
 export const logOut = () => API.get("/logout");
