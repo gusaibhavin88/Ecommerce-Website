@@ -18,7 +18,7 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // dispatch(getMyProfile());
+    dispatch(getMyProfile());
     WebFont.load({
       google: {
         families: ["Robot", "Droid sans", "Chilanka"],
