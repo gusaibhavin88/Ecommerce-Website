@@ -14,7 +14,7 @@ export default function Login() {
   const dispatch = useDispatch();
   const { register, handleSubmit, errors } = useForm();
   const { handleClick, handleClose } = useSnackbar();
-  const { isAuthenticated, error, loading } = useSelector(
+  const { isAuthenticated, error, loading, user } = useSelector(
     (state) => state.auth
   );
 
@@ -24,7 +24,6 @@ export default function Login() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      console.log(isAuthenticated);
       navigate("/");
     }
     if (error) {

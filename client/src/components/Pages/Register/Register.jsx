@@ -29,7 +29,7 @@ export default function Register() {
       myForm.append(key, data[key]);
     }
     myForm.set("avatar", avatar);
-    console.log([...myForm.entries()]);
+    // console.log([...myForm.entries()]);
 
     dispatch(registerUserAction(myForm));
   };
@@ -51,10 +51,9 @@ export default function Register() {
   };
 
   useEffect(() => {
-    // if (isAuthenticated) {
-    //   console.log(isAuthenticated);
-    //   navigate("/");
-    // }
+    if (isAuthenticated) {
+      navigate("/");
+    }
     if (error) {
       handleClick("error", error);
       dispatch(clearError());

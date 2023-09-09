@@ -7,9 +7,12 @@ import crypto from "crypto";
 import cloudinary from "cloudinary";
 
 export const createUser = CatchAsyncErros(async (req, resp, next) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, avatar } = req.body;
 
   let user = await UserModel.findOne({ email: email });
+  if (!avatar) {
+    return next(new ErrorHandler("Please add Profile image", 401));
+  }
   const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
     folder: "Ecommerce-Site/Avatars",
     width: 150,
@@ -32,7 +35,7 @@ export const createUser = CatchAsyncErros(async (req, resp, next) => {
     const token = await user.getJWTToken();
     resp.status(201).json({
       success: true,
-      data: user,
+      user: user,
       token,
       message: "User created successfully",
     });
@@ -49,7 +52,7 @@ export const getUserDetails = CatchAsyncErros(async (req, resp, next) => {
 
   resp.status(200).json({
     success: true,
-    data: user,
+    user: user,
     message: "User fetched successfully",
   });
 });
@@ -186,7 +189,7 @@ export const getUser = CatchAsyncErros(async (req, resp, next) => {
 
   resp.status(200).json({
     success: true,
-    data: user,
+    user: user,
     message: "User fetched successfully",
   });
 });

@@ -41,7 +41,12 @@ const Home = () => {
         <>
           <MetaData title="Ecommerce " />
           <div className="banner">
-            <h2>Welcome to Ecommerce</h2>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <h2>Welcome to Amazon</h2>
             <h2>Find Amazing Products Below</h2>
             <a href="#container">
               <button class="btn btn-primary" type="submit">

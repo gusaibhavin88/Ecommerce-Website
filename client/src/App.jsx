@@ -28,7 +28,7 @@ const App = () => {
 
   return (
     <Router>
-      <div style={{ height: "100vh" }}>
+      <div className="app" style={{ height: "100vh" }}>
         <Routes>
           <Route element={<PrivateRoute />}>
             <Route

@@ -52,11 +52,6 @@ const AllProducts = () => {
   return (
     <div>
       <div className="homeHeading">
-        <img
-          className="profileimg"
-          src={user?.avatar ? user.avatar?.url.toString() : profile}
-          alt=""
-        />
         <h2>Products</h2>
       </div>
       <div

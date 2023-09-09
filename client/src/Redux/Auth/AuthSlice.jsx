@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   getMyProfile,
+  logOutProfile,
   loginUserAction,
   registerUserAction,
 } from "./AuthAction";
@@ -65,14 +66,29 @@ const authSlice = createSlice({
         state.status = "succeeded";
         state.loading = false;
         state.isAuthenticated = true;
-        console.log(action);
         state.user = action.payload.data.user;
+        console.log(action);
       })
       .addCase(getMyProfile.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
         state.loading = false;
         state.isAuthenticated = false;
+      })
+      .addCase(logOutProfile.pending, (state) => {
+        state.status = "loading";
+        state.loading = true;
+      })
+      .addCase(logOutProfile.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.loading = false;
+        state.isAuthenticated = false;
+        state.user = null;
+      })
+      .addCase(logOutProfile.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+        state.loading = false;
       });
   },
 });

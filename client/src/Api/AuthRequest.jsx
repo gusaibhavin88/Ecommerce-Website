@@ -6,6 +6,7 @@ const API = axios.create({
 
 export const logInUser = (formData) =>
   API.post("/login", formData, { withCredentials: true }); //  { withCredentials: true }   Must Required
-export const registerUser = (formData) => API.post("/register", formData);
+export const registerUser = (formData) =>
+  API.post("/register", formData, { withCredentials: true });
 export const getMyProfileAcc = () => API.get("/me", { withCredentials: true }); //  { withCredentials: true }   Must Required
 export const logOut = () => API.get("/logout");
