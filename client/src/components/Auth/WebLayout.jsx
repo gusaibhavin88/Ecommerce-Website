@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 
 const WebLayout = ({ children }) => {
   const { isAuthenticated } = useSelector((state) => state.auth);
-  console.log(isAuthenticated);
   return (
     <>
       <Header />

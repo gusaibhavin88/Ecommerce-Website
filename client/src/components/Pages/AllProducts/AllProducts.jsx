@@ -79,7 +79,10 @@ const AllProducts = () => {
                   <Card style={{ gap: "1rem", cursor: "pointer" }}>
                     <Card.Img variant="top" src={item.image[0]?.url} />
                     <Card.Body>
-                      <Card.Title class="fs-3" style={{ fontWeight: "bold" }}>
+                      <Card.Title
+                        classname="fs-3"
+                        style={{ fontWeight: "bold" }}
+                      >
                         {item.name}
                       </Card.Title>
                       <div style={{ display: "flex" }}>
@@ -88,7 +91,10 @@ const AllProducts = () => {
                           &nbsp; ({item.reviews.length} &nbsp;Reviews)
                         </Card.Text>
                       </div>
-                      <Card.Text style={{ fontWeight: "bold" }} class="fs-5">
+                      <Card.Text
+                        style={{ fontWeight: "bold" }}
+                        classname="fs-5"
+                      >
                         ${item.price}
                       </Card.Text>
                     </Card.Body>

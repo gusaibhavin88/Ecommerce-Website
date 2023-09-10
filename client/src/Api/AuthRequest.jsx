@@ -9,4 +9,4 @@ export const logInUser = (formData) =>
 export const registerUser = (formData) =>
   API.post("/register", formData, { withCredentials: true });
 export const getMyProfileAcc = () => API.get("/me", { withCredentials: true }); //  { withCredentials: true }   Must Required
-export const logOut = () => API.get("/logout");
+export const logOut = () => API.get("/logout", { withCredentials: true });

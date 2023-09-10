@@ -33,7 +33,7 @@ function MySpeedDial() {
       navigate("/products");
     }
     if (action === "Profile") {
-      navigate("/products");
+      navigate("/profile");
     }
     if (action === "Logout") {
       dispatch(logOutProfile());
@@ -62,7 +62,7 @@ function MySpeedDial() {
         icon={
           <img
             className="profileimg"
-            src={user?.avatar ? user.avatar?.url.toString() : profile}
+            src={user?.avatar ? user.avatar?.url : profile}
             alt="Nf"
           />
         }

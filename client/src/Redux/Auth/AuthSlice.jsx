@@ -67,7 +67,6 @@ const authSlice = createSlice({
         state.loading = false;
         state.isAuthenticated = true;
         state.user = action.payload.data.user;
-        console.log(action);
       })
       .addCase(getMyProfile.rejected, (state, action) => {
         state.status = "failed";

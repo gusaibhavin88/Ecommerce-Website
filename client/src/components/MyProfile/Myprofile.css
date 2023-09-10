@@ -1,0 +1,29 @@
+.profile {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  height: 100vmin;
+  gap: 15rem;
+}
+
+.proimg {
+  width: 20rem;
+  height: 20rem;
+  border-radius: 50%;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* Adjust the shadow values as needed */
+}
+
+.proimgprnt {
+  display: flex;
+  flex-direction: column;
+}
+
+.proimgprnt {
+  gap: 2rem;
+}
+
+.profiledetails {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}

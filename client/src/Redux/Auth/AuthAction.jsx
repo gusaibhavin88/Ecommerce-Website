@@ -41,7 +41,6 @@ export const registerUserAction = createAsyncThunk(
 export const getMyProfile = createAsyncThunk("getMyProfile", async () => {
   try {
     const response = await getMyProfileAcc({ withCredentials: true }); // Call your API function here
-    console.log(response);
     return response; // Assuming the response contains data field with posts
   } catch (error) {
     throw error.response.data; // Assuming the response contains data field with posts
@@ -51,7 +50,7 @@ export const getMyProfile = createAsyncThunk("getMyProfile", async () => {
 // Async thunk for fetching posts
 export const logOutProfile = createAsyncThunk("logOutProfile", async () => {
   try {
-    const response = await logOut({ withCredentials: true }); // Call your API function here
+    const response = await logOut(); // Call your API function here
     return response; // Assuming the response contains data field with posts
   } catch (error) {
     throw error.response.data; // Assuming the response contains data field with posts

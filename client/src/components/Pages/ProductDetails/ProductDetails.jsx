@@ -60,20 +60,20 @@ const ProductDetails = () => {
                 })}
             </Carousel>
             <Card.Body>
-              <Card.Title class="fs-3" style={{ fontWeight: "bold" }}>
+              <Card.Title className="fs-3" style={{ fontWeight: "bold" }}>
                 {product.name}
               </Card.Title>
-              <Card.Text class="text-secondary">{`Product Id :${product._id} `}</Card.Text>
+              <Card.Text className="text-secondary">{`Product Id :${product._id} `}</Card.Text>
               <div style={{ borderTop: "1px solid #7a7d7b" }}></div>
               <div style={{ display: "flex" }}>
                 <Rating name="read-only" value={product.rating} readOnly />
 
-                <Card.Text class="text-secondary">
+                <Card.Text className="text-secondary">
                   &nbsp; ({product?.reviews?.length} &nbsp;Reviews)
                 </Card.Text>
               </div>
 
-              <Card.Text style={{ fontWeight: "bold" }} class="fs-5">
+              <Card.Text style={{ fontWeight: "bold" }} className="fs-5">
                 ${product.price}
               </Card.Text>
               <div style={{ borderBottom: "1px solid #7a7d7b" }}></div>
@@ -97,11 +97,11 @@ const ProductDetails = () => {
                   onClick={handleIncrement}
                 ></Button>
               </div>
-              <Card.Text class="text-secondary">
+              <Card.Text className="text-secondary">
                 <span style={{ fontWeight: "bold" }}>Description : </span>
                 {`${product.description} `}
               </Card.Text>
-              <Card.Text class="text-secondary">
+              <Card.Text className="text-secondary">
                 <span style={{ fontWeight: "bold", cursor: "pointer" }}>
                   Status :{" "}
                 </span>

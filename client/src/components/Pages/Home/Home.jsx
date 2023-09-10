@@ -49,13 +49,13 @@ const Home = () => {
             <h2>Welcome to Amazon</h2>
             <h2>Find Amazing Products Below</h2>
             <a href="#container">
-              <button class="btn btn-primary" type="submit">
+              <button className="btn btn-primary" type="submit">
                 <MouseIcon />
                 Button
               </button>
             </a>
             <NavLink to="/products">
-              <button class="btn btn-primary" type="submit">
+              <button className="btn btn-primary" type="submit">
                 <MouseIcon />
                 products
               </button>

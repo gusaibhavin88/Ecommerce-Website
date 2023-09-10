@@ -13,6 +13,7 @@ import WebLayout from "./components/Auth/WebLayout";
 import Register from "./components/Pages/Register/Register";
 import { getMyProfile } from "./Redux/Auth/AuthAction";
 import { useDispatch } from "react-redux";
+import Myprofile from "./components/MyProfile/Myprofile";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -40,6 +41,7 @@ const App = () => {
                 </WebLayout>
               }
             />
+
             <Route
               exact
               path="/products"
@@ -55,6 +57,15 @@ const App = () => {
               element={
                 <WebLayout>
                   <ProductDetails />
+                </WebLayout>
+              }
+            />
+            <Route
+              exact
+              path="/profile"
+              element={
+                <WebLayout>
+                  <Myprofile />
                 </WebLayout>
               }
             />

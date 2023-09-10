@@ -43,13 +43,13 @@ const Review = () => {
                     flexDirection: "column",
                   }}
                 >
-                  <Card.Title class="fs-3" style={{ fontWeight: "bold" }}>
+                  <Card.Title className="fs-3" style={{ fontWeight: "bold" }}>
                     {item.name}
                   </Card.Title>
                   <div style={{ display: "flex" }}>
                     <Rating name="read-only" value={item.rating} readOnly />
                   </div>
-                  <Card.Text style={{ fontWeight: "bold" }} class="fs-5">
+                  <Card.Text style={{ fontWeight: "bold" }} className="fs-5">
                     {item.comment}
                   </Card.Text>
                 </Card.Body>
