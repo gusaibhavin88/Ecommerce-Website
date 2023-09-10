@@ -168,7 +168,7 @@ export const updateProfile = CatchAsyncErros(async (req, resp, next) => {
   const newUserData = {
     name: req.body.name,
     email: req.body.email,
-    role: req.body.role,
+    // role: req.body.role,
   };
 
   const user = await UserModel.findByIdAndUpdate(req.user._id, newUserData, {
@@ -179,6 +179,7 @@ export const updateProfile = CatchAsyncErros(async (req, resp, next) => {
   resp.status(200).json({
     success: true,
     message: "User profile has been successfully updated",
+    user: user,
   });
 });
 

@@ -5,19 +5,20 @@ import { useSelector } from "react-redux";
 import ReactLoading from "react-loading";
 import MetaData from "../Layout/MetaData";
 import { useNavigate } from "react-router-dom";
+import ProfileUpdateDialog from "../Dialogs/ProfileUpdateDialog";
 
 const Myprofile = () => {
   const navigate = useNavigate();
 
-  const { user, loading, isAuthenticateds, error } = useSelector(
+  const { user, loading, isAuthenticated, error } = useSelector(
     (state) => state.auth
   );
 
   useEffect(() => {
-    if (!isAuthenticateds) {
+    if (!isAuthenticated) {
       navigate("/login");
     }
-  }, [isAuthenticateds, error]);
+  }, [isAuthenticated, error]);
 
   return (
     <>
@@ -34,7 +35,11 @@ const Myprofile = () => {
               src={`${user.avatar.url}`}
               alt="Your Profile"
             />
-            <Button>Edit Profile</Button>
+
+            <ProfileUpdateDialog user={user} />
+            {/* <Button onClick={() => navigate("/updateprofile")}>
+              Edit Profile
+            </Button> */}
           </div>
           <div className="profiledetails">
             <div>

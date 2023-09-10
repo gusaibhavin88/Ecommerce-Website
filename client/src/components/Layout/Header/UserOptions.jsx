@@ -46,7 +46,7 @@ function MySpeedDial() {
     { icon: <ExitToAppIcon />, name: "Logout", func: handleActionClick },
   ];
 
-  if (user.role === "admin") {
+  if (user?.role === "admin") {
     options.unshift({
       icon: <DashboardIcon />,
       name: "Dashboard",

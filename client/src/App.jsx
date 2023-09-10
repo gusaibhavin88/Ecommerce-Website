@@ -41,7 +41,15 @@ const App = () => {
                 </WebLayout>
               }
             />
-
+            <Route
+              exact
+              path="/profile"
+              element={
+                <WebLayout>
+                  <Myprofile />
+                </WebLayout>
+              }
+            />
             <Route
               exact
               path="/products"
@@ -57,15 +65,6 @@ const App = () => {
               element={
                 <WebLayout>
                   <ProductDetails />
-                </WebLayout>
-              }
-            />
-            <Route
-              exact
-              path="/profile"
-              element={
-                <WebLayout>
-                  <Myprofile />
                 </WebLayout>
               }
             />

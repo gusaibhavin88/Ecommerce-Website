@@ -46,32 +46,12 @@ export const fetchproductDetails = createAsyncThunk(
 export const createProductReview = createAsyncThunk(
   "createreview",
   async (formdata) => {
-    console.log(formdata);
-    const response = await productReview(formdata); // Call your API function here
-    return response.data; // Assuming the response contains data field with posts
+    try {
+      const response = await productReview(formdata); // Call your API function here
+      return response; // Assuming the response contains data field with posts
+    } catch (error) {
+      console.log(error);
+      throw error.response.data; // Assuming the response contains data field with posts
+    }
   }
 );
-
-// export const createTask = createAsyncThunk(
-//   "tasks/createTask",
-//   async (newTask) => {
-//     const response = await tasksAPI.createTask(newTask);
-//     return response.data;
-//   }
-// );
-
-// export const updateTask = createAsyncThunk(
-//   "tasks/updateTask",
-//   async (updatedTask) => {
-//     const response = await tasksAPI.updateTask(updatedTask);
-//     return response.data;
-//   }
-// );
-
-// export const deleteTask = createAsyncThunk(
-//   "tasks/deleteTask",
-//   async (taskId) => {
-//     await tasksAPI.deleteTask(taskId);
-//     return taskId;
-//   }
-// );

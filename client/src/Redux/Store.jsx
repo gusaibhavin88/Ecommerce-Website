@@ -11,11 +11,13 @@ import {
 } from "redux-persist";
 import AuthSlice from "./Auth/AuthSlice";
 import ProductSlice from "./Product/ProductSlice";
+import UserSlice from "./User/UserSlice";
 
 const store = configureStore({
   reducer: {
     auth: AuthSlice,
     products: ProductSlice,
+    user: UserSlice,
     // Use persistedReducer as the reducer for the "persist" key
     persist: persistedReducer,
   },

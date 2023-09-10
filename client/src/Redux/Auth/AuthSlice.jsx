@@ -11,8 +11,10 @@ const initialState = {
   isAuthenticated: false,
   status: "idle",
   error: null,
+  message: null,
   loading: false,
   user: null,
+  isUpdated: null,
 };
 
 // Create a slice
@@ -22,6 +24,9 @@ const authSlice = createSlice({
   reducers: {
     clearError: (state) => {
       state.error = null; // Clear the error by returning null or an empty string
+    },
+    clearMessage: (state) => {
+      state.message = null; // Clear the error by returning null or an empty string
     },
   },
   extraReducers: (builder) => {

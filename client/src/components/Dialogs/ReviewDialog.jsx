@@ -1,17 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Rating from "@mui/material/Rating"; // Import Rating component from the correct path
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createProductReview } from "../../Redux/Product/ProductAction";
 import { useParams } from "react-router-dom";
+import { useSnackbar } from "../context/SnackbarContext";
+import {
+  clearError,
+  clearIsUpdate,
+  clearMessage,
+} from "../../Redux/Product/ProductSlice";
 
 function ReviewDialog() {
   const dispatch = useDispatch();
   const params = useParams();
   const [show, setShow] = useState(false);
   const [review, setReview] = useState({});
+  const { error, message, isUpdated } = useSelector((state) => state.products);
+  const { handleClick } = useSnackbar();
 
   const onhandleChange = (e) => {
     setReview({ ...review, [e.target.name]: e.target.value });
@@ -22,12 +30,27 @@ function ReviewDialog() {
   const handleShow = () => {
     setShow(true);
   };
-  const onSubmit = async () => {
-    await dispatch(createProductReview({ ...review, productId: params.id }));
-    setReview({});
-    setShow(false);
-    handleClose(); // Close the modal after submitting
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    dispatch(createProductReview({ ...review, productId: params.id }));
   };
+
+  useEffect(() => {
+    if (isUpdated) {
+      handleClose();
+      setReview({});
+      setShow(false);
+      dispatch(clearIsUpdate());
+    }
+    if (error) {
+      handleClick("error", error);
+      dispatch(clearError());
+    }
+    if (message) {
+      handleClick("success", message);
+      dispatch(clearMessage());
+    }
+  }, [dispatch, , error, message, isUpdated]);
 
   return (
     <>

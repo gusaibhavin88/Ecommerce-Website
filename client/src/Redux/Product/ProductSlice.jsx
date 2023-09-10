@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 import {
   createProductReview,
   fetchProducts,
@@ -11,7 +11,9 @@ const initialState = {
   product: {},
   status: "idle",
   error: null,
+  message: null,
   loading: false,
+  isUpdated: false,
   productCount: 0,
 };
 
@@ -22,6 +24,28 @@ const productSlice = createSlice({
   reducers: {
     clearError: (state) => {
       state.error = null; // Clear the error by returning null or an empty string
+    },
+    clearMessage: (state) => {
+      state.message = null; // Clear the error by returning null or an empty string
+    },
+    clearIsUpdate: (state) => {
+      state.isUpdated = false; // Clear the error by returning null or an empty string
+    },
+    updateReview: (state, action) => {
+      console.log(action);
+      const { id } = action.payload;
+      // Find the product by ID and update it
+      const productIndex = state.product.findIndex(
+        (product) => product.id === id
+      );
+
+      console.log(productIndex);
+      if (productIndex !== -1) {
+        state.products[productIndex] = {
+          ...state.products[productIndex],
+          ...updatedProduct,
+        };
+      }
     },
   },
   extraReducers: (builder) => {
@@ -63,52 +87,20 @@ const productSlice = createSlice({
       })
       .addCase(createProductReview.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.product = action.payload.data;
         state.loading = false;
+        state.message = action.payload.data.message;
+        state.isUpdated = true;
+        console.log(current(state.product)); // Current required to get the value of Product
       })
       .addCase(createProductReview.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.error.message;
         state.loading = false;
+        state.error = action.error.message;
       });
-    // .addCase(createproduct.pending, (state) => {
-    //   state.status = "loading";
-    // })
-    // .addCase(createproduct.fulfilled, (state, action) => {
-    //   state.status = "succeeded";
-    //   state.products = action.payload;
-    // })
-    // .addCase(createproduct.rejected, (state, action) => {
-    //   state.status = "failed";
-    //   state.error = action.error.message;
-    // })
-    // .addCase(updateproduct.pending, (state) => {
-    //   state.status = "loading";
-    // })
-    // .addCase(updateproduct.fulfilled, (state, action) => {
-    //   state.status = "succeeded";
-    //   state.products = action.payload;
-    // })
-    // .addCase(updateproduct.rejected, (state, action) => {
-    //   state.status = "failed";
-    //   state.error = action.error.message;
-    // })
-    // .addCase(deleteproduct.pending, (state) => {
-    //   state.status = "loading";
-    // })
-    // .addCase(deleteproduct.fulfilled, (state, action) => {
-    //   state.status = "succeeded";
-    //   state.products = action.payload;
-    // })
-    // .addCase(deleteproduct.rejected, (state, action) => {
-    //   state.status = "failed";
-    //   state.error = action.error.message;
-    // });
-
-    // Similar cases for createproduct, updateproduct, and deleteproduct
   },
 });
 
 export default productSlice.reducer;
-export const { clearError } = productSlice.actions; // Export the clearError action
+export const { clearError, clearMessage, clearIsUpdate, updateReview } =
+  productSlice.actions; // Export the clearError action
 // Export the async thunks to use in components
