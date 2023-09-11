@@ -34,7 +34,7 @@ const Review = () => {
                     height: "150px",
                     borderRadius: "50%",
                   }}
-                  src={""}
+                  src={item?.user?.avatar?.url}
                 />
                 <Card.Body
                   style={{

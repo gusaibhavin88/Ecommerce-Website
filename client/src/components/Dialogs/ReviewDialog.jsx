@@ -32,7 +32,7 @@ function ReviewDialog() {
     setShow(true);
   };
   const onComplete = (response) => {
-    dispatch(updateReview(response));
+    // dispatch(updateReview(response));
     handleClick("success", response.data.message);
   };
   const onError = (response) => {};

@@ -165,11 +165,24 @@ export const updatePassword = CatchAsyncErros(async (req, res, next) => {
 // Update Profile
 
 export const updateProfile = CatchAsyncErros(async (req, resp, next) => {
-  const newUserData = {
+  const { avatar } = req.body;
+
+  let newUserData = {
     name: req.body.name,
     email: req.body.email,
-    // role: req.body.role,
   };
+
+  if (avatar) {
+    const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+      folder: "Ecommerce-Site/Avatars",
+      width: 150,
+      crop: "scale",
+    });
+    newUserData.avatar = {
+      public_id: myCloud.public_id,
+      url: myCloud.secure_url,
+    };
+  }
 
   const user = await UserModel.findByIdAndUpdate(req.user._id, newUserData, {
     new: true,

@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 import {
   getMyProfile,
   logOutProfile,
@@ -27,6 +27,13 @@ const authSlice = createSlice({
     },
     clearMessage: (state) => {
       state.message = null; // Clear the error by returning null or an empty string
+    },
+    updateProfile: (state, action) => {
+      console.log(action.payload);
+      state.user = {
+        ...state.user,
+        ...action.payload.data.user,
+      };
     },
   },
   extraReducers: (builder) => {
@@ -98,5 +105,5 @@ const authSlice = createSlice({
 });
 
 export default authSlice.reducer;
-export const { clearError } = authSlice.actions; // Export the clearError action
+export const { clearError, updateProfile } = authSlice.actions; // Export the clearError action
 // Export the async thunks to use in components

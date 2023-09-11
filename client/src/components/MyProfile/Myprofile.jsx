@@ -13,6 +13,7 @@ const Myprofile = () => {
   const { user, loading, isAuthenticated, error } = useSelector(
     (state) => state.auth
   );
+  console.log(user);
 
   useEffect(() => {
     if (!isAuthenticated) {

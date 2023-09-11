@@ -10,10 +10,10 @@ import { TextField, Typography } from "@mui/material";
 import "./ProfileUpdateDialog.css";
 import { profile } from "../../assets";
 import { useForm } from "react-hook-form";
-import { preventDefault } from "react";
-import { updateProfile } from "../../Redux/User/UserAction";
+import { updateProfileAction } from "../../Redux/User/UserAction";
 import { clearError, clearMessage } from "../../Redux/User/UserSlice";
 import { useSnackbar } from "../context/SnackbarContext";
+import { updateProfile } from "../../Redux/Auth/AuthSlice";
 
 function ProfileUpdateDialog({ user }) {
   const [avatar, setAvatar] = useState("");
@@ -47,9 +47,7 @@ function ProfileUpdateDialog({ user }) {
     }
   };
 
-  const onComplete = (response) => {
-    console.log(response);
-  };
+  const onComplete = (response) => {};
   const onError = (response) => {
     console.log(response);
   };
@@ -61,11 +59,14 @@ function ProfileUpdateDialog({ user }) {
       myForm.append(key, data[key]);
     }
     myForm.set("avatar", avatar);
+    console.log([...myForm.entries()]);
     dispatch(
-      updateProfile({
-        onComplete,
-        onError,
-        formData: data,
+      updateProfileAction({
+        functions: {
+          onComplete,
+          onError,
+          formData: myForm,
+        },
       })
     );
     handleClose();

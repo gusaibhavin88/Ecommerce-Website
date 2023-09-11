@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { updateProfile } from "./UserAction";
+import { updateProfileAction } from "./UserAction";
 
 // Define the initial state
 const initialState = {
@@ -24,20 +24,35 @@ const userSlice = createSlice({
     clearIsUpdate: (state) => {
       state.isUpdated = false; // Clear the error by returning null or an empty string
     },
+    updateProfile: (state, action) => {
+      const { review } = action.payload.data;
+      // Find the product by ID and update it
+
+      const productIndex = state.product.reviews.findIndex(
+        (product) => product._id === review._id
+      );
+
+      if (productIndex !== -1) {
+        state.product.reviews[productIndex] = {
+          ...state.product.reviews[productIndex],
+          ...review,
+        };
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(updateProfile.pending, (state) => {
+      .addCase(updateProfileAction.pending, (state) => {
         state.status = "loading";
         state.loading = true;
       })
-      .addCase(updateProfile.fulfilled, (state, action) => {
+      .addCase(updateProfileAction.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.loading = false;
         state.isUpdated = true;
         state.message = action.payload.data.message;
       })
-      .addCase(updateProfile.rejected, (state, action) => {
+      .addCase(updateProfileAction.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
         state.loading = false;

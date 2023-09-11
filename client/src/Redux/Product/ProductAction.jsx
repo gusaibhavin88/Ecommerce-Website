@@ -46,11 +46,11 @@ export const fetchproductDetails = createAsyncThunk(
 // createProductReview
 export const createProductReview = createAsyncThunk(
   "createreview",
-  async ({ functions }) => {
+  async ({ functions }, { dispatch }) => {
     const { onComplete, onError, formData } = functions;
     try {
       const response = await productReview(formData); // Call your API function here
-      updateReview(response);
+      dispatch(updateReview(response));
       onComplete(response);
       return response; // Assuming the response contains data field with posts
     } catch (error) {
