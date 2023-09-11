@@ -11,6 +11,7 @@ import {
   clearError,
   clearIsUpdate,
   clearMessage,
+  updateReview,
 } from "../../Redux/Product/ProductSlice";
 
 function ReviewDialog() {
@@ -30,9 +31,22 @@ function ReviewDialog() {
   const handleShow = () => {
     setShow(true);
   };
+  const onComplete = (response) => {
+    dispatch(updateReview(response));
+    handleClick("success", response.data.message);
+  };
+  const onError = (response) => {};
   const onSubmit = async (e) => {
     e.preventDefault();
-    dispatch(createProductReview({ ...review, productId: params.id }));
+    dispatch(
+      createProductReview({
+        functions: {
+          onComplete,
+          onError,
+          formData: { ...review, productId: params.id },
+        },
+      })
+    );
   };
 
   useEffect(() => {

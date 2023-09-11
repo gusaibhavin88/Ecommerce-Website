@@ -32,18 +32,17 @@ const productSlice = createSlice({
       state.isUpdated = false; // Clear the error by returning null or an empty string
     },
     updateReview: (state, action) => {
-      console.log(action);
-      const { id } = action.payload;
+      const { review } = action.payload.data;
       // Find the product by ID and update it
-      const productIndex = state.product.findIndex(
-        (product) => product.id === id
+
+      const productIndex = state.product.reviews.findIndex(
+        (product) => product._id === review._id
       );
 
-      console.log(productIndex);
       if (productIndex !== -1) {
-        state.products[productIndex] = {
-          ...state.products[productIndex],
-          ...updatedProduct,
+        state.product.reviews[productIndex] = {
+          ...state.product.reviews[productIndex],
+          ...review,
         };
       }
     },
@@ -88,14 +87,13 @@ const productSlice = createSlice({
       .addCase(createProductReview.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.loading = false;
-        state.message = action.payload.data.message;
         state.isUpdated = true;
-        console.log(current(state.product)); // Current required to get the value of Product
+        // console.log(current(state.product)); // Current required to get the value of Product
       })
       .addCase(createProductReview.rejected, (state, action) => {
         state.status = "failed";
         state.loading = false;
-        state.error = action.error.message;
+        // state.error = action.error.message;
       });
   },
 });

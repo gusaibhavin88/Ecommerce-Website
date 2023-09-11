@@ -5,6 +5,7 @@ import {
   productReview,
 } from "../../Api/ProductRequest";
 import axios from "axios";
+import { updateReview } from "./ProductSlice";
 
 const API = axios.create({
   baseURL: "http://localhost:5000/api/v1",
@@ -45,12 +46,15 @@ export const fetchproductDetails = createAsyncThunk(
 // createProductReview
 export const createProductReview = createAsyncThunk(
   "createreview",
-  async (formdata) => {
+  async ({ functions }) => {
+    const { onComplete, onError, formData } = functions;
     try {
-      const response = await productReview(formdata); // Call your API function here
+      const response = await productReview(formData); // Call your API function here
+      updateReview(response);
+      onComplete(response);
       return response; // Assuming the response contains data field with posts
     } catch (error) {
-      console.log(error);
+      onError(error);
       throw error.response.data; // Assuming the response contains data field with posts
     }
   }

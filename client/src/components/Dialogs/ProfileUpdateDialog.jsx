@@ -47,6 +47,13 @@ function ProfileUpdateDialog({ user }) {
     }
   };
 
+  const onComplete = (response) => {
+    console.log(response);
+  };
+  const onError = (response) => {
+    console.log(response);
+  };
+
   const onSubmit = (data) => {
     const myForm = new FormData();
     // Add data from the 'datas' object to the FormData
@@ -54,7 +61,13 @@ function ProfileUpdateDialog({ user }) {
       myForm.append(key, data[key]);
     }
     myForm.set("avatar", avatar);
-    dispatch(updateProfile(data));
+    dispatch(
+      updateProfile({
+        onComplete,
+        onError,
+        formData: data,
+      })
+    );
     handleClose();
     // navigate("/products");
   };

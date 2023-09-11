@@ -159,7 +159,7 @@ export const createProductReview = CatchAsyncErros(async (req, resp, next) => {
   resp.status(200).json({
     success: true,
     message: "Reviewd successfully",
-    reviewId: MyReview._id,
+    review: MyReview,
   });
 });
 

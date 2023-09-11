@@ -4,7 +4,9 @@ import { updateUserProfile } from "../../Api/UserRequest";
 // Async thunk for fetching posts
 export const updateProfile = createAsyncThunk(
   "updateProfile",
-  async (formData) => {
+  async ({ functions }) => {
+    const { onComplete, onError, formData } = functions;
+    console.log(formData);
     try {
       const response = await updateUserProfile(formData); // Call your API function here
       // console.log(response);
