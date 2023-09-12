@@ -4,16 +4,16 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Rating from "@mui/material/Rating"; // Import Rating component from the correct path
 import { useDispatch, useSelector } from "react-redux";
-import { createProductReview } from "../../Redux/Product/ProductAction";
+import { createProductReview } from "../../../Redux/Product/ProductAction";
 import { useNavigate, useParams } from "react-router-dom";
 import { TextField, Typography } from "@mui/material";
 import "./ProfileUpdateDialog.css";
-import { profile } from "../../assets";
+import { profile } from "../../../assets";
 import { useForm } from "react-hook-form";
-import { updateProfileAction } from "../../Redux/User/UserAction";
-import { clearError, clearMessage } from "../../Redux/User/UserSlice";
-import { useSnackbar } from "../context/SnackbarContext";
-import { updateProfile } from "../../Redux/Auth/AuthSlice";
+import { updateProfileAction } from "../../../Redux/User/UserAction";
+import { clearError, clearMessage } from "../../../Redux/User/UserSlice";
+import { useSnackbar } from "../../context/SnackbarContext";
+import { updateProfile } from "../../../Redux/Auth/AuthSlice";
 
 function ProfileUpdateDialog({ user }) {
   const [avatar, setAvatar] = useState("");

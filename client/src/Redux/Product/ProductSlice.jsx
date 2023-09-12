@@ -33,6 +33,7 @@ const productSlice = createSlice({
     },
     updateReview: (state, action) => {
       const { review } = action.payload.data;
+      console.log(review);
       // Find the product by ID and update it
 
       const productIndex = state.product.reviews.findIndex(
@@ -44,6 +45,8 @@ const productSlice = createSlice({
           ...state.product.reviews[productIndex],
           ...review,
         };
+      } else {
+        state.product.reviews.push(review);
       }
     },
   },

@@ -54,12 +54,6 @@ const Home = () => {
                 Button
               </button>
             </a>
-            <NavLink to="/products">
-              <button className="btn btn-primary" type="submit">
-                <MouseIcon />
-                products
-              </button>
-            </NavLink>
           </div>
           <div className="homeHeading">
             <h2>Featured Product</h2>

@@ -11,7 +11,7 @@ import Rating from "@mui/material/Rating";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-import ReviewDialog from "../../Dialogs/ReviewDialog";
+import ReviewDialog from "../../Dialogs/ReviewDialog/ReviewDialog";
 import Review from "../../Review/Review";
 
 const ProductDetails = () => {

@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 
 const Review = () => {
   const { product } = useSelector((state) => state.products);
+  console.log(product);
 
   return (
     <div style={{ padding: "1rem 5rem" }}>
@@ -34,7 +35,7 @@ const Review = () => {
                     height: "150px",
                     borderRadius: "50%",
                   }}
-                  src={item?.user?.avatar?.url}
+                  src={item?.user?.url}
                 />
                 <Card.Body
                   style={{

@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import ReactLoading from "react-loading";
 import MetaData from "../Layout/MetaData";
 import { useNavigate } from "react-router-dom";
-import ProfileUpdateDialog from "../Dialogs/ProfileUpdateDialog";
+import ProfileUpdateDialog from "../Dialogs/ProfileUpdateDialog/ProfileUpdateDialog";
 
 const Myprofile = () => {
   const navigate = useNavigate();

@@ -4,15 +4,15 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Rating from "@mui/material/Rating"; // Import Rating component from the correct path
 import { useDispatch, useSelector } from "react-redux";
-import { createProductReview } from "../../Redux/Product/ProductAction";
+import { createProductReview } from "../../../Redux/Product/ProductAction";
 import { useParams } from "react-router-dom";
-import { useSnackbar } from "../context/SnackbarContext";
+import { useSnackbar } from "../../context/SnackbarContext";
 import {
   clearError,
   clearIsUpdate,
   clearMessage,
   updateReview,
-} from "../../Redux/Product/ProductSlice";
+} from "../../../Redux/Product/ProductSlice";
 
 function ReviewDialog() {
   const dispatch = useDispatch();

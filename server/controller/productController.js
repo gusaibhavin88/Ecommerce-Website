@@ -121,7 +121,10 @@ export const createProductReview = CatchAsyncErros(async (req, resp, next) => {
   const { rating, comment, productId } = req.body;
 
   const review = {
-    user: req.user._id,
+    user: {
+      _id: req.user._id,
+      url: req.user.avatar.url,
+    },
     rating: Number(rating),
     name: req.user.name,
     comment,
@@ -129,10 +132,7 @@ export const createProductReview = CatchAsyncErros(async (req, resp, next) => {
 
   // const product = await ProductModel.findById(productId);
 
-  const product = await ProductModel.findById(productId).populate({
-    path: "reviews.user",
-    select: "avatar.url", // Specify the fields you want to populate
-  });
+  const product = await ProductModel.findById(productId);
   const isReviewed = product.reviews.find(
     (rev) => rev.user._id.toString() === req.user._id.toString()
   );
@@ -155,12 +155,12 @@ export const createProductReview = CatchAsyncErros(async (req, resp, next) => {
   });
   product.rating = avg / product.reviews.length;
 
+  await product.save();
+
   const MyReview = product.reviews.find(
     // (rev) => rev.user.toString() === req.user._id.toString()
     (rev) => rev.user._id.toString() === req.user._id.toString()
   );
-
-  await product.save({ validateBeforeSave: false });
 
   resp.status(200).json({
     success: true,
