@@ -12,12 +12,14 @@ import {
 import AuthSlice from "./Auth/AuthSlice";
 import ProductSlice from "./Product/ProductSlice";
 import UserSlice from "./User/UserSlice";
+import CartSlice from "./Cart/CartSlice";
 
 const store = configureStore({
   reducer: {
     auth: AuthSlice,
     products: ProductSlice,
     user: UserSlice,
+    cart: CartSlice,
     // Use persistedReducer as the reducer for the "persist" key
     persist: persistedReducer,
   },

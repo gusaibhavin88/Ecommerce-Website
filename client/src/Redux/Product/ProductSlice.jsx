@@ -75,7 +75,7 @@ const productSlice = createSlice({
       })
       .addCase(fetchproductDetails.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.product = action.payload.data;
+        state.product = action.payload.data.product;
         state.loading = false;
       })
       .addCase(fetchproductDetails.rejected, (state, action) => {

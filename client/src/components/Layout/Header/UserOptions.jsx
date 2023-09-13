@@ -10,6 +10,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import { useNavigate } from "react-router-dom";
 import "./Useroption.css";
 import { logOutProfile } from "../../../Redux/Auth/AuthAction";
+import HomeIcon from "@mui/icons-material/Home";
 
 function MySpeedDial() {
   const [open, setOpen] = React.useState(false);
@@ -29,8 +30,11 @@ function MySpeedDial() {
     if (action === "Dashboard") {
       navigate("/dashboard");
     }
+    if (action === "Home") {
+      navigate("/");
+    }
     if (action === "Orders") {
-      navigate("/products");
+      navigate("/cart");
     }
     if (action === "Profile") {
       navigate("/profile");
@@ -41,6 +45,7 @@ function MySpeedDial() {
   };
 
   const options = [
+    { icon: <HomeIcon />, name: "Home", func: handleActionClick },
     { icon: <ListAltIcon />, name: "Orders", func: handleActionClick },
     { icon: <PersonIcon />, name: "Profile", func: handleActionClick },
     { icon: <ExitToAppIcon />, name: "Logout", func: handleActionClick },

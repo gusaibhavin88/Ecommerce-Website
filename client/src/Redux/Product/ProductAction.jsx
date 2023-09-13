@@ -37,9 +37,13 @@ export const fetchProducts = createAsyncThunk(
 // fetchproductDetails
 export const fetchproductDetails = createAsyncThunk(
   "fetchproductDetails",
-  async (id) => {
+  async ({ functions }) => {
+    const { onComplete, onError, id } = functions;
     const response = await getProductDetails(id); // Call your API function here
-    return response.data; // Assuming the response contains data field with posts
+    if (onComplete) {
+      onComplete(response);
+    }
+    return response; // Assuming the response contains data field with posts
   }
 );
 

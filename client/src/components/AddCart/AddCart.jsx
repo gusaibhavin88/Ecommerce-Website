@@ -33,16 +33,6 @@ function subtotal(items) {
   return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
 }
 
-const rows = [
-  createRow("Paperclips (Box)", 100, 1.15),
-  createRow("Paper (Case)", 10, 45.99),
-  createRow("Waste Basket", 2, 17.99),
-];
-
-const invoiceSubtotal = subtotal(rows);
-const invoiceTaxes = TAX_RATE * invoiceSubtotal;
-const invoiceTotal = invoiceTaxes + invoiceSubtotal;
-
 export default function AddCart() {
   const [quantity, setQuantity] = useState(0);
 
@@ -55,6 +45,16 @@ export default function AddCart() {
       setQuantity(quantity - 1);
     }
   };
+
+  const rows = [
+    createRow("Paperclips (Box)", 100, 1.15),
+    createRow("Paper (Case)", 10, 45.99),
+    createRow("Waste Basket", 2, 17.99),
+  ];
+
+  const invoiceSubtotal = subtotal(rows);
+  const invoiceTaxes = TAX_RATE * invoiceSubtotal;
+  const invoiceTotal = invoiceTaxes + invoiceSubtotal;
   return (
     <div
       style={{

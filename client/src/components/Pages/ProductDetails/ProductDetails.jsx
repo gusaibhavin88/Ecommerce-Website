@@ -13,15 +13,28 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import ReviewDialog from "../../Dialogs/ReviewDialog/ReviewDialog";
 import Review from "../../Review/Review";
+import { getProductDetails } from "../../../Api/ProductRequest";
+import { useSnackbar } from "../../context/SnackbarContext";
+import { fetchproductDetailsForCart } from "../../../Redux/Cart/CartAction";
 
 const ProductDetails = () => {
   const [quantity, setQuantity] = useState(0);
   const { product } = useSelector((state) => state.products);
   const params = useParams();
   const dispatch = useDispatch();
+  const { handleClick } = useSnackbar();
+  const cartList = useSelector((state) => state.cart);
 
   useEffect(() => {
-    dispatch(fetchproductDetails(params.id));
+    dispatch(
+      fetchproductDetails({
+        functions: {
+          // onComplete,
+          onError,
+          id: params.id,
+        },
+      })
+    );
   }, [dispatch, params.id]);
 
   const handleIncrement = () => {
@@ -34,7 +47,26 @@ const ProductDetails = () => {
     }
   };
 
-  const handleAddCart = () => {};
+  const onComplete = (response) => {
+    handleClick("success", "Product Added to cart");
+  };
+
+  const onError = (response) => {
+    console.log(response);
+  };
+
+  const handleAddCart = () => {
+    dispatch(
+      fetchproductDetailsForCart({
+        functions: {
+          onComplete,
+          onError,
+          id: params.id,
+          qty: quantity,
+        },
+      })
+    );
+  };
 
   return (
     <div

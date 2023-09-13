@@ -89,7 +89,7 @@ export const getProduct = CatchAsyncErros(async (req, resp, next) => {
 
     resp.status(200).json({
       success: true,
-      data: product,
+      product: product,
       message: "Product fetched successfully",
     });
   } catch (error) {
