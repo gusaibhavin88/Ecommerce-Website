@@ -2,27 +2,31 @@ import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import Rating from "@mui/material/Rating"; // Import Rating component from the correct path
 import { useDispatch, useSelector } from "react-redux";
-import { createProductReview } from "../../../Redux/Product/ProductAction";
-import { useNavigate, useParams } from "react-router-dom";
-import { TextField, Typography } from "@mui/material";
-import "./ProfileUpdateDialog.css";
-import { profile } from "../../../assets";
+import { IconButton, InputAdornment, TextField } from "@mui/material";
+import "./PasswordUpdateDialog.css";
 import { useForm } from "react-hook-form";
-import { updateProfileAction } from "../../../Redux/User/UserAction";
+import {
+  updatePasswordAction,
+  updateProfileAction,
+} from "../../../Redux/User/UserAction";
 import { clearError, clearMessage } from "../../../Redux/User/UserSlice";
 import { useSnackbar } from "../../context/SnackbarContext";
-import { updateProfile } from "../../../Redux/Auth/AuthSlice";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 function PasswordUpdateDialog({ user }) {
-  const [avatar, setAvatar] = useState("");
-  const [avatarPreview, setAvatarPreview] = useState(profile);
   const { register, handleSubmit, setValue } = useForm();
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
   const { handleClick } = useSnackbar();
   const { message, error, isUpdated } = useSelector((state) => state.user);
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleTogglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   const handleClose = () => {
     setShow(false);
@@ -31,46 +35,29 @@ function PasswordUpdateDialog({ user }) {
     setShow(true);
   };
 
-  const onImageChange = async (e) => {
-    if (e.target.files && e.target.files[0]) {
-      const img = await e.target.files[0];
-      if (img) {
-        const reader = new FileReader();
-        reader.onload = () => {
-          if (reader.readyState === 2) {
-            setAvatarPreview(reader.result);
-            setAvatar(reader.result);
-          }
-        };
-        reader.readAsDataURL(e.target.files[0]);
-      }
-    }
+  const onComplete = (response) => {
+    handleClick("success", "Password has changed Login again");
   };
 
-  const onComplete = (response) => {};
   const onError = (response) => {
     console.log(response);
   };
 
   const onSubmit = (data) => {
-    const myForm = new FormData();
-    // Add data from the 'datas' object to the FormData
-    for (const key in data) {
-      myForm.append(key, data[key]);
+    if (data.oldPassword !== data.confOldPassword) {
+      handleClick("error", "Old Password and Confirm Old Password must match");
+      return;
     }
-    myForm.set("avatar", avatar);
-    console.log([...myForm.entries()]);
     dispatch(
-      updateProfileAction({
+      updatePasswordAction({
         functions: {
           onComplete,
           onError,
-          formData: myForm,
+          formData: data,
         },
       })
     );
     handleClose();
-    // navigate("/products");
   };
 
   useEffect(() => {
@@ -99,7 +86,7 @@ function PasswordUpdateDialog({ user }) {
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
-        Edit Profile
+        Change Password
       </Button>
 
       <Modal show={show} onHide={handleClose}>
@@ -110,30 +97,48 @@ function PasswordUpdateDialog({ user }) {
           <Form>
             <br />
             <TextField
-              label="Username"
+              fullWidth
+              label="Old Password"
               variant="outlined"
+              type={showPassword ? "text" : "password"}
               className="mb-3"
-              name="name"
-              {...register("name")}
+              {...register("oldPassword")}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleTogglePasswordVisibility}
+                      edge="end"
+                    >
+                      {showPassword ? (
+                        <VisibilityIcon />
+                      ) : (
+                        <VisibilityOffIcon />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
             <br />
             <TextField
-              label="Email"
-              type="email"
+              fullWidth
+              label="Confirm Old Password"
+              type="password"
               variant="outlined"
               className="mb-3"
-              {...register("email")}
+              {...register("confOldPassword")}
             />
-            <div className="inputdiv">
-              <img src={avatarPreview} alt="Not found" />
-              <input
-                type="file"
-                name="image"
-                id="image"
-                accept="image/*"
-                onChange={onImageChange}
-              />
-            </div>
+            <br />
+            <TextField
+              fullWidth
+              label="New Password"
+              type="password"
+              variant="outlined"
+              className="mb-3"
+              {...register("newPassword")}
+            />
           </Form>
         </Modal.Body>
         <Modal.Footer>

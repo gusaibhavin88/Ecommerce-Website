@@ -6,6 +6,7 @@ import ReactLoading from "react-loading";
 import MetaData from "../Layout/MetaData";
 import { useNavigate } from "react-router-dom";
 import ProfileUpdateDialog from "../Dialogs/ProfileUpdateDialog/ProfileUpdateDialog";
+import PasswordUpdateDialog from "../Dialogs/PasswordUpdateDialog.jsx/PasswordUpdateDialog";
 
 const Myprofile = () => {
   const navigate = useNavigate();
@@ -13,7 +14,6 @@ const Myprofile = () => {
   const { user, loading, isAuthenticated, error } = useSelector(
     (state) => state.auth
   );
-  console.log(user);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -38,9 +38,6 @@ const Myprofile = () => {
             />
 
             <ProfileUpdateDialog user={user} />
-            {/* <Button onClick={() => navigate("/updateprofile")}>
-              Edit Profile
-            </Button> */}
           </div>
           <div className="profiledetails">
             <div>
@@ -56,8 +53,7 @@ const Myprofile = () => {
               <Card.Text className="text-secondary">{user.createdAt}</Card.Text>
             </div>
             <Button>My Order</Button>
-
-            <Button>Change password</Button>
+            <PasswordUpdateDialog />
           </div>
         </div>
       )}

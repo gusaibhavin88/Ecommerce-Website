@@ -7,10 +7,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../../../Redux/Product/ProductAction";
 import ReactLoading from "react-loading";
 import { useSnackbar } from "../../context/SnackbarContext";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Home = () => {
   const { handleClick, handleClose } = useSnackbar();
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
   const { products, status, loading, error } = useSelector(
@@ -52,6 +53,12 @@ const Home = () => {
               <button className="btn btn-primary" type="submit">
                 <MouseIcon />
                 Button
+              </button>
+              <button
+                className="btn btn-primary"
+                onClick={() => navigate("/cart")}
+              >
+                To Cart
               </button>
             </a>
           </div>

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { updateProfileAction } from "./UserAction";
+import { updatePasswordAction, updateProfileAction } from "./UserAction";
 
 // Define the initial state
 const initialState = {
@@ -53,6 +53,20 @@ const userSlice = createSlice({
         state.message = action.payload.data.message;
       })
       .addCase(updateProfileAction.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+        state.loading = false;
+      })
+      .addCase(updatePasswordAction.pending, (state) => {
+        state.status = "loading";
+        state.loading = true;
+      })
+      .addCase(updatePasswordAction.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.loading = false;
+        state.message = "Password has changed Login again";
+      })
+      .addCase(updatePasswordAction.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
         state.loading = false;

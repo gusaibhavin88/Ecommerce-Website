@@ -110,6 +110,7 @@ function ProfileUpdateDialog({ user }) {
           <Form>
             <br />
             <TextField
+              fullWidth
               label="Username"
               variant="outlined"
               className="mb-3"
@@ -118,6 +119,7 @@ function ProfileUpdateDialog({ user }) {
             />
             <br />
             <TextField
+              fullWidth
               label="Email"
               type="email"
               variant="outlined"

@@ -178,6 +178,10 @@ export const updateProfile = CatchAsyncErros(async (req, resp, next) => {
       width: 150,
       crop: "scale",
     });
+
+    const user = await UserModel.findById(req.user._id);
+    const imageId = user.avatar.public_id;
+    await cloudinary.v2.uploader.destroy(imageId);
     newUserData.avatar = {
       public_id: myCloud.public_id,
       url: myCloud.secure_url,

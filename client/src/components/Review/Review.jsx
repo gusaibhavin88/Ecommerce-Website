@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 
 const Review = () => {
   const { product } = useSelector((state) => state.products);
-  console.log(product);
 
   return (
     <div style={{ padding: "1rem 5rem" }}>

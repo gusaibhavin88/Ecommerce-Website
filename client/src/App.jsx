@@ -14,6 +14,7 @@ import Register from "./components/Pages/Register/Register";
 import { getMyProfile } from "./Redux/Auth/AuthAction";
 import { useDispatch } from "react-redux";
 import Myprofile from "./components/MyProfile/Myprofile";
+import AddCart from "./components/AddCart/AddCart";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -69,6 +70,15 @@ const App = () => {
               }
             />
           </Route>
+          <Route
+            exact
+            path="/cart"
+            element={
+              <WebLayout>
+                <AddCart />
+              </WebLayout>
+            }
+          />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/register" element={<Register />} />
           <Route path="*" element={<PageNotFound />} />

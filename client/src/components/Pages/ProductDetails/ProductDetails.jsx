@@ -34,6 +34,8 @@ const ProductDetails = () => {
     }
   };
 
+  const handleAddCart = () => {};
+
   return (
     <div
       style={{
@@ -96,7 +98,15 @@ const ProductDetails = () => {
                   startIcon={<AddIcon />}
                   onClick={handleIncrement}
                 ></Button>
+                <Button
+                  variant="contained"
+                  style={{ backgroundColor: "orange", color: "white" }}
+                  onClick={handleAddCart}
+                >
+                  Add To Cart
+                </Button>
               </div>
+
               <Card.Text className="text-secondary">
                 <span style={{ fontWeight: "bold" }}>Description : </span>
                 {`${product.description} `}
