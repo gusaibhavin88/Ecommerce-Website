@@ -23,8 +23,15 @@ const cartSlice = createSlice({
       state.isUpdated = false; // Clear the error by returning null or an empty string
     },
     updateCart: (state, action) => {
-      state.cartList = [{ ...action.payload }];
+      state.cartList = [...state.cartList, { ...action.payload }];
       // state.cartList = false; // Clear the error by returning null or an empty string
+    },
+
+    removeCart: (state, action) => {
+      const itemIdToRemove = action.payload;
+      state.cartList = state.cartList.filter(
+        (item, index) => index !== itemIdToRemove
+      );
     },
   },
   extraReducers: (builder) => {
@@ -46,6 +53,11 @@ const cartSlice = createSlice({
 });
 
 export default cartSlice.reducer;
-export const { clearError, clearMessage, clearIsUpdate, updateCart } =
-  cartSlice.actions; // Export the clearError action
+export const {
+  clearError,
+  clearMessage,
+  clearIsUpdate,
+  updateCart,
+  removeCart,
+} = cartSlice.actions; // Export the clearError action
 // Export the async thunks to use in components

@@ -132,8 +132,18 @@ const ProductDetails = () => {
                 ></Button>
                 <Button
                   variant="contained"
-                  style={{ backgroundColor: "orange", color: "white" }}
+                  style={{
+                    color: "white",
+                    ...(quantity > 0
+                      ? { backgroundColor: "orange", cursor: "pointer" }
+                      : {
+                          backgroundColor: "#ccc",
+                          color: "#888",
+                          cursor: "pointer",
+                        }),
+                  }}
                   onClick={handleAddCart}
+                  disabled={quantity > 0 ? false : true}
                 >
                   Add To Cart
                 </Button>

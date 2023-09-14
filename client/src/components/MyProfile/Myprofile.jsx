@@ -42,7 +42,7 @@ const Myprofile = () => {
           <div className="profiledetails">
             <div>
               <h3>Full name</h3>
-              <Card.Text className="text-secondary">`${user.name}`</Card.Text>
+              <Card.Text className="text-secondary">{user.name}</Card.Text>
             </div>
             <div>
               <h3>Email</h3>
