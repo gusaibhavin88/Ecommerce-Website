@@ -15,6 +15,7 @@ import { getMyProfile } from "./Redux/Auth/AuthAction";
 import { useDispatch } from "react-redux";
 import Myprofile from "./components/MyProfile/Myprofile";
 import AddCart from "./components/AddCart/AddCart";
+import Shipping from "./components/Shopping/Shipping";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -76,6 +77,15 @@ const App = () => {
             element={
               <WebLayout>
                 <AddCart />
+              </WebLayout>
+            }
+          />
+          <Route
+            exact
+            path="/shipping"
+            element={
+              <WebLayout>
+                <Shipping />
               </WebLayout>
             }
           />

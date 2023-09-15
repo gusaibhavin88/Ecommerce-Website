@@ -3,7 +3,9 @@ import { fetchproductDetailsForCart } from "./CartAction";
 
 // Define the initial state
 const initialState = {
-  cartList: [],
+  cartList: localStorage.getItem("cartItems")
+    ? JSON.parse(localStorage.getItem("cartItems"))
+    : [],
   error: null,
   message: null,
 };

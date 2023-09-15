@@ -8,15 +8,22 @@ import { clearError } from "../../../Redux/Auth/AuthSlice";
 import "../LoginPage/LogIn.css";
 import ReactLoading from "react-loading";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export default function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
   const { register, handleSubmit, errors } = useForm();
   const { handleClick, handleClose } = useSnackbar();
   const { isAuthenticated, error, loading, user } = useSelector(
     (state) => state.auth
   );
+
+  const redirect = location.search
+    ? `/${location.search.split("=")[1]}`
+    : "/profile";
+  console.log(redirect);
 
   const onSubmit = (data) => {
     dispatch(loginUserAction(data));
@@ -24,13 +31,13 @@ export default function Login() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/");
+      navigate(redirect);
     }
     if (error) {
       handleClick("error", error);
       dispatch(clearError());
     }
-  }, [dispatch, error, isAuthenticated]);
+  }, [dispatch, error, isAuthenticated, redirect]);
 
   return (
     <div>

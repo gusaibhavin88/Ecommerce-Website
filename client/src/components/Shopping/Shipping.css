@@ -1,0 +1,24 @@
+.homeHeading {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+  align-items: center;
+  text-align: center;
+}
+.homeHeading h2 {
+  border-bottom: 2px solid #8fb3ff;
+  padding: 1rem;
+} /*# sourceMappingURL=Home.css.map */
+
+.textfiled {
+  margin-top: 1rem;
+}
+.shipping {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100vh;
+}

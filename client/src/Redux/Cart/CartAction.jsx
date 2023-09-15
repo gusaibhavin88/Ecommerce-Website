@@ -10,11 +10,12 @@ const API = axios.create({
 // fetchproductDetails
 export const fetchproductDetailsForCart = createAsyncThunk(
   "fetchproductDetailsForCart",
-  async ({ functions }, { dispatch }) => {
+  async ({ functions }, { dispatch, getState }) => {
     const { onComplete, onError, id, qty } = functions;
     console.log(qty);
     const response = await getProductDetails(id); // Call your API function here
     dispatch(updateCart({ ...response.data.product, qty: qty }));
+    localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartList));
     if (onComplete) {
       onComplete(response);
     }

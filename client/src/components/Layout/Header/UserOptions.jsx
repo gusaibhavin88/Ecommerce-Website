@@ -11,12 +11,15 @@ import { useNavigate } from "react-router-dom";
 import "./Useroption.css";
 import { logOutProfile } from "../../../Redux/Auth/AuthAction";
 import HomeIcon from "@mui/icons-material/Home";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 function MySpeedDial() {
   const [open, setOpen] = React.useState(false);
   const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const { cartList } = useSelector((state) => state.cart);
 
   const handleOpen = () => {
     setOpen(true);
@@ -34,6 +37,9 @@ function MySpeedDial() {
       navigate("/");
     }
     if (action === "Orders") {
+      navigate("/shipping");
+    }
+    if (action.includes("Carts")) {
       navigate("/cart");
     }
     if (action === "Profile") {
@@ -47,6 +53,15 @@ function MySpeedDial() {
   const options = [
     { icon: <HomeIcon />, name: "Home", func: handleActionClick },
     { icon: <ListAltIcon />, name: "Orders", func: handleActionClick },
+    {
+      icon: (
+        <ShoppingCartIcon
+          style={{ color: cartList.length > 0 ? "tomato" : "unset" }}
+        />
+      ),
+      name: `Carts(${cartList.length})`,
+      func: handleActionClick,
+    },
     { icon: <PersonIcon />, name: "Profile", func: handleActionClick },
     { icon: <ExitToAppIcon />, name: "Logout", func: handleActionClick },
   ];
@@ -76,6 +91,7 @@ function MySpeedDial() {
         open={open}
         direction="down"
         className="speedDial"
+        transitionDuration={1000}
       >
         {options &&
           options.map((opt, index) => {
@@ -84,8 +100,8 @@ function MySpeedDial() {
                 key={index}
                 icon={opt.icon}
                 tooltipTitle={opt.name}
-                s
                 onClick={() => opt.func(`${opt.name}`.toString())}
+                tooltipOpen={window.innerWidth > 600 ? true : false}
               />
             );
           })}
