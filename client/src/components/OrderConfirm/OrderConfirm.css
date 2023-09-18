@@ -1,0 +1,62 @@
+.confirmorder {
+  min-height: 100vh;
+}
+
+.orderData {
+  display: grid;
+  grid-template-columns: 70% 30%;
+  padding: 0 1.5rem;
+  min-height: 100%;
+}
+.shipinfo {
+  display: flex;
+  flex-direction: column;
+  margin-left: 2rem;
+  gap: 0.5rem;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+.leftdata {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  padding: 3rem;
+}
+.lefttop,
+.leftbottom {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.leftdata > div > h1 {
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+.rightdata {
+  border-left: 1px solid black;
+}
+
+.twoitwm {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+.innerist {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.totalamount > h5 {
+  font-weight: 400;
+}
+.rightdata {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 5rem;
+}
+.calcu {
+  display: flex;
+  border: 1px solid red;
+  justify-content: space-between;
+}

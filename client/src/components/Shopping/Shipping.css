@@ -10,8 +10,22 @@
   padding: 1rem;
 } /*# sourceMappingURL=Home.css.map */
 
+.formperent {
+  width: 30vw;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .textfiled {
   margin-top: 1rem;
+  align-self: center;
+  width: 100%;
+  gap: 1rem;
+  border: 1px solid black;
+  outline: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
 }
 .shipping {
   display: flex;
@@ -20,5 +34,5 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  height: 100vh;
+  /* height: 100vh; */
 }
