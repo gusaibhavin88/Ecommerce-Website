@@ -211,11 +211,7 @@ export default function AddCart() {
                   <TableCell align="center" colSpan={3}></TableCell>
                   <TableCell align="center" colSpan={4}>
                     <Button
-                      style={{
-                        backgroundColor: "blue",
-                        color: "white",
-                        outline: "none",
-                      }}
+                      variant="contained"
                       onClick={() => navigate("/login?redirect=shipping")}
                     >
                       Check Out
@@ -246,6 +242,7 @@ export default function AddCart() {
               color: "white",
               outline: "none",
             }}
+            onClick={() => navigate("/products")}
           >
             Add Products
           </Button>

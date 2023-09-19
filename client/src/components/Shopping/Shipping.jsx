@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./shipping.css";
 import HomeIcon from "@mui/icons-material/Home";
 import { Box, Button, MenuItem, Select, TextField } from "@mui/material";
@@ -12,18 +12,47 @@ import { useForm } from "react-hook-form";
 import CustomizedSteppers from "./CheckOutSteps/CheckOutSteps";
 import { useNavigate } from "react-router-dom";
 import MetaData from "../Layout/MetaData";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { updateShipping } from "../../Redux/Cart/CartSlice";
 
 const Shipping = () => {
   const [country, setCountry] = useState("");
   const [state, setState] = useState("");
   const navigate = useNavigate();
-  const { register, handleSubmit, setValue } = useForm();
-  const stepStage = 0;
-
-  const onSubmit = (data) => {
-    console.log(data);
-    navigate("/order/confirm");
+  const dispatch = useDispatch();
+  const defaultValues = {
+    address: "",
+    city: "",
+    pinCode: "",
+    phoneNo: "",
+    country: country,
+    state: state,
   };
+  const { register, handleSubmit, setValue, getValues, formState } = useForm({
+    defaultValues,
+  });
+  const { shippingDetail } = useSelector((state) => state.cart);
+  const stepStage = 0;
+  const onSubmit = (data) => {
+    dispatch(updateShipping(data));
+    // navigate("/order/confirm");
+  };
+
+  useEffect(() => {
+    if (shippingDetail) {
+      const keys = Object.keys(shippingDetail);
+      keys.map((item) => {
+        if (item === "country") {
+          setCountry(shippingDetail[item]);
+        }
+        if (item === "state") {
+          setState(shippingDetail[item]);
+        }
+        setValue(item, shippingDetail[item]);
+      });
+    }
+  }, []);
 
   return (
     <div className="shipping">
@@ -32,7 +61,7 @@ const Shipping = () => {
       <div className="homeHeading">
         <h2>Shipping Details</h2>
       </div>
-      <form>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div
           className="formperent"
           style={{
@@ -56,7 +85,8 @@ const Shipping = () => {
               id="input-with-sx"
               variant="outlined"
               primary
-              {...register("address")}
+              name="address"
+              {...register("address", { required: true })}
               placeholder="Enter your address"
             />
           </Box>
@@ -74,7 +104,8 @@ const Shipping = () => {
               id="input-with-sx"
               variant="outlined"
               primary
-              {...register("city")}
+              name="city"
+              {...register("city", { required: true })}
               placeholder="Enter your city"
             />
           </Box>
@@ -93,7 +124,8 @@ const Shipping = () => {
               variant="outlined"
               type="number"
               primary
-              {...register("pinCode")}
+              name="pinCode"
+              {...register("pinCode", { required: true })}
               placeholder="Enter your pin code"
               inputProps={{
                 inputMode: "numeric",
@@ -114,14 +146,16 @@ const Shipping = () => {
               className="textfiled"
               id="input-with-sx"
               variant="outlined"
-              primary
-              type="number"
+              type="text" // Change the type to text to allow input of numeric characters
+              name="phoneNo"
               inputProps={{
                 inputMode: "numeric",
                 pattern: "[0-9]*",
+                maxLength: 10, // Limit input to 10 characters
+                minLength: 10, // Ensure at least 10 characters are entered
               }}
-              {...register("phoneNo")}
-              placeholder="Enter your phone number"
+              {...register("phoneNo", { required: true })}
+              placeholder="Enter your 10-digit phone number"
             />
           </Box>
           <Box
@@ -133,10 +167,13 @@ const Shipping = () => {
               sx={{ color: "action.active", mr: 1, my: 0.5 }}
               style={{ fontSize: "2rem" }}
             />
+
             <Select
               variant="outlined"
               fullWidth
-              {...register("country")}
+              value={country}
+              name="country"
+              {...register("country", { required: true })}
               onChange={(e) => setCountry(e.target.value)}
             >
               <MenuItem value={""}>none</MenuItem>
@@ -150,6 +187,7 @@ const Shipping = () => {
                 })}
             </Select>
           </Box>
+
           {country && (
             <Box
               className="textfiled"
@@ -161,7 +199,14 @@ const Shipping = () => {
                 style={{ fontSize: "2rem" }}
               />
 
-              <Select variant="outlined" {...register("city")} fullWidth>
+              <Select
+                variant="outlined"
+                {...register("state", { required: true })}
+                name="state"
+                fullWidth
+                value={state}
+                onChange={(e) => setState(e.target.value)}
+              >
                 <MenuItem value={""}>State</MenuItem>
                 {country &&
                   State.getStatesOfCountry(country).map((item, index) => {
@@ -176,9 +221,11 @@ const Shipping = () => {
           )}
         </div>
         <Button
+          type="submit"
           style={{ marginTop: "1rem" }}
           variant="contained"
           onClick={handleSubmit(onSubmit)}
+          disabled={formState?.isValid ? false : true}
         >
           Add To Cart
         </Button>

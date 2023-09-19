@@ -4,6 +4,7 @@ import MetaData from "../Layout/MetaData";
 import "./OrderConfirm.css";
 import { logo } from "../../assets";
 import { useSelector } from "react-redux";
+import { Button } from "@mui/material";
 
 const OrderConfirm = () => {
   const { cartList } = useSelector((state) => state.cart);
@@ -58,25 +59,28 @@ const OrderConfirm = () => {
         </div>
 
         <div className="rightdata">
-          <div className="homeHeading">
-            <h2>Order Summary</h2>
+          <h2>Order Summary</h2>
+          <div className="calperent">
+            <div className="calcu">
+              <h5>Subtotal:</h5>
+              <h5>42000</h5>
+            </div>
+            <div className="calcu">
+              <h5>Subtotal:</h5>
+              <h5>42000</h5>
+            </div>
+            <div className="calcu">
+              <h5>Subtotal:</h5>
+              <h5>42000</h5>
+            </div>
           </div>
           <div className="calcu">
-            <h5>Subtotal:</h5>
+            <h5 style={{ fontWeight: "bold" }}>Total:</h5>
             <h5>42000</h5>
           </div>
-          <div className="calcu">
-            <h5>Subtotal:</h5>
-            <h5>42000</h5>
-          </div>
-          <div className="calcu">
-            <h5>Subtotal:</h5>
-            <h5>42000</h5>
-          </div>
-
-          <div className="homeHeading">
-            <h2></h2>
-          </div>
+          <Button style={{ marginTop: "1rem" }} variant="contained">
+            Proceed To Payment
+          </Button>
         </div>
       </div>
     </div>

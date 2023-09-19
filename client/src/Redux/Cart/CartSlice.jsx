@@ -6,6 +6,9 @@ const initialState = {
   cartList: localStorage.getItem("cartItems")
     ? JSON.parse(localStorage.getItem("cartItems"))
     : [],
+  shippingDetail: localStorage.getItem("shippingDetail")
+    ? JSON.parse(localStorage.getItem("shippingDetail"))
+    : [],
   error: null,
   message: null,
 };
@@ -28,12 +31,22 @@ const cartSlice = createSlice({
       state.cartList = [...state.cartList, { ...action.payload }];
       // state.cartList = false; // Clear the error by returning null or an empty string
     },
+    updateShipping: (state, action) => {
+      state.shippingDetail = { ...action.payload };
+      localStorage.setItem(
+        "shippingDetail",
+        JSON.stringify(state.shippingDetail)
+      );
+      console.log(state.shippingDetail);
+      // state.cartList = false; // Clear the error by returning null or an empty string
+    },
 
     removeCart: (state, action) => {
       const itemIdToRemove = action.payload;
       state.cartList = state.cartList.filter(
         (item, index) => index !== itemIdToRemove
       );
+      localStorage.setItem("cartItems", JSON.stringify(state.cartList));
     },
   },
   extraReducers: (builder) => {
@@ -61,5 +74,6 @@ export const {
   clearIsUpdate,
   updateCart,
   removeCart,
+  updateShipping,
 } = cartSlice.actions; // Export the clearError action
 // Export the async thunks to use in components

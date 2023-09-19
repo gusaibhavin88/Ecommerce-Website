@@ -20,9 +20,7 @@ export default function Login() {
     (state) => state.auth
   );
 
-  const redirect = location.search
-    ? `/${location.search.split("=")[1]}`
-    : "/profile";
+  const redirect = location.search ? `/${location.search.split("=")[1]}` : "/";
   console.log(redirect);
 
   const onSubmit = (data) => {
