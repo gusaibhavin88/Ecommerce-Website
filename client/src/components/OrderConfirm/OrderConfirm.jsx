@@ -1,15 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CustomizedSteppers from "../Shopping/CheckOutSteps/CheckOutSteps";
 import MetaData from "../Layout/MetaData";
 import "./OrderConfirm.css";
 import { logo } from "../../assets";
 import { useSelector } from "react-redux";
 import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const OrderConfirm = () => {
+  const navigate = useNavigate();
   const { cartList } = useSelector((state) => state.cart);
-  console.log(cartList);
+  const { shippingDetail } = useSelector((state) => state.cart);
+  const { user } = useSelector((state) => state.auth);
+  const [subTotal, setSubTotal] = useState(0);
+  const [gst, setGst] = useState(0);
+  const [shippingCharge, setShippingCharge] = useState(0);
+  const [total, setTotal] = useState(0);
   const stepStage = 1;
+
+  const processPayment = () => {
+    const data = {
+      subTotal: subTotal,
+      total: total,
+      shippingCharge: shippingCharge,
+      gst: gst,
+    };
+    sessionStorage.setItem("orderInfo", JSON.stringify(data));
+    navigate("/process/payment");
+  };
+
+  useEffect(() => {
+    let total = 0;
+    cartList.map((item) => {
+      total = total + item.price;
+    });
+    setSubTotal(total);
+    setGst((total * 7) / 100);
+    setTotal((total * 7) / 100 + total);
+  }, []);
   return (
     <div className="confirmorder">
       <MetaData title="Confirm Order" />
@@ -20,13 +48,13 @@ const OrderConfirm = () => {
             <h1>Shipping Info</h1>
             <div className="shipinfo">
               <h4>
-                Name: <span>gdgg</span>
+                Name: <span>{user?.name}</span>
               </h4>
               <h4>
-                Phone: <span>sggs</span>
+                Phone: <span>{shippingDetail?.phoneNo}</span>
               </h4>
               <h4>
-                Address: <span>gd</span>
+                Address: <span>{shippingDetail?.address}</span>
               </h4>
             </div>
           </div>
@@ -63,22 +91,26 @@ const OrderConfirm = () => {
           <div className="calperent">
             <div className="calcu">
               <h5>Subtotal:</h5>
-              <h5>42000</h5>
+              <h5>₹{subTotal}</h5>
             </div>
             <div className="calcu">
-              <h5>Subtotal:</h5>
-              <h5>42000</h5>
+              <h5>ShippingCharges:</h5>
+              <h5>₹{shippingCharge}</h5>
             </div>
             <div className="calcu">
-              <h5>Subtotal:</h5>
-              <h5>42000</h5>
+              <h5>GST:</h5>
+              <h5>₹{gst}</h5>
             </div>
           </div>
           <div className="calcu">
             <h5 style={{ fontWeight: "bold" }}>Total:</h5>
-            <h5>42000</h5>
+            <h5>₹{total}</h5>
           </div>
-          <Button style={{ marginTop: "1rem" }} variant="contained">
+          <Button
+            style={{ marginTop: "1rem" }}
+            variant="contained"
+            onClick={processPayment}
+          >
             Proceed To Payment
           </Button>
         </div>

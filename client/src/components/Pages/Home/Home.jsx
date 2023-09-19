@@ -8,6 +8,7 @@ import { fetchProducts } from "../../../Redux/Product/ProductAction";
 import ReactLoading from "react-loading";
 import { useSnackbar } from "../../context/SnackbarContext";
 import { NavLink, useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
 
 const Home = () => {
   const { handleClick, handleClose } = useSnackbar();
@@ -50,16 +51,13 @@ const Home = () => {
             <h2>Welcome to Amazon</h2>
             <h2>Find Amazing Products Below</h2>
             <a href="#container">
-              <button className="btn btn-primary" type="submit">
+              <Button
+                style={{ marginTop: "1rem", gap: "5px" }}
+                variant="contained"
+              >
                 <MouseIcon />
                 Button
-              </button>
-              <button
-                className="btn btn-primary"
-                onClick={() => navigate("/cart")}
-              >
-                To Cart
-              </button>
+              </Button>
             </a>
           </div>
           <div className="homeHeading">

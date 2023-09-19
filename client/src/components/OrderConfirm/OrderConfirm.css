@@ -5,7 +5,7 @@
 .orderData {
   display: grid;
   grid-template-columns: 70% 30%;
-  padding: 0 1.5rem;
+  padding: 0 4rem;
   min-height: 100%;
 }
 .shipinfo {
@@ -32,7 +32,7 @@
 }
 
 .rightdata {
-  border-left: 1px solid black;
+  border-left: 1px solid #e3e3e3;
 }
 
 .twoitwm {

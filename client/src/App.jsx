@@ -12,15 +12,17 @@ import { PrivateRoute } from "./components/Auth/PrivateRoute";
 import WebLayout from "./components/Auth/WebLayout";
 import Register from "./components/Pages/Register/Register";
 import { getMyProfile } from "./Redux/Auth/AuthAction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Myprofile from "./components/MyProfile/Myprofile";
 import AddCart from "./components/AddCart/AddCart";
 import Shipping from "./components/Shopping/Shipping";
 import CheckOutPage from "./components/CheckOutPage/CheckOutPage";
 import OrderConfirm from "./components/OrderConfirm/OrderConfirm";
+import UserOptions from "..//src/components/Layout/Header/UserOptions";
 
 const App = () => {
   const dispatch = useDispatch();
+  const { isAuthenticated } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(getMyProfile());
@@ -34,6 +36,7 @@ const App = () => {
   return (
     <Router>
       <div className="app" style={{ height: "100vh" }}>
+        {isAuthenticated && <UserOptions />}
         <Routes>
           <Route element={<PrivateRoute />}>
             <Route

@@ -36,7 +36,7 @@ const Shipping = () => {
   const stepStage = 0;
   const onSubmit = (data) => {
     dispatch(updateShipping(data));
-    // navigate("/order/confirm");
+    navigate("/order/confirm");
   };
 
   useEffect(() => {

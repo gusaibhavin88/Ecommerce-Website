@@ -21,7 +21,6 @@ export default function Login() {
   );
 
   const redirect = location.search ? `/${location.search.split("=")[1]}` : "/";
-  console.log(redirect);
 
   const onSubmit = (data) => {
     dispatch(loginUserAction(data));
