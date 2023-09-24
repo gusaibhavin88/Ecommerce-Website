@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import WebFont from "webfontloader";
 import Home from "./components/Pages/Home/Home";
@@ -19,10 +19,20 @@ import Shipping from "./components/Shopping/Shipping";
 import CheckOutPage from "./components/CheckOutPage/CheckOutPage";
 import OrderConfirm from "./components/OrderConfirm/OrderConfirm";
 import UserOptions from "..//src/components/Layout/Header/UserOptions";
+import axios from "axios";
+import { getStripapikey } from "./Api/PaymentRequest";
+import Payment from "./components/Payment/Payment";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
 
 const App = () => {
   const dispatch = useDispatch();
+  const [stripeApiKey, setStripeApiKey] = useState("");
   const { isAuthenticated } = useSelector((state) => state.auth);
+  async function getStripeApiKey() {
+    var { data } = await getStripapikey();
+    setStripeApiKey(data.sendStripApiKey);
+  }
 
   useEffect(() => {
     dispatch(getMyProfile());
@@ -31,6 +41,8 @@ const App = () => {
         families: ["Robot", "Droid sans", "Chilanka"],
       },
     });
+
+    getStripeApiKey();
   }, []);
 
   return (
@@ -110,6 +122,17 @@ const App = () => {
               <WebLayout>
                 <OrderConfirm />
               </WebLayout>
+            }
+          />
+          <Route
+            exact
+            path="/process/payment"
+            element={
+              <Elements stripe={loadStripe(stripeApiKey)}>
+                <WebLayout>
+                  <Payment />
+                </WebLayout>
+              </Elements>
             }
           />
           <Route exact path="/login" element={<Login />} />

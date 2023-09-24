@@ -2,12 +2,12 @@ import express from "express";
 import {
   processPayment,
   sendStripApiKey,
-} from "../controller/paymentController";
-import { isAuthenticated } from "../middleware/isAuthenticated";
+} from "../controller/paymentController.js";
+import { isAuthenticated } from "../middleware/isAuthenticated.js";
 
 const router = express.Router();
 
-router.post("/payment/process", isAuthenticated, processPayment);
+router.post("/process/payment", isAuthenticated, processPayment);
 router.get("/stripapikey", isAuthenticated, sendStripApiKey);
 
 export default router;

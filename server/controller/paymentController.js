@@ -1,10 +1,10 @@
 import stripePackage from "stripe";
-import CatchAsyncErros from "../middleware/catchAsyncErrors";
+import CatchAsyncErros from "../middleware/catchAsyncErrors.js";
 
-const stripe = stripePackage(process.env.STRIPE_API_KEY);
+const stripe = stripePackage(process.env.SECRET_KEY);
 
 export const processPayment = CatchAsyncErros(async (req, resp, next) => {
-  const myPayment = await stripe.paymetIntents.create({
+  const myPayment = await stripe.paymentIntents.create({
     amount: req.body.amount,
     currency: "inr",
     metadata: {

@@ -9,6 +9,7 @@ import cookieParser from "cookie-parser";
 import orderRouter from "./router/orderRouter.js";
 import cloudinary from "cloudinary";
 import fileUpload from "express-fileupload";
+import paymentRouter from "./router/paymentRouter.js";
 
 //Handling  Uncaught Error
 process.on("uncaughtException", (err) => {
@@ -60,6 +61,7 @@ process.on("unhandledRejection", (err) => {
 app.use("/api/v1", productRouter);
 app.use("/api/v1", userRouter);
 app.use("/api/v1", orderRouter);
+app.use("/api/v1", paymentRouter);
 
 //Middleware
 app.use(ErrorMiddleware);

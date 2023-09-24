@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createProductReview } from "../../../Redux/Product/ProductAction";
 import { useParams } from "react-router-dom";
 import { useSnackbar } from "../../context/SnackbarContext";
+import { useForm } from "react-hook-form";
 import {
   clearError,
   clearIsUpdate,
@@ -21,6 +22,13 @@ function ReviewDialog() {
   const [review, setReview] = useState({});
   const { error, message, isUpdated } = useSelector((state) => state.products);
   const { handleClick } = useSnackbar();
+  const { product } = useSelector((state) => state.products);
+  const { user } = useSelector((state) => state.auth);
+  const { register, setValue } = useForm();
+
+  const isReviewTrue = product?.reviews?.find((item) => {
+    return item.user._id === user._id;
+  });
 
   const onhandleChange = (e) => {
     setReview({ ...review, [e.target.name]: e.target.value });
@@ -64,12 +72,19 @@ function ReviewDialog() {
       handleClick("success", message);
       dispatch(clearMessage());
     }
+    if (isReviewTrue) {
+      var { comment, rating } = isReviewTrue;
+      console.log(comment);
+      console.log(rating);
+      setValue("comment", comment);
+      // setValue("rating", { test: rating });
+    }
   }, [dispatch, , error, message, isUpdated]);
 
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
-        Submit Review
+        {isReviewTrue ? "Update Review" : "Submit Review"}
       </Button>
 
       <Modal show={show} onHide={handleClose}>
@@ -80,7 +95,11 @@ function ReviewDialog() {
           <Form>
             <Form.Label>Give Rating</Form.Label>
             <br />
-            <Rating name="rating" onChange={onhandleChange} />
+            <Rating
+              name="rating"
+              onChange={onhandleChange}
+              // {...register("rating")}
+            />
             <Form.Group
               className="mb-3"
               controlId="exampleForm.ControlTextarea1"
@@ -92,6 +111,7 @@ function ReviewDialog() {
                 rows={3}
                 name="comment"
                 onChange={onhandleChange}
+                // {...register("comment")}
               />
             </Form.Group>
           </Form>
