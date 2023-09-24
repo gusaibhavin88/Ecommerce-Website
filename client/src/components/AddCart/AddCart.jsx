@@ -24,13 +24,13 @@ function ccyFormat(num) {
   return `${num.toFixed(2)}`;
 }
 
-function priceRow(qty, unit) {
-  return qty * unit;
+function priceRow(quantity, unit) {
+  return quantity * unit;
 }
 
-function createRow(desc, qty, unit) {
-  const price = priceRow(qty, unit);
-  return { desc, qty, unit, price };
+function createRow(desc, quantity, unit) {
+  const price = priceRow(quantity, unit);
+  return { desc, quantity, unit, price };
 }
 
 function subtotal(items) {
@@ -44,6 +44,7 @@ export default function AddCart() {
   const { isAuthenticated } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  console.log(cartList);
 
   const handleIncrement = () => {
     setQuantity(quantity + 1);
@@ -56,7 +57,7 @@ export default function AddCart() {
   };
   function createRowsFromDatabaseData() {
     const rowsList = cartList.map((item) =>
-      createRow(item.name, item.qty, item.price)
+      createRow(item.name, item.quantity, item.price)
     );
     return rowsList;
   }
@@ -164,7 +165,7 @@ export default function AddCart() {
                       </div>
                     </TableCell>
                     <TableCell align="center" colSpan={2}>
-                      <span>{row.qty}</span>
+                      <span>{row.quantity}</span>
                     </TableCell>
                     <TableCell align="center" colSpan={3}>
                       {row.unit}

@@ -35,7 +35,13 @@ const Shipping = () => {
   const { shippingDetail } = useSelector((state) => state.cart);
   const stepStage = 0;
   const onSubmit = (data) => {
-    dispatch(updateShipping(data));
+    const newData = {
+      ...data,
+      phoneNo: Number(data.phoneNo),
+      pinCode: Number(data.pinCode),
+    };
+    console.log(newData);
+    dispatch(updateShipping(newData));
     navigate("/order/confirm");
   };
 

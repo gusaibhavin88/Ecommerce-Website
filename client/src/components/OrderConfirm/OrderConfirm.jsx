@@ -74,9 +74,9 @@ const OrderConfirm = () => {
                     </div>
                     <div className="totalamount">
                       <h5>
-                        {item.qty} X ₹{item.price} ={" "}
+                        {item.quantity} X ₹{item.price} ={" "}
                         <span style={{ fontWeight: "700" }}>
-                          ₹{item.qty * item.price}
+                          ₹{item.quantity * item.price}
                         </span>
                       </h5>
                     </div>

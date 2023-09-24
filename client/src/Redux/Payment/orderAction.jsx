@@ -1,20 +1,20 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { getProductDetails } from "../../Api/ProductRequest";
 import axios from "axios";
-import { updateCart } from "./CartSlice";
+import { createNewOrder } from "../../Api/OrderRequest";
+import { addOrder } from "./orderSlice";
 
 const API = axios.create({
   baseURL: "http://localhost:5000/api/v1",
 });
 
 // fetchproductDetails
-export const fetchproductDetailsForCart = createAsyncThunk(
-  "fetchproductDetailsForCart",
+export const createNewOrderAction = createAsyncThunk(
+  "createNewOrderAction",
   async ({ functions }, { dispatch, getState }) => {
-    const { onComplete, onError, id, quantity } = functions;
-    const response = await getProductDetails(id); // Call your API function here
-    dispatch(updateCart({ ...response.data.product, quantity: quantity }));
-    localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartList));
+    const { onComplete, onError, formdata } = functions;
+    const response = await createNewOrder(formdata); // Call your API function here
+    dispatch(addOrder(formdata));
     if (onComplete) {
       onComplete(response);
     }

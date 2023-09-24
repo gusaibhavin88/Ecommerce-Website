@@ -62,7 +62,7 @@ const ProductDetails = () => {
           onComplete,
           onError,
           id: params.id,
-          qty: quantity,
+          quantity: quantity,
         },
       })
     );

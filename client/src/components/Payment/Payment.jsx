@@ -1,34 +1,59 @@
-import React, { useRef } from "react";
-import "./payment.css";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import EventIcon from "@mui/icons-material/Event";
 import VpnKeyIcon from "@mui/icons-material/VpnKey";
-import CheckOutPage from "../CheckOutPage/CheckOutPage";
-import MetaData from "../Layout/MetaData";
-import CustomizedSteppers from "../Shopping/CheckOutSteps/CheckOutSteps";
-import { Button, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import {
-  CardNumberElement,
   CardCvcElement,
   CardExpiryElement,
-  useStripe,
+  CardNumberElement,
   useElements,
+  useStripe,
 } from "@stripe/react-stripe-js";
-import { paymentRequest } from "../../Api/PaymentRequest";
-import { useSelector } from "react-redux";
+import React, { useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { paymentRequest } from "../../Api/PaymentRequest";
+import MetaData from "../Layout/MetaData";
+import CustomizedSteppers from "../Shopping/CheckOutSteps/CheckOutSteps";
+import { useSnackbar } from "../context/SnackbarContext";
+import "./payment.css";
+import { createNewOrderAction } from "../../Redux/Payment/orderAction";
 
 const Payment = () => {
   const orderDetail = JSON.parse(sessionStorage.getItem("orderInfo"));
   const { shippingDetail } = useSelector((state) => state.cart);
+  const { cartList } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const stepStage = 2;
   const payBtn = useRef();
   const stripe = useStripe();
   const element = useElements();
+  const dispatch = useDispatch();
+  const { handleClick, handleClose } = useSnackbar();
   const paymentData = {
     amount: Math.round(orderDetail.total),
+  };
+
+  let newOrder = {
+    shippingInfo: shippingDetail,
+    itemsPrice: orderDetail.subTotal,
+    taxPrice: Number(orderDetail.gst),
+    shippingPrice: Number(orderDetail.shippingCharge),
+    totalPrice: Number(orderDetail.total),
+    paymentInfo: {
+      id: "",
+      status: "",
+    },
+    // orderItems: cartList,
+  };
+
+  const onComplete = (response) => {
+    handleClick("success", "Password has changed Login again");
+  };
+
+  const onError = (response) => {
+    console.log(response);
   };
 
   const handleSubmit = async (e) => {
@@ -38,7 +63,6 @@ const Payment = () => {
       const { data } = await paymentRequest(paymentData);
 
       const clientSecretKey = data.client_secret;
-      console.log(clientSecretKey);
       if (!stripe || !element) {
         console.error("Stripe or element is not available.");
         return;
@@ -71,12 +95,38 @@ const Payment = () => {
       console.log("Payment result:", result);
 
       if (result.error) {
-        console.error("Payment failed:", result.error.message);
         payBtn.current.disabled = false;
       } else {
-        console.log("Payment successful");
-        navigate("/success");
-        // Add your code for successful payment handling here
+        if (result.paymentIntent.status === "succeeded") {
+          const filterCart = cartList.map((item) => ({
+            name: item.name,
+            price: item.price,
+            image: item.image[0].url,
+            quantity: item.quantity,
+            product: item._id,
+          }));
+
+          newOrder.paymentInfo.id = result.paymentIntent.id;
+          newOrder.paymentInfo.status = result.paymentIntent.status;
+          newOrder.orderItems = filterCart;
+          console.log(newOrder);
+          dispatch(
+            createNewOrderAction({
+              functions: {
+                onComplete,
+                onError,
+                formdata: newOrder,
+              },
+            })
+          );
+
+          console.log("first");
+          payBtn.current.disabled = false;
+          navigate("/success");
+          handleClick("success", "Payment done successfully");
+        } else {
+          handleClick("error", "There's some issue while processing payment");
+        }
       }
     } catch (error) {
       console.error("Error processing payment:", error);
