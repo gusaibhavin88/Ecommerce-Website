@@ -1,3 +1,4 @@
+/* Default styles for larger screens */
 .confirmorder {
   min-height: 100vh;
 }
@@ -8,6 +9,7 @@
   padding: 0 4rem;
   min-height: 100%;
 }
+
 .shipinfo {
   display: flex;
   flex-direction: column;
@@ -15,18 +17,21 @@
   gap: 0.5rem;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
+
 .leftdata {
   display: flex;
   flex-direction: column;
   gap: 3rem;
   padding: 3rem;
 }
+
 .lefttop,
 .leftbottom {
   display: flex;
   flex-direction: column;
   gap: 2rem;
 }
+
 .leftdata > div > h1 {
   font-family: Georgia, "Times New Roman", Times, serif;
 }
@@ -40,14 +45,17 @@
   align-items: center;
   gap: 2rem;
 }
+
 .innerist {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
 .totalamount > h5 {
   font-weight: 400;
 }
+
 .rightdata {
   align-items: center;
   justify-content: center;
@@ -56,15 +64,46 @@
   padding: 2rem 5rem;
   gap: 1rem;
 }
+
 .calcu {
   display: flex;
-
   margin-top: 1rem;
   justify-content: space-between;
   width: 100%;
 }
+
 .calperent {
   border-top: 2px solid #8fb3ff;
   border-bottom: 2px solid #8fb3ff;
   width: 100%;
 }
+
+.orderIdPer {
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  border-bottom: "5px solid red";
+  display: flex;
+}
+.orderIdPer > h1 {
+  border-bottom: 3px solid tomato;
+  color: tomato;
+}
+
+/* Responsive styles for smaller screens */
+@media screen and (max-width: 768px) {
+  .orderData {
+    grid-template-columns: 100%; /* Single column layout for smaller screens */
+    padding: 0 2rem;
+  }
+
+  .leftdata {
+    padding: 2rem;
+  }
+
+  .rightdata {
+    border-left: none;
+    padding: 2rem;
+  }
+}
+
+/* Add more media queries as needed for different screen sizes */

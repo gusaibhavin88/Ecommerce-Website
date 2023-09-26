@@ -93,7 +93,7 @@ const Payment = () => {
           },
         },
       });
-
+      console.log(result);
       if (result.error) {
         payBtn.current.disabled = false;
       } else {
@@ -107,7 +107,7 @@ const Payment = () => {
           }));
 
           newOrder.paymentInfo.id = result.paymentIntent.id;
-          newOrder.paymentInfo.status = result.paymentIntent.status;
+          newOrder.paymentInfo.status = "Processing";
           newOrder.orderItems = filterCart;
           console.log(newOrder);
           dispatch(

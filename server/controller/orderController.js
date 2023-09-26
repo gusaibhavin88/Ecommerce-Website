@@ -60,6 +60,18 @@ export const getAllOrders = CatchAsyncErros(async (req, resp, next) => {
     .json({ success: true, orders, totalAmount, message: "My orders fetched" });
 });
 
+export const findMyOrder = CatchAsyncErros(async (req, resp, next) => {
+  const { id } = req.params;
+  const myOrder = await OrderModel.findById(id);
+  if (!myOrder) {
+    return next(new ErrorHandler("Order not Found", 400));
+  }
+
+  resp
+    .status(200)
+    .json({ success: true, order: myOrder, message: "My order fetched" });
+});
+
 //Update Order Status -- Admin
 
 export const updateOrder = CatchAsyncErros(async (req, resp, next) => {

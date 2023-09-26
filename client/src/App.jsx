@@ -26,6 +26,8 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import OrderSuccess from "./components/OrderSuccess/OrderSuccess";
 import MyOrders from "./components/MyOrders/MyOrders";
+import OrderInfo from "./components/OrderInfo/OrderInfo";
+import Dashboard from "./components/Pages/Dashboard/Dashboard";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -152,6 +154,24 @@ const App = () => {
             element={
               <WebLayout>
                 <MyOrders />
+              </WebLayout>
+            }
+          />
+          <Route
+            exact
+            path="/orderinfo/:id"
+            element={
+              <WebLayout>
+                <OrderInfo />
+              </WebLayout>
+            }
+          />
+          <Route
+            exact
+            path="/dashboard"
+            element={
+              <WebLayout>
+                <Dashboard />
               </WebLayout>
             }
           />

@@ -10,6 +10,8 @@ import Paper from "@mui/material/Paper";
 import "./MyOrders.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getMyOrdersAction } from "../../Redux/Payment/orderAction";
+import LaunchIcon from "@mui/icons-material/Launch";
+import { useNavigate } from "react-router-dom";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -32,6 +34,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function MyOrders() {
+  const navigate = useNavigate();
   const [rows, setRows] = React.useState([]);
   console.log(rows);
   const dispatch = useDispatch();
@@ -74,7 +77,7 @@ export default function MyOrders() {
 
       fetchData();
     }
-  }, [getOrderData, myOrders]);
+  }, [getOrderData]);
   return (
     <div className="tableCont">
       <TableContainer component={Paper}>
@@ -108,7 +111,12 @@ export default function MyOrders() {
                   <StyledTableCell align="right">{row.status}</StyledTableCell>
                   <StyledTableCell align="right">{row.qty}</StyledTableCell>
                   <StyledTableCell align="right">{row.amount}</StyledTableCell>
-                  <StyledTableCell align="right">{row.protein}</StyledTableCell>
+                  <StyledTableCell
+                    align="right"
+                    onClick={() => navigate(`/orderinfo/${row.id}`)}
+                  >
+                    <LaunchIcon />
+                  </StyledTableCell>
                 </StyledTableRow>
               ))}
           </TableBody>

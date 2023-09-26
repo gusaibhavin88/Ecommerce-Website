@@ -45,7 +45,7 @@ const OrderConfirm = () => {
       <div className="orderData">
         <div className="leftdata">
           <div className="lefttop">
-            <h1>Shipping Info</h1>
+            <h2>Shipping Info</h2>
             <div className="shipinfo">
               <h4>
                 Name: <span>{user?.name}</span>
@@ -59,7 +59,7 @@ const OrderConfirm = () => {
             </div>
           </div>
           <div className="leftbottom">
-            <h1>Your Cart Items:</h1>
+            <h2>Your Cart Items:</h2>
             {cartList &&
               cartList.map((item) => {
                 return (
