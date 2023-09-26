@@ -37,7 +37,7 @@ function MySpeedDial() {
       navigate("/");
     }
     if (action === "Orders") {
-      navigate("/shipping");
+      navigate("/orders");
     }
     if (action.includes("Carts")) {
       navigate("/cart");

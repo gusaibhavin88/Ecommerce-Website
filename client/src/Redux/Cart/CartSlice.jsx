@@ -31,6 +31,10 @@ const cartSlice = createSlice({
       state.cartList = [...state.cartList, { ...action.payload }];
       // state.cartList = false; // Clear the error by returning null or an empty string
     },
+    clearCart: (state) => {
+      state.cartList = [];
+      // state.cartList = false; // Clear the error by returning null or an empty string
+    },
     updateShipping: (state, action) => {
       state.shippingDetail = { ...action.payload };
       localStorage.setItem(
@@ -75,5 +79,6 @@ export const {
   updateCart,
   removeCart,
   updateShipping,
+  clearCart,
 } = cartSlice.actions; // Export the clearError action
 // Export the async thunks to use in components

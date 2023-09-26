@@ -24,6 +24,8 @@ import { getStripapikey } from "./Api/PaymentRequest";
 import Payment from "./components/Payment/Payment";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
+import OrderSuccess from "./components/OrderSuccess/OrderSuccess";
+import MyOrders from "./components/MyOrders/MyOrders";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -133,6 +135,24 @@ const App = () => {
                   <Payment />
                 </WebLayout>
               </Elements>
+            }
+          />
+          <Route
+            exact
+            path="/success"
+            element={
+              <WebLayout>
+                <OrderSuccess />
+              </WebLayout>
+            }
+          />
+          <Route
+            exact
+            path="/orders"
+            element={
+              <WebLayout>
+                <MyOrders />
+              </WebLayout>
             }
           />
           <Route exact path="/login" element={<Login />} />

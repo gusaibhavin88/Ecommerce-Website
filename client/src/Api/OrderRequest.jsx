@@ -6,3 +6,5 @@ const API = axios.create({
 
 export const createNewOrder = (formData) =>
   API.post("/order/new", formData, { withCredentials: true });
+export const getMyOrders = () =>
+  API.get("/order/me", { withCredentials: true });

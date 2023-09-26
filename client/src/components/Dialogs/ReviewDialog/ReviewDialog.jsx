@@ -27,7 +27,7 @@ function ReviewDialog() {
   const { register, setValue } = useForm();
 
   const isReviewTrue = product?.reviews?.find((item) => {
-    return item.user._id === user._id;
+    return item.user._id === user?._id;
   });
 
   const onhandleChange = (e) => {

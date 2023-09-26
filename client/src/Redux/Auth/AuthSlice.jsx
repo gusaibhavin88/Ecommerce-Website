@@ -9,7 +9,7 @@ import { updatePasswordAction } from "../User/UserAction";
 
 // Define the initial state
 const initialState = {
-  isAuthenticated: false,
+  isAuthenticated: null,
   status: "idle",
   error: null,
   message: null,

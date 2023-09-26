@@ -18,6 +18,7 @@ import CustomizedSteppers from "../Shopping/CheckOutSteps/CheckOutSteps";
 import { useSnackbar } from "../context/SnackbarContext";
 import "./payment.css";
 import { createNewOrderAction } from "../../Redux/Payment/orderAction";
+import { useForm } from "react-hook-form";
 
 const Payment = () => {
   const orderDetail = JSON.parse(sessionStorage.getItem("orderInfo"));
@@ -31,6 +32,7 @@ const Payment = () => {
   const element = useElements();
   const dispatch = useDispatch();
   const { handleClick, handleClose } = useSnackbar();
+  const { formState } = useForm();
   const paymentData = {
     amount: Math.round(orderDetail.total),
   };
@@ -49,7 +51,7 @@ const Payment = () => {
   };
 
   const onComplete = (response) => {
-    handleClick("success", "Password has changed Login again");
+    handleClick("success", "Payment done successfully");
   };
 
   const onError = (response) => {
@@ -92,8 +94,6 @@ const Payment = () => {
         },
       });
 
-      console.log("Payment result:", result);
-
       if (result.error) {
         payBtn.current.disabled = false;
       } else {
@@ -120,10 +120,8 @@ const Payment = () => {
             })
           );
 
-          console.log("first");
           payBtn.current.disabled = false;
           navigate("/success");
-          handleClick("success", "Payment done successfully");
         } else {
           handleClick("error", "There's some issue while processing payment");
         }
@@ -140,7 +138,15 @@ const Payment = () => {
       <CustomizedSteppers stepStage={stepStage} />
       <div className="pamentContainer">
         <form action="" className="paymentForm">
-          <Typography>Card Info</Typography>
+          <Typography
+            style={{
+              fontSize: "2rem",
+              borderBottom: "1px solid #  ",
+              fontWeight: "bold",
+            }}
+          >
+            Card Info
+          </Typography>
           <div className="paymentCont">
             <CreditCardIcon />
             <CardNumberElement className="paymentInput" />
@@ -156,10 +162,9 @@ const Payment = () => {
           <input
             type="text"
             className="total"
-            style={{ width: "50%" }}
             ref={payBtn}
             onClick={handleSubmit}
-            value={`pay  - ${orderDetail && orderDetail.total}`}
+            value={`Pay  - ₹${orderDetail && orderDetail.total}`}
           />
         </form>
       </div>

@@ -44,7 +44,6 @@ export default function AddCart() {
   const { isAuthenticated } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  console.log(cartList);
 
   const handleIncrement = () => {
     setQuantity(quantity + 1);
@@ -235,7 +234,7 @@ export default function AddCart() {
             gap: "1rem",
           }}
         >
-          <RemoveShoppingCartIcon style={{ fontSize: "5rem", color: "red" }} />
+          <RemoveShoppingCartIcon style={{ fontSize: "10rem", color: "red" }} />
           <h2>No Product in Your Cart</h2>
           <Button
             style={{

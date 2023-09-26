@@ -87,7 +87,7 @@ const Shipping = () => {
               style={{ fontSize: "2rem" }}
             />
             <TextField
-              className="textfiled"
+              className="inputText"
               id="input-with-sx"
               variant="outlined"
               primary
@@ -106,7 +106,7 @@ const Shipping = () => {
               style={{ fontSize: "2rem" }}
             />
             <TextField
-              className="textfiled"
+              className="inputText"
               id="input-with-sx"
               variant="outlined"
               primary
@@ -125,7 +125,7 @@ const Shipping = () => {
               style={{ fontSize: "2rem" }}
             />
             <TextField
-              className="textfiled"
+              className="inputText"
               id="input-with-sx"
               variant="outlined"
               type="number"
@@ -149,7 +149,7 @@ const Shipping = () => {
               style={{ fontSize: "2rem" }}
             />
             <TextField
-              className="textfiled"
+              className="inputText"
               id="input-with-sx"
               variant="outlined"
               type="text" // Change the type to text to allow input of numeric characters

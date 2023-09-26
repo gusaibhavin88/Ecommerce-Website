@@ -23,7 +23,7 @@ const orderSlice = createSlice({
       state.isUpdated = false; // Clear the error by returning null or an empty string
     },
     addOrder: (state, action) => {
-      state.cartList = [...state.cartList, { ...action.payload }];
+      state.myOrders = [...state.myOrders, action.payload.data.order];
     },
   },
   extraReducers: (builder) => {
