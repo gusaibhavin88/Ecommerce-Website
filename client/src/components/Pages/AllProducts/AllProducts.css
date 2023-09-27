@@ -1,7 +1,13 @@
 .homeHeading {
-  display: flex;
-  flex-direction: column;
-  margin-top: 1rem;
-  align-items: center;
-  text-align: center;
+  text-align: center; /* Center the text horizontally */
+  background-color: #007bff; /* Background color */
+  color: #fff; /* Text color */
+  padding: 10px; /* Add some padding around the content */
+  border-radius: 5px; /* Add rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+}
+
+.homeHeading h2 {
+  margin: 0; /* Remove default margin for the h2 element */
+  font-size: 24px; /* Adjust the font size */
 }

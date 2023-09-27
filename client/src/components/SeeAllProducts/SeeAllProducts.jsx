@@ -7,11 +7,13 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import "./MyOrders.css";
+import "./SeeAllProducts.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getMyOrdersAction } from "../../Redux/Payment/orderAction";
 import LaunchIcon from "@mui/icons-material/Launch";
 import { useNavigate } from "react-router-dom";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -33,7 +35,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-export default function MyOrders() {
+export default function SeeAllProducts() {
   const navigate = useNavigate();
   const [rows, setRows] = React.useState([]);
   console.log(rows);
@@ -81,46 +83,53 @@ export default function MyOrders() {
   return (
     <div className="tableCont">
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 700 }} aria-label="customized table">
-          <TableHead style={{ color: "red" }}>
-            <TableRow>
-              <StyledTableCell style={{ fontSize: "1.2rem" }}>
-                Order ID
-              </StyledTableCell>
-              <StyledTableCell style={{ fontSize: "1.2rem" }} align="right">
-                Name
-              </StyledTableCell>
-              <StyledTableCell style={{ fontSize: "1.2rem" }} align="right">
-                Stock
-              </StyledTableCell>
-              <StyledTableCell style={{ fontSize: "1.2rem" }} align="right">
-                Price
-              </StyledTableCell>
-              <StyledTableCell style={{ fontSize: "1.2rem" }} align="right">
-                Actions
-              </StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows &&
-              rows.map((row) => (
-                <StyledTableRow key={row.id}>
-                  <StyledTableCell component="th" scope="row">
-                    {row.id}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">{row.status}</StyledTableCell>
-                  <StyledTableCell align="right">{row.qty}</StyledTableCell>
-                  <StyledTableCell align="right">{row.amount}</StyledTableCell>
-                  <StyledTableCell
-                    align="right"
-                    onClick={() => navigate(`/orderinfo/${row.id}`)}
-                  >
-                    <LaunchIcon />
-                  </StyledTableCell>
-                </StyledTableRow>
-              ))}
-          </TableBody>
-        </Table>
+        <div style={{ maxHeight: "100vh", overflowY: "auto" }}>
+          <Table sx={{ minWidth: 700 }} aria-label="customized table">
+            <TableHead style={{ color: "red" }}>
+              <TableRow>
+                <StyledTableCell style={{ fontSize: "1.2rem" }}>
+                  Product ID
+                </StyledTableCell>
+                <StyledTableCell style={{ fontSize: "1.2rem" }} align="right">
+                  Name
+                </StyledTableCell>
+                <StyledTableCell style={{ fontSize: "1.2rem" }} align="right">
+                  Stock
+                </StyledTableCell>
+                <StyledTableCell style={{ fontSize: "1.2rem" }} align="right">
+                  Price
+                </StyledTableCell>
+                <StyledTableCell style={{ fontSize: "1.2rem" }} align="right">
+                  Actions
+                </StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows &&
+                rows.map((row) => (
+                  <StyledTableRow key={row.id}>
+                    <StyledTableCell component="th" scope="row">
+                      {row.id}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {row.status}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">{row.qty}</StyledTableCell>
+                    <StyledTableCell align="right">
+                      {row.amount}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      align="right"
+                      onClick={() => navigate(`/orderinfo/${row.id}`)}
+                    >
+                      <EditIcon />
+                      <DeleteIcon />
+                    </StyledTableCell>
+                  </StyledTableRow>
+                ))}
+            </TableBody>
+          </Table>
+        </div>
       </TableContainer>
     </div>
   );

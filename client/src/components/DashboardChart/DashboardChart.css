@@ -3,60 +3,81 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  padding: 1rem; /* Add some padding for better spacing */
+  max-width: 1200px; /* Limit the maximum width of the dashboard */
+  margin: 0 auto; /* Center the dashboard horizontally */
 }
+
 .dashboard > h1 {
   color: #3d3e42;
   border-bottom: 2px solid #3d3e42;
   margin-top: 2rem;
+  text-align: center; /* Center the heading text */
+  padding: 0.5rem 0; /* Add padding for better spacing */
 }
 
 .lineChart {
-  width: 80%;
-  margin: auto;
-  box-shadow: 0 5px 10px rgb(0 0 0 / 0.2);
+  width: 100%; /* Make the chart container full-width */
+  max-width: 800px; /* Limit the maximum width of the chart */
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
 .doughnutChart {
-  width: 30vmax;
-  margin: auto;
+  width: 100%; /* Make the chart container full-width */
+  max-width: 400px; /* Limit the maximum width of the chart */
 }
 
 .productData {
   display: flex;
-  gap: 8rem;
+  flex-wrap: wrap; /* Allow products to wrap to the next line on small screens */
+  justify-content: space-around;
+  width: 100%;
+  padding: 1rem 0; /* Add padding for better spacing */
 }
 
 .productinfo {
-  content: none;
   width: 10rem;
+  height: 10rem;
   color: white;
   font-weight: 600;
   align-items: center;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  height: 10rem;
   background-color: #d68b7c;
   border-radius: 50%;
-  box-shadow: 0 5px 10px rgb(0 0 0 / 0.2);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  margin: 1rem; /* Add margin between product info elements */
 }
+
 .productinfo:nth-last-of-type(2) {
   color: black;
   background-color: #64edb0;
 }
+
 .productinfo:nth-last-of-type(1) {
   color: white;
   background-color: #2e2b30;
 }
+
 .totalAmount {
   color: white;
   font-weight: 600;
   display: flex;
   flex-direction: column;
-  height: 5rem;
   justify-content: center;
   align-items: center;
   background-color: #6688ed;
   width: 100%;
-  box-shadow: 0 5px 10px rgb(0 0 0 / 0.2);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  padding: 1rem 0; /* Add padding for better spacing */
+}
+
+/* Media Query for Mobile Devices */
+@media (max-width: 768px) {
+  .productinfo {
+    width: 100%; /* Make product info elements full-width on small screens */
+    max-width: 200px; /* Limit the maximum width */
+  }
 }

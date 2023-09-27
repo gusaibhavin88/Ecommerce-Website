@@ -5,9 +5,12 @@ import Tabs from "@mui/material/Tabs";
 import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
 import React from "react";
-import OrderSuccess from "../OrderSuccess/OrderSuccess";
-import OrderConfirm from "../OrderConfirm/OrderConfirm";
 import DashboardChart from "../DashboardChart/DashboardChart";
+import SeeAllProducts from "../SeeAllProducts/SeeAllProducts";
+import AddProducts from "../AddProducts/AddProducts";
+import SeeAllOrders from "../SeeAllOrders/SeeAllOrders";
+import AllUsers from "../All Users/AllUsers";
+import SeeAllReviews from "../../See All Reviews/SeeAllReviews";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -67,11 +70,12 @@ export default function Slider() {
         spacing={2}
         style={{
           padding: "0rem 5rem",
+          height: "100vh",
         }}
       >
-        <Grid item md={3} xl={2} style={{}}>
+        <Grid item md={3} xl={2}>
           <Toolbar variant="dense" />
-          <Paper
+          {/* <Paper
             style={
               {
                 // boxShadow: "0 5px 10px rgb(0 0 0 / 0.2)",
@@ -79,26 +83,26 @@ export default function Slider() {
                 // width: "15rem",
               }
             }
+          > */}
+          <Tabs
+            TabIndicatorProps={{
+              style: { display: "none" },
+            }}
+            textColor="primary"
+            variant="fullWidth"
+            orientation="vertical"
+            value={value}
+            onChange={handleChange}
+            aria-label="setting tabs"
           >
-            <Tabs
-              TabIndicatorProps={{
-                style: { display: "none" },
-              }}
-              textColor="primary"
-              variant="fullWidth"
-              orientation="vertical"
-              value={value}
-              onChange={handleChange}
-              aria-label="setting tabs"
-            >
-              <Tab label="Dashboard" {...a11yProps(0)} />
-              <Tab label="All Products" {...a11yProps(1)} />
-              <Tab label="Add Products" {...a11yProps(2)} />
-              <Tab label="Orders" {...a11yProps(2)} />
-              <Tab label="Users" {...a11yProps(2)} />
-              <Tab label="Reviews" {...a11yProps(2)} />
-            </Tabs>
-          </Paper>
+            <Tab label="Dashboard" {...a11yProps(0)} />
+            <Tab label="See All Products" {...a11yProps(1)} />
+            <Tab label="Add Products" {...a11yProps(2)} />
+            <Tab label="Orders" {...a11yProps(3)} />
+            <Tab label="Users" {...a11yProps(4)} />
+            <Tab label="See All Reviews" {...a11yProps(5)} />
+          </Tabs>
+          {/* </Paper> */}
         </Grid>
         <Grid item md={9} xl={10}>
           <div style={{ maxHeight: "100vh", overflowY: "auto" }}>
@@ -106,7 +110,19 @@ export default function Slider() {
               <DashboardChart />
             </TabPanel>
             <TabPanel value={value} index={1}>
-              <OrderConfirm />
+              <SeeAllProducts />
+            </TabPanel>
+            <TabPanel value={value} index={2}>
+              <AddProducts />
+            </TabPanel>
+            <TabPanel value={value} index={3}>
+              <SeeAllOrders />
+            </TabPanel>
+            <TabPanel value={value} index={4}>
+              <AllUsers />
+            </TabPanel>
+            <TabPanel value={value} index={5}>
+              <SeeAllReviews />
             </TabPanel>
           </div>
         </Grid>
