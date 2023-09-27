@@ -62,10 +62,24 @@ export default function Slider() {
 
   return (
     <Container maxWidth="xl">
-      <Grid container spacing={2}>
-        <Grid item md={3} xl={2}>
+      <Grid
+        container
+        spacing={2}
+        style={{
+          padding: "0rem 5rem",
+        }}
+      >
+        <Grid item md={3} xl={2} style={{}}>
           <Toolbar variant="dense" />
-          <Paper>
+          <Paper
+            style={
+              {
+                // boxShadow: "0 5px 10px rgb(0 0 0 / 0.2)",
+                // position: "fixed",
+                // width: "15rem",
+              }
+            }
+          >
             <Tabs
               TabIndicatorProps={{
                 style: { display: "none" },
@@ -76,7 +90,6 @@ export default function Slider() {
               value={value}
               onChange={handleChange}
               aria-label="setting tabs"
-              //   className={classes.tabs}
             >
               <Tab label="Dashboard" {...a11yProps(0)} />
               <Tab label="All Products" {...a11yProps(1)} />
@@ -88,12 +101,14 @@ export default function Slider() {
           </Paper>
         </Grid>
         <Grid item md={9} xl={10}>
-          <TabPanel value={value} index={0}>
-            <DashboardChart />
-          </TabPanel>
-          <TabPanel value={value} index={1}>
-            <OrderConfirm />
-          </TabPanel>
+          <div style={{ maxHeight: "100vh", overflowY: "auto" }}>
+            <TabPanel value={value} index={0}>
+              <DashboardChart />
+            </TabPanel>
+            <TabPanel value={value} index={1}>
+              <OrderConfirm />
+            </TabPanel>
+          </div>
         </Grid>
       </Grid>
     </Container>

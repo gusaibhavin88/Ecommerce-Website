@@ -1,0 +1,62 @@
+.dashboard {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.dashboard > h1 {
+  color: #3d3e42;
+  border-bottom: 2px solid #3d3e42;
+  margin-top: 2rem;
+}
+
+.lineChart {
+  width: 80%;
+  margin: auto;
+  box-shadow: 0 5px 10px rgb(0 0 0 / 0.2);
+}
+
+.doughnutChart {
+  width: 30vmax;
+  margin: auto;
+}
+
+.productData {
+  display: flex;
+  gap: 8rem;
+}
+
+.productinfo {
+  content: none;
+  width: 10rem;
+  color: white;
+  font-weight: 600;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: 10rem;
+  background-color: #d68b7c;
+  border-radius: 50%;
+  box-shadow: 0 5px 10px rgb(0 0 0 / 0.2);
+}
+.productinfo:nth-last-of-type(2) {
+  color: black;
+  background-color: #64edb0;
+}
+.productinfo:nth-last-of-type(1) {
+  color: white;
+  background-color: #2e2b30;
+}
+.totalAmount {
+  color: white;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  height: 5rem;
+  justify-content: center;
+  align-items: center;
+  background-color: #6688ed;
+  width: 100%;
+  box-shadow: 0 5px 10px rgb(0 0 0 / 0.2);
+}

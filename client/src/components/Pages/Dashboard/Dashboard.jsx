@@ -1,18 +1,11 @@
 import React from "react";
 import "./Dashboard.css";
-import Sidebar from "../../sidebar/sidebar";
+import Slider from "../../Sidebar/Sidebar";
 
 const Dashboard = () => {
   return (
-    <div
-      style={{
-        height: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        border: "1px solid red",
-      }}
-    >
-      <Sidebar />
+    <div style={{}}>
+      <Slider />
     </div>
   );
 };
