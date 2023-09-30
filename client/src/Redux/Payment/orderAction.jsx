@@ -1,5 +1,4 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { getProductDetails } from "../../Api/ProductRequest";
 import axios from "axios";
 import {
   createNewOrder,
@@ -38,6 +37,7 @@ export const getMyOrdersAction = createAsyncThunk(
     return response.data; // Assuming the response contains data field with posts
   }
 );
+
 export const getMyOrderAction = createAsyncThunk(
   "getMyOrderAction",
   async (id) => {

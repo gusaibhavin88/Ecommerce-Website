@@ -10,7 +10,6 @@
 
 .dashboard > h1 {
   color: #3d3e42;
-  border-bottom: 2px solid #3d3e42;
   margin-top: 2rem;
   text-align: center; /* Center the heading text */
   padding: 0.5rem 0; /* Add padding for better spacing */

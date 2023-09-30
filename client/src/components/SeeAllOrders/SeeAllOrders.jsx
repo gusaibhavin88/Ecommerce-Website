@@ -82,6 +82,7 @@ export default function SeeAllOrders() {
   }, [getOrderData]);
   return (
     <div className="tableCont">
+      <h1>All Orders</h1>
       <TableContainer component={Paper}>
         <div style={{ maxHeight: "100vh", overflowY: "auto" }}>
           <Table sx={{ minWidth: 700 }} aria-label="customized table">

@@ -118,3 +118,16 @@ export const deleteOrder = CatchAsyncErros(async (req, resp, next) => {
     .status(200)
     .json({ success: true, message: "Order deleted successfuly" });
 });
+
+export const DashboardDetails = CatchAsyncErros(async (req, resp, next) => {
+  const orderCount = await OrderModel.countDocuments();
+  const productCount = await ProductModel.countDocuments();
+  const userCount = await OrderModel.countDocuments();
+  if (!orderCount || !productCount || !userCount) {
+    return next(new ErrorHandler("Order not found", 400));
+  }
+
+  resp
+    .status(200)
+    .json({ success: true, message: "Order deleted successfuly" });
+});

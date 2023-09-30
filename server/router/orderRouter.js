@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  DashboardDetails,
   createNewOrder,
   deleteOrder,
   findMyOrder,
@@ -41,5 +42,11 @@ router.delete(
   deleteOrder
 );
 router.get("/order/:id", isAuthenticated, findMyOrder);
+router.get(
+  "/dashboard/data",
+  isAuthenticated,
+  authorizeRoles("admin"),
+  DashboardDetails
+);
 
 export default router;

@@ -1,5 +1,6 @@
 import { createSlice, current } from "@reduxjs/toolkit";
 import {
+  createProductAction,
   createProductReview,
   fetchProducts,
   fetchproductDetails,
@@ -97,6 +98,23 @@ const productSlice = createSlice({
         state.status = "failed";
         state.loading = false;
         // state.error = action.error.message;
+      })
+      .addCase(createProductAction.pending, (state) => {
+        state.status = "loading";
+        state.loading = true;
+      })
+      .addCase(createProductAction.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.loading = false;
+        state.isUpdated = true;
+        state.message = action.payload.message;
+        console.log(action);
+        // console.log(current(state.product)); // Current required to get the value of Product
+      })
+      .addCase(createProductAction.rejected, (state, action) => {
+        state.status = "failed";
+        state.loading = false;
+        state.error = action.error.message;
       });
   },
 });
