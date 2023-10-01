@@ -219,7 +219,7 @@ export const getAllUsers = CatchAsyncErros(async (req, resp, next) => {
 
   resp.status(200).json({
     success: true,
-    data: users,
+    users: users,
     message: "All users fetched successfully",
   });
 });

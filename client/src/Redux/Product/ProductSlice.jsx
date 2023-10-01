@@ -4,6 +4,7 @@ import {
   createProductReview,
   fetchProducts,
   fetchproductDetails,
+  getAllReviewsAction,
 } from "./ProductAction";
 
 // Define the initial state
@@ -16,6 +17,7 @@ const initialState = {
   loading: false,
   isUpdated: false,
   productCount: 0,
+  reviews: [],
 };
 
 // Create a slice
@@ -112,6 +114,22 @@ const productSlice = createSlice({
         // console.log(current(state.product)); // Current required to get the value of Product
       })
       .addCase(createProductAction.rejected, (state, action) => {
+        state.status = "failed";
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(getAllReviewsAction.pending, (state) => {
+        state.status = "loading";
+        state.loading = true;
+      })
+      .addCase(getAllReviewsAction.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.loading = false;
+        state.isUpdated = true;
+        state.reviews = action.payload.reviews;
+        state.message = action.payload.message;
+      })
+      .addCase(getAllReviewsAction.rejected, (state, action) => {
         state.status = "failed";
         state.loading = false;
         state.error = action.error.message;

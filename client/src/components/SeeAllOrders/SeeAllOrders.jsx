@@ -91,16 +91,16 @@ export default function SeeAllOrders() {
                 <StyledTableCell style={{ fontSize: "1.2rem" }}>
                   Order ID
                 </StyledTableCell>
-                <StyledTableCell style={{ fontSize: "1.2rem" }} align="right">
+                <StyledTableCell style={{ fontSize: "1.2rem" }} align="left">
                   Status
                 </StyledTableCell>
-                <StyledTableCell style={{ fontSize: "1.2rem" }} align="right">
+                <StyledTableCell style={{ fontSize: "1.2rem" }} align="left">
                   Item Qty
                 </StyledTableCell>
-                <StyledTableCell style={{ fontSize: "1.2rem" }} align="right">
+                <StyledTableCell style={{ fontSize: "1.2rem" }} align="left">
                   Amount
                 </StyledTableCell>
-                <StyledTableCell style={{ fontSize: "1.2rem" }} align="right">
+                <StyledTableCell style={{ fontSize: "1.2rem" }} align="center">
                   Actions
                 </StyledTableCell>
               </TableRow>
@@ -112,15 +112,11 @@ export default function SeeAllOrders() {
                     <StyledTableCell component="th" scope="row">
                       {row.id}
                     </StyledTableCell>
-                    <StyledTableCell align="right">
-                      {row.status}
-                    </StyledTableCell>
-                    <StyledTableCell align="right">{row.qty}</StyledTableCell>
-                    <StyledTableCell align="right">
-                      {row.amount}
-                    </StyledTableCell>
+                    <StyledTableCell align="left">{row.status}</StyledTableCell>
+                    <StyledTableCell align="left">{row.qty}</StyledTableCell>
+                    <StyledTableCell align="left">{row.amount}</StyledTableCell>
                     <StyledTableCell
-                      align="right"
+                      align="center"
                       onClick={() => navigate(`/orderinfo/${row.id}`)}
                     >
                       <EditIcon />

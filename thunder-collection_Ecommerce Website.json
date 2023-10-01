@@ -1,0 +1,544 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "Ecommerce Website",
+    "dateExported": "2023-09-30T07:02:20.285Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "_id": "61c92755-06c8-4496-8603-33bd09fc4718",
+            "name": "Product",
+            "containerId": "",
+            "created": "2023-08-21T05:35:49.563Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "d6fae51d-fba9-4da8-a825-8b6d26a86838",
+            "name": "User",
+            "containerId": "",
+            "created": "2023-08-21T05:36:10.151Z",
+            "sortNum": 20000
+        },
+        {
+            "_id": "a6932ada-a1be-41a5-a9ab-1701e20eeb46",
+            "name": "Order",
+            "containerId": "",
+            "created": "2023-08-23T06:49:50.461Z",
+            "sortNum": 30000
+        },
+        {
+            "_id": "523c4bea-5dc8-4967-bd7a-ca5f7baed85a",
+            "name": "Payment",
+            "containerId": "",
+            "created": "2023-09-24T05:07:12.333Z",
+            "sortNum": 40000
+        },
+        {
+            "_id": "ec78473c-42b4-403b-bd7c-64d249409830",
+            "name": "Dashboard",
+            "containerId": "",
+            "created": "2023-09-27T11:05:24.658Z",
+            "sortNum": 50000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "cb299d31-064d-4ff2-8594-3bc72ec69010",
+            "colId": "d2d966cf-7a5c-4517-b2aa-41380b3e00e7",
+            "containerId": "61c92755-06c8-4496-8603-33bd09fc4718",
+            "name": "Createproduct",
+            "url": "http://localhost:5000/api/v1/product/new",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2023-08-02T17:29:57.392Z",
+            "modified": "2023-09-24T16:33:55.496Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n   \"name\" : \"fdffdfffdfdfd\", \"stock\" :10, \"price\" : 5500, \"description\" : \"fwfsfsfsfs\", \"category\" : \"Laptop\",\"rating\"  : 0, \"image\" :[ {\n         \"url\" : \"//www.html.am/images/image-codes/milford_sound_t.jpg\" , \"public_id\" : \"iijij\"\n   }, {\n         \"url\" : \"//www.html.am/images/image-codes/milford_sound_t.jpg\" , \"public_id\" : \"iijij\"\n   }]\n   \n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "a861d439-c9b2-4fcd-9e31-a1d0fb08f58e",
+            "colId": "d2d966cf-7a5c-4517-b2aa-41380b3e00e7",
+            "containerId": "d6fae51d-fba9-4da8-a825-8b6d26a86838",
+            "name": "Logout",
+            "url": "http://localhost:5000/api/v1/logout",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2023-08-21T05:36:01.544Z",
+            "modified": "2023-08-21T08:30:17.329Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "7f384197-274a-4c33-8e16-860500b3a98e",
+            "colId": "d2d966cf-7a5c-4517-b2aa-41380b3e00e7",
+            "containerId": "61c92755-06c8-4496-8603-33bd09fc4718",
+            "name": "getAllProduct",
+            "url": "http://localhost:5000/api/v1/products",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2023-08-17T09:28:31.059Z",
+            "modified": "2023-09-03T11:53:29.258Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "price[gte]",
+                    "value": "100",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "price[lte]",
+                    "value": "2000",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "category",
+                    "value": "",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "keyword",
+                    "value": "chips",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "currentPage",
+                    "value": "1",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "page",
+                    "value": "2",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "ratings",
+                    "value": "",
+                    "isDisabled": true,
+                    "isPath": false
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "9f4292f5-4618-4251-bb1c-a67cf1691938",
+            "colId": "d2d966cf-7a5c-4517-b2aa-41380b3e00e7",
+            "containerId": "61c92755-06c8-4496-8603-33bd09fc4718",
+            "name": "updateProduct",
+            "url": "http://localhost:5000/api/v1/product/64e5d75889af62d6019b3f2d",
+            "method": "PUT",
+            "sortNum": 30000,
+            "created": "2023-08-17T10:53:22.784Z",
+            "modified": "2023-08-23T09:55:08.316Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{ \n   \"name\" : \"chips 2\", \"stock\" : 50, \"price\" : 10, \"description\" : \"HHUHU\", \"category\" : \"hudhih\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "891df6da-c9d5-4bfb-8845-f515598cd259",
+            "colId": "d2d966cf-7a5c-4517-b2aa-41380b3e00e7",
+            "containerId": "61c92755-06c8-4496-8603-33bd09fc4718",
+            "name": "deleteProduct",
+            "url": "http://localhost:5000/api/v1/product/64e5d75889af62d6019b3f2d",
+            "method": "DELETE",
+            "sortNum": 40000,
+            "created": "2023-08-17T11:10:18.379Z",
+            "modified": "2023-08-28T09:58:17.691Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "7b1d765c-4f32-4cae-87a7-4213cde1f69d",
+            "colId": "d2d966cf-7a5c-4517-b2aa-41380b3e00e7",
+            "containerId": "61c92755-06c8-4496-8603-33bd09fc4718",
+            "name": "getProduct",
+            "url": "http://localhost:5000/api/v1/product/64e856aecb1eac405e9b51f1",
+            "method": "GET",
+            "sortNum": 50000,
+            "created": "2023-08-17T11:19:16.498Z",
+            "modified": "2023-09-12T10:00:13.248Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "id",
+                    "value": "64e5c5278928765c30702070",
+                    "isDisabled": true,
+                    "isPath": false
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "9ab12ba1-07c2-4354-abc4-85c94c28c605",
+            "colId": "d2d966cf-7a5c-4517-b2aa-41380b3e00e7",
+            "containerId": "d6fae51d-fba9-4da8-a825-8b6d26a86838",
+            "name": "CreateUSer",
+            "url": "http://localhost:5000/api/v1/register",
+            "method": "POST",
+            "sortNum": 90000,
+            "created": "2023-08-21T05:36:35.621Z",
+            "modified": "2023-08-23T07:54:55.842Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n   \"name\" : \"Bhavin\", \"email\" : \"gusaibhavin88@gmail.com\", \"password\" : \"Guru@1234\"}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "fdac6a2a-ff94-4eb4-b24e-387239333070",
+            "colId": "d2d966cf-7a5c-4517-b2aa-41380b3e00e7",
+            "containerId": "d6fae51d-fba9-4da8-a825-8b6d26a86838",
+            "name": "Log In User",
+            "url": "http://localhost:5000/api/v1/login",
+            "method": "POST",
+            "sortNum": 100000,
+            "created": "2023-08-21T06:52:18.078Z",
+            "modified": "2023-09-06T06:55:34.060Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\" : \"gusaibhavin88@gmail.com\",\n  \"password\" : \"Guru@1234\"\n\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "ea75be6d-bbd4-431b-adea-d2802bc828ce",
+            "colId": "d2d966cf-7a5c-4517-b2aa-41380b3e00e7",
+            "containerId": "d6fae51d-fba9-4da8-a825-8b6d26a86838",
+            "name": "Forgotpassword",
+            "url": "http://localhost:5000/api/v1/password/forgot",
+            "method": "POST",
+            "sortNum": 110000,
+            "created": "2023-08-21T11:20:55.271Z",
+            "modified": "2023-08-23T07:55:28.636Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\" : \"gusaibhavin88@gmail.com\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "34f75f80-38da-47e8-b90b-3e173ae8c70d",
+            "colId": "d2d966cf-7a5c-4517-b2aa-41380b3e00e7",
+            "containerId": "d6fae51d-fba9-4da8-a825-8b6d26a86838",
+            "name": "Reset",
+            "url": "http://localhost:5000/api/v1/password/reset/79e4adde2c36ff08937998f08dbcca2028464847",
+            "method": "PUT",
+            "sortNum": 130000,
+            "created": "2023-08-22T08:38:58.193Z",
+            "modified": "2023-08-23T07:57:28.046Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"password\" : \"Guru@1234\",\n  \"confirmPassword\" : \"Guru@1234\"\n  \n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "cfb6c352-bf8f-4bb0-ad78-338e1fd5b4c4",
+            "colId": "d2d966cf-7a5c-4517-b2aa-41380b3e00e7",
+            "containerId": "d6fae51d-fba9-4da8-a825-8b6d26a86838",
+            "name": "getUserDetail",
+            "url": "http://localhost:5000/api/v1/me",
+            "method": "GET",
+            "sortNum": 140000,
+            "created": "2023-08-22T09:26:52.254Z",
+            "modified": "2023-08-22T09:27:03.631Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "a8589d3c-8526-494f-8320-16f3a10037a9",
+            "colId": "d2d966cf-7a5c-4517-b2aa-41380b3e00e7",
+            "containerId": "d6fae51d-fba9-4da8-a825-8b6d26a86838",
+            "name": "UpdateuserProfile",
+            "url": "http://localhost:5000/api/v1/updateProfile",
+            "method": "PUT",
+            "sortNum": 150000,
+            "created": "2023-08-22T09:42:49.789Z",
+            "modified": "2023-08-23T08:36:43.354Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n \"email\" : \"gusaibhavin88@gmail.com\",\n \"name\" : \"Bhavin Goswami\",\n \"role\" : \"admin\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "fa35fbf1-546d-4a65-9839-669a3b9748e3",
+            "colId": "d2d966cf-7a5c-4517-b2aa-41380b3e00e7",
+            "containerId": "d6fae51d-fba9-4da8-a825-8b6d26a86838",
+            "name": "updateUserPassword",
+            "url": "http://localhost:5000/api/v1/updatepassword",
+            "method": "PUT",
+            "sortNum": 170000,
+            "created": "2023-08-22T10:12:23.759Z",
+            "modified": "2023-08-23T08:33:25.697Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n \"oldPassword\" : \"Guru@1234\",\n \"confOldPassword\" : \"Guru@1234\",\n \"newPassword\" : \"Guru@1234\"\n }",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "28eea6af-9743-4375-82f2-1151a515c19b",
+            "colId": "d2d966cf-7a5c-4517-b2aa-41380b3e00e7",
+            "containerId": "d6fae51d-fba9-4da8-a825-8b6d26a86838",
+            "name": "getAllUser",
+            "url": "http://localhost:5000/api/v1/getusers",
+            "method": "GET",
+            "sortNum": 180000,
+            "created": "2023-08-22T11:09:43.680Z",
+            "modified": "2023-08-22T11:12:05.829Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "94fd868a-0876-47a8-bc03-46f6d4ea2790",
+            "colId": "d2d966cf-7a5c-4517-b2aa-41380b3e00e7",
+            "containerId": "d6fae51d-fba9-4da8-a825-8b6d26a86838",
+            "name": "Get Single User",
+            "url": "http://localhost:5000/api/v1/admin/users/64e48b9d1f4f7746cad05456",
+            "method": "GET",
+            "sortNum": 190000,
+            "created": "2023-08-22T11:19:58.200Z",
+            "modified": "2023-08-22T11:47:25.491Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "26ec3dd2-18a5-4f8b-b674-d2d94cb2dec7",
+            "colId": "d2d966cf-7a5c-4517-b2aa-41380b3e00e7",
+            "containerId": "d6fae51d-fba9-4da8-a825-8b6d26a86838",
+            "name": "Delete User",
+            "url": "http://localhost:5000/api/v1/deleteuser/64f6d2f030807fdf4f8da103",
+            "method": "DELETE",
+            "sortNum": 200000,
+            "created": "2023-08-22T11:39:54.321Z",
+            "modified": "2023-09-05T09:47:21.482Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "bb3cc378-d327-4076-9107-dd624dee5ffa",
+            "colId": "d2d966cf-7a5c-4517-b2aa-41380b3e00e7",
+            "containerId": "61c92755-06c8-4496-8603-33bd09fc4718",
+            "name": "Delete Product Review",
+            "url": "http://localhost:5000/api/v1/reviews?id=64e5bb532d88481ad5f72526&productId=64e5c5278928765c30702070",
+            "method": "DELETE",
+            "sortNum": 220000,
+            "created": "2023-08-23T05:15:02.760Z",
+            "modified": "2023-08-23T08:38:44.311Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "id",
+                    "value": "64e5bb532d88481ad5f72526",
+                    "isPath": false
+                },
+                {
+                    "name": "productId",
+                    "value": "64e5c5278928765c30702070",
+                    "isPath": false
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "2535a332-1fab-410c-b2ea-7f3b6626cfcd",
+            "colId": "d2d966cf-7a5c-4517-b2aa-41380b3e00e7",
+            "containerId": "61c92755-06c8-4496-8603-33bd09fc4718",
+            "name": "Product Review",
+            "url": "http://localhost:5000/api/v1/createreview",
+            "method": "PUT",
+            "sortNum": 230000,
+            "created": "2023-08-23T05:17:36.469Z",
+            "modified": "2023-09-04T06:53:11.992Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"rating\": 5,\n  \"comment\": \"good\",\n  \"productId\": \"64e85493cb1eac405e9b51a7\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "e6ad6186-eee6-4c7b-bd9f-94c5005ebc56",
+            "colId": "d2d966cf-7a5c-4517-b2aa-41380b3e00e7",
+            "containerId": "a6932ada-a1be-41a5-a9ab-1701e20eeb46",
+            "name": "CreateOrder",
+            "url": "http://localhost:5000/api/v1/order/new",
+            "method": "POST",
+            "sortNum": 260000,
+            "created": "2023-08-23T06:49:56.853Z",
+            "modified": "2023-09-24T10:49:40.750Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"shippingInfo\": {\n    \"address\": \"ravechi 5\",\n    \"city\": \"uihi\",\n    \"state\": \"iij\",\n    \"country\": \"iiuji\",\n    \"pinCode\": 6566654,\n    \"phoneNo\": 4531415\n  },\n  \"orderItems\": {\n    \"name\": \"iijioi\",\n    \"price\": 60,\n      \"quantity\": 1,\n    \"image\": \"UHUijijj\",\n    \"product\": \"64e5c5278928765c30702070\"\n  },\n  \"paymentInfo\": {\n    \"id\": \"uhfuhaf\",\n    \"status\": \"pefs\"\n  },\n  \"itemPrice\": 50,\n  \"taxPrice\": 50,\n  \"shippingPrice\": 50,\n  \"totalPrice\": 71\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "3c6acfad-8bc4-42d0-b3fc-59fad1519608",
+            "colId": "d2d966cf-7a5c-4517-b2aa-41380b3e00e7",
+            "containerId": "a6932ada-a1be-41a5-a9ab-1701e20eeb46",
+            "name": "Myorders",
+            "url": "http://localhost:5000/api/v1/order/me",
+            "method": "GET",
+            "sortNum": 270000,
+            "created": "2023-08-23T07:31:11.353Z",
+            "modified": "2023-08-23T07:36:09.287Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "ef5b6c90-13a4-48e1-8148-a752b9c9b83e",
+            "colId": "d2d966cf-7a5c-4517-b2aa-41380b3e00e7",
+            "containerId": "a6932ada-a1be-41a5-a9ab-1701e20eeb46",
+            "name": "All Order Admin",
+            "url": "http://localhost:5000/api/v1/order/all",
+            "method": "GET",
+            "sortNum": 300000,
+            "created": "2023-08-23T08:53:49.662Z",
+            "modified": "2023-08-23T08:53:56.149Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "9254809b-a3ea-4671-ac98-200243e4e102",
+            "colId": "d2d966cf-7a5c-4517-b2aa-41380b3e00e7",
+            "containerId": "a6932ada-a1be-41a5-a9ab-1701e20eeb46",
+            "name": "deleteoder",
+            "url": "http://localhost:5000/api/v1/order/delete/64e5c6631ab2773088dac99c",
+            "method": "DELETE",
+            "sortNum": 310000,
+            "created": "2023-08-23T09:20:29.731Z",
+            "modified": "2023-08-23T09:21:29.314Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "320024fb-539d-4f45-9588-e152600092a2",
+            "colId": "d2d966cf-7a5c-4517-b2aa-41380b3e00e7",
+            "containerId": "a6932ada-a1be-41a5-a9ab-1701e20eeb46",
+            "name": "UpdateOrder",
+            "url": "http://localhost:5000/api/v1/order/update/64e5d44d81bd45d2beb38795",
+            "method": "PUT",
+            "sortNum": 320000,
+            "created": "2023-08-23T09:23:53.243Z",
+            "modified": "2023-08-23T09:41:55.192Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{ \"status\" : \"Delivered\"}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "e531f053-5f17-42d7-9335-9958b53ff0a7",
+            "colId": "d2d966cf-7a5c-4517-b2aa-41380b3e00e7",
+            "containerId": "523c4bea-5dc8-4967-bd7a-ca5f7baed85a",
+            "name": "sendApiKey",
+            "url": "http://localhost:5000/api/v1/stripapikey",
+            "method": "GET",
+            "sortNum": 370000,
+            "created": "2023-09-24T08:07:04.686Z",
+            "modified": "2023-09-24T08:08:13.757Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "d3866895-7f9c-451b-b924-d477f4074d36",
+            "colId": "d2d966cf-7a5c-4517-b2aa-41380b3e00e7",
+            "containerId": "523c4bea-5dc8-4967-bd7a-ca5f7baed85a",
+            "name": "Payment Process",
+            "url": "http://localhost:5000/api/v1/process/payment",
+            "method": "POST",
+            "sortNum": 380000,
+            "created": "2023-09-24T08:24:30.950Z",
+            "modified": "2023-09-24T08:25:40.499Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"amount\" : \"500\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "23f827a8-9be2-4aa6-9fa6-49f22ecdf14e",
+            "colId": "d2d966cf-7a5c-4517-b2aa-41380b3e00e7",
+            "containerId": "a6932ada-a1be-41a5-a9ab-1701e20eeb46",
+            "name": "Find My Order",
+            "url": "http://localhost:5000/api/v1/order/64e5d44d81bd45d2beb38795",
+            "method": "GET",
+            "sortNum": 390000,
+            "created": "2023-09-26T09:13:44.754Z",
+            "modified": "2023-09-26T09:15:29.171Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "cbed18d3-10ee-410d-be39-34f314dd8324",
+            "colId": "d2d966cf-7a5c-4517-b2aa-41380b3e00e7",
+            "containerId": "ec78473c-42b4-403b-bd7c-64d249409830",
+            "name": "Dashboarddata",
+            "url": "http://localhost:5000/api/v1/dashboard/data",
+            "method": "GET",
+            "sortNum": 410000,
+            "created": "2023-09-27T11:05:34.963Z",
+            "modified": "2023-09-27T11:05:54.559Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        }
+    ]
+}

@@ -130,8 +130,6 @@ export const createProductReview = CatchAsyncErros(async (req, resp, next) => {
     comment,
   };
 
-  // const product = await ProductModel.findById(productId);
-
   const product = await ProductModel.findById(productId);
   const isReviewed = product.reviews.find(
     (rev) => rev.user._id.toString() === req.user._id.toString()
@@ -208,4 +206,23 @@ export const deleteReview = CatchAsyncErros(async (req, resp, next) => {
   resp
     .status(200)
     .json({ success: true, message: "Review deleted successfully" });
+});
+
+export const getAllReviews = CatchAsyncErros(async (req, resp, next) => {
+  const productId = await ProductModel.findById(req.params.id);
+  try {
+    let product = await ProductModel.findById(productId);
+
+    if (!product) {
+      return next(new ErrorHandler("Product not found", 401));
+    }
+
+    resp.status(200).json({
+      success: true,
+      reviews: product.reviews,
+      message: "Product Reviews fetched successfully",
+    });
+  } catch (error) {
+    resp.status(500).json({ success: false, message: error.message });
+  }
 });

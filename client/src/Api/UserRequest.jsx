@@ -8,3 +8,5 @@ export const updateUserProfile = (formData) =>
   API.put("/updateProfile", formData, { withCredentials: true });
 export const updateUserPassword = (formData) =>
   API.put("/updatepassword", formData, { withCredentials: true });
+export const getAllUsers = () =>
+  API.get("/getusers", { withCredentials: true });

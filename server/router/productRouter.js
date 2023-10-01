@@ -5,6 +5,7 @@ import {
   deleteProduct,
   deleteReview,
   getAllProduct,
+  getAllReviews,
   getProduct,
   updateProduct,
 } from "../controller/productController.js";
@@ -42,6 +43,7 @@ router.delete(
 );
 router.delete("/reviews", isAuthenticated, deleteReview);
 router.put("/createreview", isAuthenticated, createProductReview);
+router.get("/getallreviews/:id", isAuthenticated, getAllReviews);
 // router.delete("/product/:id", deleteProduct);
 
 export default router;

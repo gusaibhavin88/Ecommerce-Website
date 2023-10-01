@@ -1,10 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { updateUserPassword, updateUserProfile } from "../../Api/UserRequest";
+import {
+  getAllUsers,
+  updateUserPassword,
+  updateUserProfile,
+} from "../../Api/UserRequest";
 import { updateProfile } from "../Auth/AuthSlice";
 import { logOutProfile } from "../Auth/AuthAction";
 import { logOut } from "../../Api/AuthRequest";
 
-// Async thunk for updating user profile
 export const updateProfileAction = createAsyncThunk(
   "updateProfile",
   async ({ functions }, { dispatch }) => {
@@ -25,7 +28,6 @@ export const updateProfileAction = createAsyncThunk(
   }
 );
 
-// Async thunk for updating user profile
 export const updatePasswordAction = createAsyncThunk(
   "updatePassword",
   async ({ functions }, { dispatch }) => {
@@ -34,6 +36,19 @@ export const updatePasswordAction = createAsyncThunk(
       const response = await updateUserPassword(formData); // Call your API function here
       logOut();
       onComplete(response);
+      return response; // Assuming the response contains the data you need
+    } catch (error) {
+      throw error.response.data; // Assuming the response contains error data
+    }
+  }
+);
+
+export const getAllUsesrAction = createAsyncThunk(
+  "getAllUsersAction",
+  async () => {
+    try {
+      const response = await getAllUsers(); // Call your API function here
+      console.log(response);
       return response; // Assuming the response contains the data you need
     } catch (error) {
       throw error.response.data; // Assuming the response contains error data

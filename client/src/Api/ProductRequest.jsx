@@ -10,3 +10,5 @@ export const productReview = (formdata) =>
   API.put("/createreview", formdata, { withCredentials: true });
 export const createProduct = (formData) =>
   API.post("product/new", formData, { withCredentials: true });
+export const getAllReviews = (id) =>
+  API.get(`getallreviews/${id}`, { withCredentials: true });

@@ -23,12 +23,6 @@ router.get(
   authorizeRoles("admin"),
   getAllOrders
 );
-router.get(
-  "/order/all",
-  isAuthenticated,
-  authorizeRoles("admin"),
-  getAllOrders
-);
 router.put(
   "/order/update/:id",
   isAuthenticated,

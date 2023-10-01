@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   createProduct,
+  getAllReviews,
   getProductDetails,
   productReview,
 } from "../../Api/ProductRequest";
@@ -70,6 +71,19 @@ export const createProductAction = createAsyncThunk(
     try {
       console.log(formData);
       const response = await createProduct(formData); // Call your API function here
+      return response.data; // Assuming the response contains data field with posts
+    } catch (error) {
+      throw error.response.data; // Assuming the response contains data field with posts
+    }
+  }
+);
+
+export const getAllReviewsAction = createAsyncThunk(
+  "getAllReviewsAction",
+  async (id) => {
+    try {
+      const response = await getAllReviews(id); // Call your API function here
+      console.log(response);
       return response.data; // Assuming the response contains data field with posts
     } catch (error) {
       throw error.response.data; // Assuming the response contains data field with posts

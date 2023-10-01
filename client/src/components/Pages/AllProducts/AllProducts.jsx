@@ -45,7 +45,7 @@ const AllProducts = () => {
       dispatch(clearError());
     }
     if (currentPage) {
-      dispatch(fetchProducts({ currentPage: currentPage }));
+      dispatch(fetchProducts({ currentPage: 1 }));
     }
   }, [dispatch, currentPage, error]);
 

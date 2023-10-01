@@ -14,6 +14,7 @@ import LaunchIcon from "@mui/icons-material/Launch";
 import { useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { fetchProducts } from "../../Redux/Product/ProductAction";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -38,48 +39,40 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export default function SeeAllProducts() {
   const navigate = useNavigate();
   const [rows, setRows] = React.useState([]);
-  console.log(rows);
   const dispatch = useDispatch();
   const { myOrders } = useSelector((state) => state.order);
+  const { products } = useSelector((state) => state.products);
 
-  function createData(id, status, qty, amount) {
-    return { id, status, qty, amount };
+  function createData(id, name, stock, price) {
+    return { id, name, stock, price };
   }
 
-  const getOrderData = React.useCallback(async () => {
-    console.log(myOrders, "myOrder");
-    if (!myOrders) return [];
+  const getProductData = React.useCallback(async () => {
+    if (!products) return [];
 
     const rowData = await Promise.all(
-      myOrders[0].map(async (item) => {
-        return createData(
-          item._id,
-          item.paymentInfo.status,
-          item.itemsPrice,
-          item.itemsPrice
-        );
+      products.map(async (item) => {
+        return createData(item._id, item.name, item.stock, item.price);
       })
     );
 
     return rowData;
-  }, [myOrders]);
+  }, [products]);
 
   React.useEffect(() => {
-    dispatch(getMyOrdersAction());
+    dispatch(fetchProducts({ currentPage: 1 }));
   }, [dispatch]);
 
   React.useEffect(() => {
-    if (myOrders) {
-      console.log("huhuhuh", myOrders);
+    if (products) {
       async function fetchData() {
-        const data = await getOrderData();
+        const data = await getProductData();
         setRows(data);
-        console.log(data, "data");
       }
 
       fetchData();
     }
-  }, [getOrderData]);
+  }, [getProductData, products]);
   return (
     <div className="tableCont">
       <TableContainer component={Paper}>
@@ -90,16 +83,16 @@ export default function SeeAllProducts() {
                 <StyledTableCell style={{ fontSize: "1.2rem" }}>
                   Product ID
                 </StyledTableCell>
-                <StyledTableCell style={{ fontSize: "1.2rem" }} align="right">
+                <StyledTableCell style={{ fontSize: "1.2rem" }} align="left">
                   Name
                 </StyledTableCell>
-                <StyledTableCell style={{ fontSize: "1.2rem" }} align="right">
+                <StyledTableCell style={{ fontSize: "1.2rem" }} align="left">
                   Stock
                 </StyledTableCell>
-                <StyledTableCell style={{ fontSize: "1.2rem" }} align="right">
+                <StyledTableCell style={{ fontSize: "1.2rem" }} align="left">
                   Price
                 </StyledTableCell>
-                <StyledTableCell style={{ fontSize: "1.2rem" }} align="right">
+                <StyledTableCell style={{ fontSize: "1.2rem" }} align="center">
                   Actions
                 </StyledTableCell>
               </TableRow>
@@ -111,15 +104,11 @@ export default function SeeAllProducts() {
                     <StyledTableCell component="th" scope="row">
                       {row.id}
                     </StyledTableCell>
-                    <StyledTableCell align="right">
-                      {row.status}
-                    </StyledTableCell>
-                    <StyledTableCell align="right">{row.qty}</StyledTableCell>
-                    <StyledTableCell align="right">
-                      {row.amount}
-                    </StyledTableCell>
+                    <StyledTableCell align="left">{row.name}</StyledTableCell>
+                    <StyledTableCell align="left">{row.stock}</StyledTableCell>
+                    <StyledTableCell align="left">{row.price}</StyledTableCell>
                     <StyledTableCell
-                      align="right"
+                      align="center"
                       onClick={() => navigate(`/orderinfo/${row.id}`)}
                     >
                       <EditIcon />

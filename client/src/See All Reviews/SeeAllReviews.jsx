@@ -12,8 +12,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { getMyOrdersAction } from "../Redux/Payment/orderAction";
 import { Button } from "@mui/material";
+import { getAllReviewsAction } from "../Redux/Product/ProductAction";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -38,55 +38,58 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export default function SeeAllReviews() {
   const navigate = useNavigate();
   const [rows, setRows] = React.useState([]);
+  const [reviewId, setReviewId] = React.useState("");
+  console.log(reviewId);
   console.log(rows);
   const dispatch = useDispatch();
-  const { myOrders } = useSelector((state) => state.order);
+  const { reviews } = useSelector((state) => state.products);
 
-  function createData(id, status, qty, amount) {
-    return { id, status, qty, amount };
+  function createData(id, name, comment, rating) {
+    return { id, name, comment, rating };
   }
 
-  const getOrderData = React.useCallback(async () => {
-    console.log(myOrders, "myOrder");
-    if (!myOrders) return [];
+  const getReviewsData = React.useCallback(async () => {
+    console.log(reviews, "myOrder");
+    if (!reviews) return [];
 
     const rowData = await Promise.all(
-      myOrders[0].map(async (item) => {
-        return createData(
-          item._id,
-          item.paymentInfo.status,
-          item.itemsPrice,
-          item.itemsPrice
-        );
+      reviews.map(async (item) => {
+        return createData(item._id, item.name, item.comment, item.rating);
       })
     );
 
     return rowData;
-  }, [myOrders]);
+  }, [reviews]);
+
+  const searchReview = () => {
+    dispatch(getAllReviewsAction(reviewId));
+    setReviewId("");
+  };
 
   React.useEffect(() => {
-    dispatch(getMyOrdersAction());
-  }, [dispatch]);
-
-  React.useEffect(() => {
-    if (myOrders) {
-      console.log("huhuhuh", myOrders);
+    if (reviews) {
       async function fetchData() {
-        const data = await getOrderData();
+        const data = await getReviewsData();
         setRows(data);
-        console.log(data, "data");
       }
 
       fetchData();
     }
-  }, [getOrderData]);
+  }, [getReviewsData]);
+
   return (
     <div className="tableCont">
       <TableContainer component={Paper}>
         <div className="reviewSearch">
           <h2>ALL REVIEWS </h2>
-          <input placeholder="Please feel Product Id" />
-          <Button variant="contained">Search</Button>
+          <input
+            placeholder="Please feel Product Id"
+            value={reviewId}
+            onChange={(e) => setReviewId(e.target.value)}
+          />
+          <Button variant="contained" onClick={searchReview}>
+            Search
+          </Button>
         </div>
         <div
           style={{ maxHeight: "100vh", overflowY: "auto", marginTop: "1rem" }}
@@ -97,16 +100,16 @@ export default function SeeAllReviews() {
                 <StyledTableCell style={{ fontSize: "1.2rem" }}>
                   Review ID
                 </StyledTableCell>
-                <StyledTableCell style={{ fontSize: "1.2rem" }} align="right">
+                <StyledTableCell style={{ fontSize: "1.2rem" }} align="left">
                   Users
                 </StyledTableCell>
-                <StyledTableCell style={{ fontSize: "1.2rem" }} align="right">
+                <StyledTableCell style={{ fontSize: "1.2rem" }} align="left">
                   Comment
                 </StyledTableCell>
-                <StyledTableCell style={{ fontSize: "1.2rem" }} align="right">
+                <StyledTableCell style={{ fontSize: "1.2rem" }} align="left">
                   Rating
                 </StyledTableCell>
-                <StyledTableCell style={{ fontSize: "1.2rem" }} align="right">
+                <StyledTableCell style={{ fontSize: "1.2rem" }} align="center">
                   Actions
                 </StyledTableCell>
               </TableRow>
@@ -118,15 +121,13 @@ export default function SeeAllReviews() {
                     <StyledTableCell component="th" scope="row">
                       {row.id}
                     </StyledTableCell>
-                    <StyledTableCell align="right">
-                      {row.status}
+                    <StyledTableCell align="left">{row.name}</StyledTableCell>
+                    <StyledTableCell align="left">
+                      {row.comment}
                     </StyledTableCell>
-                    <StyledTableCell align="right">{row.qty}</StyledTableCell>
-                    <StyledTableCell align="right">
-                      {row.amount}
-                    </StyledTableCell>
+                    <StyledTableCell align="left">{row.rating}</StyledTableCell>
                     <StyledTableCell
-                      align="right"
+                      align="center"
                       onClick={() => navigate(`/orderinfo/${row.id}`)}
                     >
                       <DeleteIcon />

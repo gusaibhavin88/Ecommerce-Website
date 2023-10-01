@@ -96,11 +96,11 @@ export default function Slider() {
             aria-label="setting tabs"
           >
             <Tab label="Dashboard" {...a11yProps(0)} />
-            <Tab label="See All Products" {...a11yProps(1)} />
+            <Tab label="All Products" {...a11yProps(1)} />
             <Tab label="Add Products" {...a11yProps(2)} />
-            <Tab label="Orders" {...a11yProps(3)} />
-            <Tab label="Users" {...a11yProps(4)} />
-            <Tab label="See All Reviews" {...a11yProps(5)} />
+            <Tab label="All Orders" {...a11yProps(3)} />
+            <Tab label="All Users" {...a11yProps(4)} />
+            <Tab label=" All Reviews" {...a11yProps(5)} />
           </Tabs>
           {/* </Paper> */}
         </Grid>
