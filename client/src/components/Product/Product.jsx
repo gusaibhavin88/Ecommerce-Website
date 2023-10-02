@@ -22,70 +22,58 @@ const Product = ({ products }) => {
     setCurrentPage(e);
   };
 
-  // useEffect(() => {
-  //   dispatch(fetchProducts());
-  // }, []);
-
   return (
     <div
       style={{
-        width: "100%",
+        width: "80%",
         padding: "1rem",
         alignItems: "center",
         justifyContent: "center",
-        display: "flex",
-        flexDirection: "column",
-        gap: "1rem",
+        textAlign: "center",
       }}
     >
-      <Row xs={5} md={4} className="g-4">
+      <Row xs={2} md={4} className="g-4">
         {products &&
-          products.slice(0, 9).map((item, idx) => {
-            return (
-              <Col key={idx} onClick={() => handleProductDetails(item._id)}>
-                <Card style={{ gap: "1rem" }}>
-                  <Card.Img variant="top" src={item.image[0]?.url} />
-                  <Card.Body>
-                    <Card.Title className="fs-3" style={{ fontWeight: "bold" }}>
-                      {item.name}
-                    </Card.Title>
-                    <div style={{ display: "flex" }}>
-                      <Rating
-                        name="no-value"
-                        value={products.rating}
-                        defaultValue={2.5}
-                      ></Rating>
-                      <Card.Text>
-                        &nbsp; ({item.reviews.length} &nbsp;Reviews)
-                      </Card.Text>
-                    </div>
-                    <Card.Text style={{ fontWeight: "bold" }} className="fs-5">
-                      ${item.price}
+          products.map((item, idx) => (
+            <Col key={idx} onClick={() => handleProductDetails(item._id)}>
+              <Card style={{ gap: "1rem", cursor: "pointer" }}>
+                <Card.Img variant="top" src={item.image[0]?.url} />
+                <Card.Body>
+                  <Card.Title className="fs-3" style={{ fontWeight: "bold" }}>
+                    {item.name}
+                  </Card.Title>
+                  <div style={{ display: "flex" }}>
+                    <Rating name="read-only" value={item.rating} readOnly />
+                    <Card.Text>
+                      &nbsp; ({item.reviews.length} &nbsp;Reviews)
                     </Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
-            );
-          })}
+                  </div>
+                  <Card.Text style={{ fontWeight: "bold" }} className="fs-5">
+                    ${item.price}
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
       </Row>
       <NavLink to="/products">
         <span className="seeallproduct">See All Products</span>
       </NavLink>
-
-      {/* <Pagination
-        activePage={1}
-        itemsCountPerPage={3}
-        totalItemsCount={productCount}
-        onChange={setCurrentPageNo}
-        nextPageText="Next"
-        prevPageText="Prev"
-        firstPageText="1st"
-        lastPageText="Last"
-        itemClass="page-item"
-        linkClass="page-link"
-        activeClass="pageItemActive"
-        activeLinkClass="pageLinkActive"
-      /> */}
+      {products?.length < 1 && (
+        <>
+          <div
+            style={{
+              backgroundColor: "lightgray",
+              padding: "10px",
+              textAlign: "center",
+            }}
+          >
+            <span style={{ color: "red", fontWeight: "bold" }}>
+              Products Not Found
+            </span>
+          </div>
+        </>
+      )}
     </div>
   );
 };

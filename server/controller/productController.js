@@ -2,6 +2,7 @@ import ProductModel from "../model/productModel.js";
 import ErrorHandler from "../utilities/errorHandler.js";
 import CatchAsyncErros from "../middleware/catchAsyncErrors.js";
 import Apifeatures from "../utilities/apiFeatures.js";
+import cloudinary from "cloudinary";
 
 export const getAllProduct = CatchAsyncErros(async (req, resp, next) => {
   const resultPerPages = 8;
@@ -22,7 +23,7 @@ export const getAllProduct = CatchAsyncErros(async (req, resp, next) => {
   } else {
     resp.status(200).json({
       success: true,
-      data: products,
+      products: products,
       message: "Products fetched successfully",
       productCount,
       filteredProducts,
@@ -32,15 +33,32 @@ export const getAllProduct = CatchAsyncErros(async (req, resp, next) => {
 });
 
 export const createProduct = CatchAsyncErros(async (req, resp, next) => {
-  const { name } = req.body;
   req.body.user = req.user;
 
-  let product = await ProductModel.findOne({ name: name });
+  let product = await ProductModel.findOne({ name: req.body.name });
+
+  if (!req.body.avatar) {
+    return next(new ErrorHandler("Please add Profile image", 401));
+  }
 
   if (product) {
     return next(new ErrorHandler("Product name already exist", 401));
   } else {
-    product = await ProductModel.create(req.body);
+    const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+      folder: "Ecommerce-Site/Avatars",
+      width: 150,
+      crop: "scale",
+    });
+    product = await ProductModel.create({
+      ...req.body,
+      image: {
+        public_id: myCloud.public_id,
+        url: myCloud.secure_url,
+      },
+    });
+
+    product.save();
+
     resp.status(200).json({
       success: true,
       data: product,
@@ -110,7 +128,7 @@ export const deleteProduct = CatchAsyncErros(async (req, resp, next) => {
 
   resp.status(200).json({
     success: true,
-    data: product,
+    product: product,
     message: "Product deleted successfully",
   });
 });

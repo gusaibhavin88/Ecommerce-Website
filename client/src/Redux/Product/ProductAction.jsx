@@ -1,12 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   createProduct,
+  deleteProduct,
   getAllReviews,
   getProductDetails,
   productReview,
 } from "../../Api/ProductRequest";
 import axios from "axios";
-import { updateReview } from "./ProductSlice";
+import { updateProducts, updateReview } from "./ProductSlice";
 
 const API = axios.create({
   baseURL: "http://localhost:5000/api/v1",
@@ -18,10 +19,11 @@ export const fetchProducts = createAsyncThunk(
   async ({
     keyword = "",
     currentPage = 1,
-    price = [0, 25000],
+    price = [0, 10000000],
     rating = 0,
     category = "",
   }) => {
+    console.log(price[1]);
     let link = `/products?keyword=${keyword}&price[gte]=${price[0]}&price[lte]=${price[1]}&rating[gte]=${rating}&page=${currentPage}`;
     if (category === "Reset Filter") {
       link = `/products?keyword=${keyword}&price[gte]=${price[0]}&price[lte]=${price[1]}&rating[gte]=${rating}&page=${currentPage}`;
@@ -69,8 +71,12 @@ export const createProductAction = createAsyncThunk(
   "createProductAction",
   async (formData) => {
     try {
-      console.log(formData);
-      const response = await createProduct(formData); // Call your API function here
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+      const response = await createProduct(formData, config); // Call your API function here
       return response.data; // Assuming the response contains data field with posts
     } catch (error) {
       throw error.response.data; // Assuming the response contains data field with posts
@@ -84,6 +90,19 @@ export const getAllReviewsAction = createAsyncThunk(
     try {
       const response = await getAllReviews(id); // Call your API function here
       console.log(response);
+      return response.data; // Assuming the response contains data field with posts
+    } catch (error) {
+      throw error.response.data; // Assuming the response contains data field with posts
+    }
+  }
+);
+
+export const deleteProductAction = createAsyncThunk(
+  "deleteProductAction",
+  async (id, { dispatch }) => {
+    try {
+      const response = await deleteProduct(id); // Call your API function here
+      dispatch(updateProducts(id));
       return response.data; // Assuming the response contains data field with posts
     } catch (error) {
       throw error.response.data; // Assuming the response contains data field with posts

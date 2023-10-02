@@ -1,14 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useSnackbar } from "../context/SnackbarContext";
 import { clearError, clearMessage } from "../../Redux/Product/ProductSlice";
 import { createProductAction } from "../../Redux/Product/ProductAction";
+import { profile } from "../../assets";
+import "./AddProducts.css";
 
 const AddProducts = () => {
   const dispatch = useDispatch();
-  const { register, handleSubmit, setValue } = useForm();
+  const { register, handleSubmit, setValue, reset } = useForm();
+  const [avatar, setAvatar] = useState("");
+  const [avatarPreview, setAvatarPreview] = useState(profile);
   const { handleClick } = useSnackbar();
   const { error, message } = useSelector((state) => state.products);
   const category = [
@@ -20,7 +24,32 @@ const AddProducts = () => {
   ];
 
   const getFormData = (data) => {
-    dispatch(createProductAction(data));
+    const myForm = new FormData();
+    // Add data from the 'datas' object to the FormData
+    for (const key in data) {
+      myForm.append(key, data[key]);
+    }
+    myForm.set("avatar", avatar);
+    // console.log([...myForm.entries()]);
+
+    dispatch(createProductAction(myForm));
+    reset();
+  };
+
+  const onImageChange = async (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const img = await e.target.files[0];
+      if (img) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            setAvatarPreview(reader.result);
+            setAvatar(reader.result);
+          }
+        };
+        reader.readAsDataURL(e.target.files[0]);
+      }
+    }
   };
 
   useEffect(() => {
@@ -92,7 +121,16 @@ const AddProducts = () => {
       {/* File */}
       <Form.Group className="mb-3" controlId="exampleForm.ControlFile1">
         <Form.Label>Upload File</Form.Label>
-        <Form.Control type="file" />
+        <div className="fileImg">
+          <img src={avatarPreview} alt="Not found" className="preImg" />
+          <Form.Control
+            type="file"
+            name="image"
+            id="image"
+            accept="image/*"
+            onChange={onImageChange}
+          />
+        </div>
       </Form.Group>
 
       {/* Create Button */}

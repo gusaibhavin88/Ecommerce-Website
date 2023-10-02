@@ -14,7 +14,10 @@ import LaunchIcon from "@mui/icons-material/Launch";
 import { useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { fetchProducts } from "../../Redux/Product/ProductAction";
+import {
+  deleteProductAction,
+  fetchProducts,
+} from "../../Redux/Product/ProductAction";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -73,6 +76,10 @@ export default function SeeAllProducts() {
       fetchData();
     }
   }, [getProductData, products]);
+
+  const deleteproduct = (id) => {
+    dispatch(deleteProductAction(id));
+  };
   return (
     <div className="tableCont">
       <TableContainer component={Paper}>
@@ -107,12 +114,9 @@ export default function SeeAllProducts() {
                     <StyledTableCell align="left">{row.name}</StyledTableCell>
                     <StyledTableCell align="left">{row.stock}</StyledTableCell>
                     <StyledTableCell align="left">{row.price}</StyledTableCell>
-                    <StyledTableCell
-                      align="center"
-                      onClick={() => navigate(`/orderinfo/${row.id}`)}
-                    >
+                    <StyledTableCell align="center">
                       <EditIcon />
-                      <DeleteIcon />
+                      <DeleteIcon onClick={() => deleteproduct(row.id)} />
                     </StyledTableCell>
                   </StyledTableRow>
                 ))}

@@ -76,11 +76,22 @@ const AllProducts = () => {
             {products &&
               products.map((item, idx) => (
                 <Col key={idx} onClick={() => handleProductDetails(item._id)}>
-                  <Card style={{ gap: "1rem", cursor: "pointer" }}>
-                    <Card.Img variant="top" src={item.image[0]?.url} />
+                  <Card
+                    style={{
+                      gap: "1rem",
+                      cursor: "pointer",
+                      // border: "10px solid red",
+                      height: "35rem",
+                    }}
+                  >
+                    <Card.Img
+                      variant="top"
+                      src={item.image[0]?.url}
+                      className="imageSize"
+                    />
                     <Card.Body>
                       <Card.Title
-                        classname="fs-3"
+                        className="fs-3"
                         style={{ fontWeight: "bold" }}
                       >
                         {item.name}
@@ -93,7 +104,7 @@ const AllProducts = () => {
                       </div>
                       <Card.Text
                         style={{ fontWeight: "bold" }}
-                        classname="fs-5"
+                        className="fs-5"
                       >
                         ${item.price}
                       </Card.Text>
@@ -102,6 +113,21 @@ const AllProducts = () => {
                 </Col>
               ))}
           </Row>
+          {products?.length < 1 && (
+            <>
+              <div
+                style={{
+                  backgroundColor: "lightgray",
+                  padding: "10px",
+                  textAlign: "center",
+                }}
+              >
+                <span style={{ color: "red", fontWeight: "bold" }}>
+                  Products Not Found
+                </span>
+              </div>
+            </>
+          )}
         </div>
       </div>
       <div className="pagination">

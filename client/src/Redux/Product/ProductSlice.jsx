@@ -52,6 +52,14 @@ const productSlice = createSlice({
         state.product.reviews.push(review);
       }
     },
+    updateProducts: (state, action) => {
+      const id = action.payload;
+      // Find the product by ID and update it
+      const filterProducts = state.products.filter(
+        (product) => product._id !== id
+      );
+      state.products = filterProducts;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -61,7 +69,8 @@ const productSlice = createSlice({
       })
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.products = action.payload.data;
+        state.products = action.payload.products;
+        console.log(action);
         state.loading = false;
         state.productCount = action.payload.productCount;
         state.filteredCount = action.payload.filteredProducts;
@@ -138,6 +147,11 @@ const productSlice = createSlice({
 });
 
 export default productSlice.reducer;
-export const { clearError, clearMessage, clearIsUpdate, updateReview } =
-  productSlice.actions; // Export the clearError action
+export const {
+  clearError,
+  clearMessage,
+  clearIsUpdate,
+  updateReview,
+  updateProducts,
+} = productSlice.actions; // Export the clearError action
 // Export the async thunks to use in components

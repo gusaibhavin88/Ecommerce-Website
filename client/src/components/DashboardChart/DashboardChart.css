@@ -41,7 +41,7 @@
   font-weight: 600;
   align-items: center;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   background-color: #d68b7c;
   border-radius: 50%;

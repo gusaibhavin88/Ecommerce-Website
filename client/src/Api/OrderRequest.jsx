@@ -10,3 +10,5 @@ export const getMyOrders = () =>
   API.get("/order/me", { withCredentials: true });
 export const getMyOrder = (id) =>
   API.get(`/order/${id}`, { withCredentials: true });
+export const getDashboardData = () =>
+  API.get("dashboard/data", { withCredentials: true });

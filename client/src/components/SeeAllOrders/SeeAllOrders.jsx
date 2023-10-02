@@ -14,6 +14,7 @@ import LaunchIcon from "@mui/icons-material/Launch";
 import { useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { deleteProductAction } from "../../Redux/Product/ProductAction";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -80,8 +81,12 @@ export default function SeeAllOrders() {
       fetchData();
     }
   }, [getOrderData]);
+
+  const deleteproduct = (id) => {
+    dispatch(deleteProductAction(id));
+  };
   return (
-    <div className="tableCont">
+    <div className="tableCont" id="seeAllOrders">
       <h1>All Orders</h1>
       <TableContainer component={Paper}>
         <div style={{ maxHeight: "100vh", overflowY: "auto" }}>
@@ -120,7 +125,7 @@ export default function SeeAllOrders() {
                       onClick={() => navigate(`/orderinfo/${row.id}`)}
                     >
                       <EditIcon />
-                      <DeleteIcon />
+                      <DeleteIcon onClick={() => deleteproduct(row.id)} />
                     </StyledTableCell>
                   </StyledTableRow>
                 ))}

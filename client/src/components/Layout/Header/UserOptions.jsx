@@ -31,7 +31,7 @@ function MySpeedDial() {
 
   const handleActionClick = (action) => {
     if (action === "Dashboard") {
-      navigate("/dashboard");
+      navigate("/admin/dashboard");
     }
     if (action === "Home") {
       navigate("/");

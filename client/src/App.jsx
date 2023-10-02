@@ -168,7 +168,7 @@ const App = () => {
           />
           <Route
             exact
-            path="/dashboard"
+            path="/admin/dashboard"
             element={
               <WebLayout>
                 <Dashboard />

@@ -1,6 +1,7 @@
 import CatchAsyncErros from "../middleware/catchAsyncErrors.js";
 import OrderModel from "../model/orderModel.js";
 import ProductModel from "../model/productModel.js";
+import UserModel from "../model/userModel.js";
 import ErrorHandler from "../utilities/errorHandler.js";
 
 export const createNewOrder = CatchAsyncErros(async (req, resp, next) => {
@@ -122,12 +123,41 @@ export const deleteOrder = CatchAsyncErros(async (req, resp, next) => {
 export const DashboardDetails = CatchAsyncErros(async (req, resp, next) => {
   const orderCount = await OrderModel.countDocuments();
   const productCount = await ProductModel.countDocuments();
-  const userCount = await OrderModel.countDocuments();
-  if (!orderCount || !productCount || !userCount) {
-    return next(new ErrorHandler("Order not found", 400));
+  const userCount = await UserModel.countDocuments();
+  const allOrders = await OrderModel.find();
+  const allProducts = await ProductModel.find();
+
+  let totalAmount = 0;
+  allOrders.map((item) => {
+    const addAmount = item.totalPrice;
+    return (totalAmount = totalAmount + addAmount);
+  });
+
+  let outOfStock = 0;
+
+  allProducts.map((item) => {
+    if (item.stock < 1) {
+      outOfStock++;
+    }
+  });
+
+  if (
+    !orderCount ||
+    !productCount ||
+    !userCount ||
+    !outOfStock ||
+    !totalAmount
+  ) {
+    return next(new ErrorHandler("dashboard data not found", 400));
   }
 
-  resp
-    .status(200)
-    .json({ success: true, message: "Order deleted successfuly" });
+  resp.status(200).json({
+    success: true,
+    message: "Dashboard data fetched successfuly",
+    orderCount: orderCount,
+    productCount: productCount,
+    userCount: userCount,
+    totalAmount: totalAmount,
+    outOfStock: outOfStock,
+  });
 });

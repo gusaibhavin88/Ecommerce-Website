@@ -21,7 +21,9 @@ const Home = () => {
   const { user } = useSelector((state) => state.auth);
 
   const fetchAllPoducts = () => {
-    dispatch(fetchProducts({ keyword: "", currentPage: 1, price: [0, 25000] }));
+    dispatch(
+      fetchProducts({ keyword: "", currentPage: 1, price: [0, 1000000] })
+    );
   };
 
   useEffect(() => {
@@ -67,13 +69,31 @@ const Home = () => {
             className="conatiner"
             id="container"
             style={{
+              width: "100%",
               padding: "1rem",
-              display: "flex",
               alignItems: "center",
               justifyContent: "center",
+              display: "flex",
+              flexDirection: "column",
+              gap: "1rem",
             }}
           >
             <Product products={products} />
+
+            {products?.length < 1 && (
+              <>
+                <div
+                  className="productNF"
+                  style={{
+                    backgroundColor: "lightgray",
+                    padding: "10px",
+                    textAlign: "center",
+                  }}
+                >
+                  <span style={{ fontWeight: "bold" }}>Products Not Found</span>
+                </div>
+              </>
+            )}
           </div>
         </>
       )}

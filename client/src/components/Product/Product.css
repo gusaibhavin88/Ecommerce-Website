@@ -52,3 +52,20 @@
   border-radius: 50%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
+
+.imageSize {
+  width: 5rem;
+  height: 20rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.productNF {
+  background-color: lightgray;
+  padding: 10px;
+  text-align: center;
+}
+
+.productNF span {
+  color: red;
+  font-weight: bold;
+}

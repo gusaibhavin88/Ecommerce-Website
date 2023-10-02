@@ -18,18 +18,17 @@ function valuetext(value) {
 const ProductFilter = () => {
   const isSmallScreen = useMediaQuery("(max-width: 1024px)"); // Define your media query here
   const dispatch = useDispatch();
-  const [priceValue, setPriceValue] = useState([0, 25000]);
+  const [priceValue, setPriceValue] = useState([0, 1000000]);
   const [ratingValue, setRatingValue] = useState(0);
   const [category, setCategory] = useState("");
   const [activeCatagaryIndex, setActiveCatagaryIndex] = useState("");
 
   const catagory = [
-    "Laptop",
-    "Footwear",
-    "Bottoms",
-    "Tops",
-    "Camera",
-    "SmartPhone",
+    "Grocery",
+    "Mobiles",
+    "Fashion",
+    "Electronics",
+    "Appliances",
   ];
 
   const handleChangePrice = (event, newValue) => {
