@@ -9,7 +9,10 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import "./SeeAllOrders.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getMyOrdersAction } from "../../Redux/Payment/orderAction";
+import {
+  deleteOrderAction,
+  getMyOrdersAction,
+} from "../../Redux/Payment/orderAction";
 import LaunchIcon from "@mui/icons-material/Launch";
 import { useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
@@ -39,7 +42,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export default function SeeAllOrders() {
   const navigate = useNavigate();
   const [rows, setRows] = React.useState([]);
-  console.log(rows);
   const dispatch = useDispatch();
   const { myOrders } = useSelector((state) => state.order);
 
@@ -48,11 +50,10 @@ export default function SeeAllOrders() {
   }
 
   const getOrderData = React.useCallback(async () => {
-    console.log(myOrders, "myOrder");
     if (!myOrders) return [];
 
     const rowData = await Promise.all(
-      myOrders[0].map(async (item) => {
+      myOrders.map(async (item) => {
         return createData(
           item._id,
           item.paymentInfo.status,
@@ -71,19 +72,17 @@ export default function SeeAllOrders() {
 
   React.useEffect(() => {
     if (myOrders) {
-      console.log("huhuhuh", myOrders);
       async function fetchData() {
         const data = await getOrderData();
         setRows(data);
-        console.log(data, "data");
       }
 
       fetchData();
     }
   }, [getOrderData]);
 
-  const deleteproduct = (id) => {
-    dispatch(deleteProductAction(id));
+  const deleteOrder = (id) => {
+    dispatch(deleteOrderAction(id));
   };
   return (
     <div className="tableCont" id="seeAllOrders">
@@ -120,12 +119,9 @@ export default function SeeAllOrders() {
                     <StyledTableCell align="left">{row.status}</StyledTableCell>
                     <StyledTableCell align="left">{row.qty}</StyledTableCell>
                     <StyledTableCell align="left">{row.amount}</StyledTableCell>
-                    <StyledTableCell
-                      align="center"
-                      onClick={() => navigate(`/orderinfo/${row.id}`)}
-                    >
+                    <StyledTableCell align="center">
                       <EditIcon />
-                      <DeleteIcon onClick={() => deleteproduct(row.id)} />
+                      <DeleteIcon onClick={() => deleteOrder(row.id)} />
                     </StyledTableCell>
                   </StyledTableRow>
                 ))}

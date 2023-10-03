@@ -1,10 +1,10 @@
 import ProductModel from "../model/productModel.js";
 import ErrorHandler from "../utilities/errorHandler.js";
-import CatchAsyncErros from "../middleware/catchAsyncErrors.js";
+import CatchAsyncErrors from "../middleware/catchAsyncErrors.js";
 import Apifeatures from "../utilities/apiFeatures.js";
 import cloudinary from "cloudinary";
 
-export const getAllProduct = CatchAsyncErros(async (req, resp, next) => {
+export const getAllProduct = CatchAsyncErrors(async (req, resp, next) => {
   const resultPerPages = 8;
   const productCount = await ProductModel.countDocuments();
 
@@ -32,7 +32,7 @@ export const getAllProduct = CatchAsyncErros(async (req, resp, next) => {
   }
 });
 
-export const createProduct = CatchAsyncErros(async (req, resp, next) => {
+export const createProduct = CatchAsyncErrors(async (req, resp, next) => {
   req.body.user = req.user;
 
   let product = await ProductModel.findOne({ name: req.body.name });
@@ -71,7 +71,7 @@ export const createProduct = CatchAsyncErros(async (req, resp, next) => {
   }
 });
 
-export const updateProduct = CatchAsyncErros(async (req, resp, next) => {
+export const updateProduct = CatchAsyncErrors(async (req, resp, next) => {
   const { id } = req.params;
 
   try {
@@ -96,7 +96,7 @@ export const updateProduct = CatchAsyncErros(async (req, resp, next) => {
   }
 });
 
-export const getProduct = CatchAsyncErros(async (req, resp, next) => {
+export const getProduct = CatchAsyncErrors(async (req, resp, next) => {
   const productId = await ProductModel.findById(req.params.id);
   try {
     let product = await ProductModel.findById(productId);
@@ -115,7 +115,7 @@ export const getProduct = CatchAsyncErros(async (req, resp, next) => {
   }
 });
 
-export const deleteProduct = CatchAsyncErros(async (req, resp, next) => {
+export const deleteProduct = CatchAsyncErrors(async (req, resp, next) => {
   const { id } = req.params;
 
   let product = await ProductModel.findById(id);
@@ -135,7 +135,7 @@ export const deleteProduct = CatchAsyncErros(async (req, resp, next) => {
 
 // createProductReview
 
-export const createProductReview = CatchAsyncErros(async (req, resp, next) => {
+export const createProductReview = CatchAsyncErrors(async (req, resp, next) => {
   const { rating, comment, productId } = req.body;
 
   const review = {
@@ -185,7 +185,7 @@ export const createProductReview = CatchAsyncErros(async (req, resp, next) => {
   });
 });
 
-export const deleteReview = CatchAsyncErros(async (req, resp, next) => {
+export const deleteReview = CatchAsyncErrors(async (req, resp, next) => {
   const product = await ProductModel.findById(req.query.productId);
   if (!product) {
     return next(new ErrorHandler("Product not found", 401));
@@ -226,7 +226,7 @@ export const deleteReview = CatchAsyncErros(async (req, resp, next) => {
     .json({ success: true, message: "Review deleted successfully" });
 });
 
-export const getAllReviews = CatchAsyncErros(async (req, resp, next) => {
+export const getAllReviews = CatchAsyncErrors(async (req, resp, next) => {
   const productId = await ProductModel.findById(req.params.id);
   try {
     let product = await ProductModel.findById(productId);

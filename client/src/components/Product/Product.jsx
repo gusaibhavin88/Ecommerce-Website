@@ -36,8 +36,12 @@ const Product = ({ products }) => {
         {products &&
           products.map((item, idx) => (
             <Col key={idx} onClick={() => handleProductDetails(item._id)}>
-              <Card style={{ gap: "1rem", cursor: "pointer" }}>
-                <Card.Img variant="top" src={item.image[0]?.url} />
+              <Card style={{ gap: "1rem", cursor: "pointer", height: "35rem" }}>
+                <Card.Img
+                  variant="top"
+                  src={item.image[0]?.url}
+                  className="imageSize"
+                />
                 <Card.Body>
                   <Card.Title className="fs-3" style={{ fontWeight: "bold" }}>
                     {item.name}

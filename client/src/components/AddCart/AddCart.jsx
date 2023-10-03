@@ -28,9 +28,9 @@ function priceRow(quantity, unit) {
   return quantity * unit;
 }
 
-function createRow(desc, quantity, unit) {
+function createRow(name, quantity, unit, image) {
   const price = priceRow(quantity, unit);
-  return { desc, quantity, unit, price };
+  return { name, quantity, unit, price, image };
 }
 
 function subtotal(items) {
@@ -56,7 +56,7 @@ export default function AddCart() {
   };
   function createRowsFromDatabaseData() {
     const rowsList = cartList.map((item) =>
-      createRow(item.name, item.quantity, item.price)
+      createRow(item.name, item.quantity, item.price, item.image)
     );
     return rowsList;
   }
@@ -123,7 +123,7 @@ export default function AddCart() {
             <TableBody>
               {rows &&
                 rows.map((row, index) => (
-                  <TableRow key={row.desc} colSpan={1}>
+                  <TableRow key={row.name} colSpan={1}>
                     <TableCell
                       align="center"
                       style={{
@@ -134,7 +134,7 @@ export default function AddCart() {
                     >
                       <Typography>
                         <img
-                          src={logo}
+                          src={row.image[0].url}
                           style={{
                             width: "10rem",
                             height: "10rem",
@@ -153,7 +153,7 @@ export default function AddCart() {
                         <Typography
                           style={{ fontWeight: "bold", fontSize: "1.5rem" }}
                         >
-                          {row.desc}
+                          {row.name}
                         </Typography>
                         <Typography
                           style={{ color: "red" }}

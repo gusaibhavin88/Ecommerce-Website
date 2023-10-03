@@ -72,7 +72,7 @@ const AllProducts = () => {
             justifyContent: "center",
           }}
         >
-          <Row xs={2} md={4} className="g-4">
+          <Row xs={2} md={3} className="g-4">
             {products &&
               products.map((item, idx) => (
                 <Col key={idx} onClick={() => handleProductDetails(item._id)}>
@@ -80,7 +80,6 @@ const AllProducts = () => {
                     style={{
                       gap: "1rem",
                       cursor: "pointer",
-                      // border: "10px solid red",
                       height: "35rem",
                     }}
                   >

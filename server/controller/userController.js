@@ -1,12 +1,12 @@
 import ErrorHandler from "../utilities/errorHandler.js";
-import CatchAsyncErros from "../middleware/catchAsyncErrors.js";
+import CatchAsyncErrors from "../middleware/catchAsyncErrors.js";
 import UserModel from "../model/userModel.js";
 import { sendToken } from "../utilities/sendToken.js";
 import { sendMail } from "../utilities/sendMail.js";
 import crypto from "crypto";
 import cloudinary from "cloudinary";
 
-export const createUser = CatchAsyncErros(async (req, resp, next) => {
+export const createUser = CatchAsyncErrors(async (req, resp, next) => {
   const { name, email, password, avatar } = req.body;
 
   let user = await UserModel.findOne({ email: email });
@@ -42,7 +42,7 @@ export const createUser = CatchAsyncErros(async (req, resp, next) => {
   }
 });
 
-export const getUserDetails = CatchAsyncErros(async (req, resp, next) => {
+export const getUserDetails = CatchAsyncErrors(async (req, resp, next) => {
   const id = req.user._id;
   let user = await UserModel.findById(id);
 
@@ -57,7 +57,7 @@ export const getUserDetails = CatchAsyncErros(async (req, resp, next) => {
   });
 });
 
-export const loginUser = CatchAsyncErros(async (req, resp, next) => {
+export const loginUser = CatchAsyncErrors(async (req, resp, next) => {
   const { email, password } = req.body;
   const user = await UserModel.findOne({ email });
   if (!email || !password) {
@@ -75,7 +75,7 @@ export const loginUser = CatchAsyncErros(async (req, resp, next) => {
   }
 });
 
-export const logoutUser = CatchAsyncErros(async (req, resp, next) => {
+export const logoutUser = CatchAsyncErrors(async (req, resp, next) => {
   resp.cookie("token", null, {
     httpOnly: true,
     expires: new Date(Date.now()),
@@ -83,7 +83,7 @@ export const logoutUser = CatchAsyncErros(async (req, resp, next) => {
   resp.status(200).json({ success: true, message: "Logged out successfully" });
 });
 
-export const forgotPassword = CatchAsyncErros(async (req, resp, next) => {
+export const forgotPassword = CatchAsyncErrors(async (req, resp, next) => {
   const { email } = req.body;
   const user = await UserModel.findOne({ email: email });
   if (!user) {
@@ -112,7 +112,7 @@ export const forgotPassword = CatchAsyncErros(async (req, resp, next) => {
   }
 });
 
-export const resetPassword = CatchAsyncErros(async (req, res, next) => {
+export const resetPassword = CatchAsyncErrors(async (req, res, next) => {
   const { token } = req.params;
   console.log(token);
 
@@ -146,7 +146,7 @@ export const resetPassword = CatchAsyncErros(async (req, res, next) => {
   sendToken(res, 200, user, "User password has been successfully reset");
 });
 
-export const updatePassword = CatchAsyncErros(async (req, res, next) => {
+export const updatePassword = CatchAsyncErrors(async (req, res, next) => {
   const user = await UserModel.findById(req.user._id);
 
   const ismatch = await user.comparePassword(req.body.oldPassword);
@@ -164,7 +164,7 @@ export const updatePassword = CatchAsyncErros(async (req, res, next) => {
 
 // Update Profile
 
-export const updateProfile = CatchAsyncErros(async (req, resp, next) => {
+export const updateProfile = CatchAsyncErrors(async (req, resp, next) => {
   const { avatar } = req.body;
 
   let newUserData = {
@@ -202,7 +202,7 @@ export const updateProfile = CatchAsyncErros(async (req, resp, next) => {
 
 //Get Single User
 
-export const getUser = CatchAsyncErros(async (req, resp, next) => {
+export const getUser = CatchAsyncErrors(async (req, resp, next) => {
   const user = await UserModel.findById(req.params.id);
 
   resp.status(200).json({
@@ -214,7 +214,7 @@ export const getUser = CatchAsyncErros(async (req, resp, next) => {
 
 //Get All User
 
-export const getAllUsers = CatchAsyncErros(async (req, resp, next) => {
+export const getAllUsers = CatchAsyncErrors(async (req, resp, next) => {
   const users = await UserModel.find();
 
   resp.status(200).json({
@@ -226,7 +226,7 @@ export const getAllUsers = CatchAsyncErros(async (req, resp, next) => {
 
 // Update User -- Admin
 
-export const deleteUser = CatchAsyncErros(async (req, resp, next) => {
+export const deleteUser = CatchAsyncErrors(async (req, resp, next) => {
   const user = await UserModel.findById(req.params.id);
   if (!user) {
     return next(new ErrorHandler("User not Found", 400));

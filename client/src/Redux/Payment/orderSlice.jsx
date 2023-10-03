@@ -1,5 +1,9 @@
 import { createSlice, current } from "@reduxjs/toolkit";
-import { createNewOrderAction, getMyOrderAction } from "./orderAction";
+import {
+  createNewOrderAction,
+  deleteOrderAction,
+  getMyOrderAction,
+} from "./orderAction";
 
 // Define the initial state
 const initialState = {
@@ -24,7 +28,16 @@ const orderSlice = createSlice({
       state.isUpdated = false; // Clear the error by returning null or an empty string
     },
     addOrder: (state, action) => {
-      state.myOrders = [...state.myOrders, action.payload.data.order];
+      console.log(action);
+      state.myOrders = [...state.myOrders, ...action.payload.data.order];
+    },
+    removeOrder: (state, action) => {
+      const id = action.payload;
+      console.log(id);
+      // Create a new array without the order with the specified ID
+      const updatedOrders = state.myOrders.filter((order) => order._id !== id);
+      console.log(updatedOrders);
+      state.myOrders = updatedOrders;
     },
   },
   extraReducers: (builder) => {
@@ -56,11 +69,30 @@ const orderSlice = createSlice({
         state.status = "failed";
         state.error = action.error.message;
         state.loading = false;
+      })
+      .addCase(deleteOrderAction.pending, (state) => {
+        state.status = "loading";
+        state.loading = true;
+      })
+      .addCase(deleteOrderAction.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.loading = false;
+        state.message = action.payload.message;
+      })
+      .addCase(deleteOrderAction.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+        state.loading = false;
       });
   },
 });
 
 export default orderSlice.reducer;
-export const { clearError, clearMessage, clearIsUpdate, addOrder } =
-  orderSlice.actions; // Export the clearError action
+export const {
+  clearError,
+  clearMessage,
+  clearIsUpdate,
+  addOrder,
+  removeOrder,
+} = orderSlice.actions; // Export the clearError action
 // Export the async thunks to use in components

@@ -40,8 +40,12 @@ export default function MyOrders() {
   const dispatch = useDispatch();
   const { myOrders } = useSelector((state) => state.order);
 
-  function createData(id, status, qty, amount) {
-    return { id, status, qty, amount };
+  function createData(id, status, items, amount) {
+    let totalQty = items
+      .map((price) => price.quantity)
+      .reduce((sum, i) => sum + i, 0);
+
+    return { id, status, totalQty, amount };
   }
 
   const getOrderData = React.useCallback(async () => {
@@ -49,11 +53,12 @@ export default function MyOrders() {
     if (!myOrders) return [];
 
     const rowData = await Promise.all(
-      myOrders[0].map(async (item) => {
+      myOrders.map(async (item) => {
+        console.log(item);
         return createData(
           item._id,
           item.paymentInfo.status,
-          item.itemsPrice,
+          item.orderItems,
           item.itemsPrice
         );
       })
@@ -109,7 +114,9 @@ export default function MyOrders() {
                     {row.id}
                   </StyledTableCell>
                   <StyledTableCell align="right">{row.status}</StyledTableCell>
-                  <StyledTableCell align="right">{row.qty}</StyledTableCell>
+                  <StyledTableCell align="right">
+                    {row.totalQty}
+                  </StyledTableCell>
                   <StyledTableCell align="right">{row.amount}</StyledTableCell>
                   <StyledTableCell
                     align="right"

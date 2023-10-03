@@ -1,10 +1,10 @@
-import CatchAsyncErros from "../middleware/catchAsyncErrors.js";
+import CatchAsyncErrors from "../middleware/catchAsyncErrors.js";
 import OrderModel from "../model/orderModel.js";
 import ProductModel from "../model/productModel.js";
 import UserModel from "../model/userModel.js";
 import ErrorHandler from "../utilities/errorHandler.js";
 
-export const createNewOrder = CatchAsyncErros(async (req, resp, next) => {
+export const createNewOrder = CatchAsyncErrors(async (req, resp, next) => {
   const {
     shippingInfo,
     orderItems,
@@ -33,7 +33,7 @@ export const createNewOrder = CatchAsyncErros(async (req, resp, next) => {
   });
 });
 
-export const myOrder = CatchAsyncErros(async (req, resp, next) => {
+export const myOrder = CatchAsyncErrors(async (req, resp, next) => {
   const order = await OrderModel.find({ user: req.user._id }).populate(
     "user",
     "name email"
@@ -44,7 +44,7 @@ export const myOrder = CatchAsyncErros(async (req, resp, next) => {
   resp.status(200).json({ success: true, order, message: "My orders fetched" });
 });
 
-export const getAllOrders = CatchAsyncErros(async (req, resp, next) => {
+export const getAllOrders = CatchAsyncErrors(async (req, resp, next) => {
   const orders = await OrderModel.find();
   if (!orders) {
     return next(new ErrorHandler("Order not Found", 400));
@@ -61,7 +61,7 @@ export const getAllOrders = CatchAsyncErros(async (req, resp, next) => {
     .json({ success: true, orders, totalAmount, message: "My orders fetched" });
 });
 
-export const findMyOrder = CatchAsyncErros(async (req, resp, next) => {
+export const findMyOrder = CatchAsyncErrors(async (req, resp, next) => {
   const { id } = req.params;
   const myOrder = await OrderModel.findById(id);
   if (!myOrder) {
@@ -75,7 +75,7 @@ export const findMyOrder = CatchAsyncErros(async (req, resp, next) => {
 
 //Update Order Status -- Admin
 
-export const updateOrder = CatchAsyncErros(async (req, resp, next) => {
+export const updateOrder = CatchAsyncErrors(async (req, resp, next) => {
   const order = await OrderModel.findById(req.params.id);
 
   if (order.orderStatus === "Delivered") {
@@ -107,20 +107,19 @@ export const updateOrder = CatchAsyncErros(async (req, resp, next) => {
     .json({ success: true, message: "Order updated successfuly" });
 });
 
-export const deleteOrder = CatchAsyncErros(async (req, resp, next) => {
-  const order = await OrderModel.findById(req.params.id);
+export const deleteOrder = CatchAsyncErrors(async (req, res, next) => {
+  const order = await OrderModel.findByIdAndDelete(req.params.id);
 
   if (!order) {
-    return next(new ErrorHandler("Order not found", 400));
+    return next(new ErrorHandler("Order not found", 404)); // 404 for "Not Found"
   }
-  await order.remove();
 
-  resp
+  res
     .status(200)
-    .json({ success: true, message: "Order deleted successfuly" });
+    .json({ success: true, message: "Order deleted successfully" });
 });
 
-export const DashboardDetails = CatchAsyncErros(async (req, resp, next) => {
+export const DashboardDetails = CatchAsyncErrors(async (req, resp, next) => {
   const orderCount = await OrderModel.countDocuments();
   const productCount = await ProductModel.countDocuments();
   const userCount = await UserModel.countDocuments();

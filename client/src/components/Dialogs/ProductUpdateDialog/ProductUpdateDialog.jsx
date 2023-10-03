@@ -1,0 +1,216 @@
+import React, { useEffect, useState } from "react";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+import Form from "react-bootstrap/Form";
+import Rating from "@mui/material/Rating"; // Import Rating component from the correct path
+import { useDispatch, useSelector } from "react-redux";
+import {
+  createProductReview,
+  fetchproductDetails,
+} from "../../../Redux/Product/ProductAction";
+import { useParams } from "react-router-dom";
+import { useSnackbar } from "../../context/SnackbarContext";
+import { useForm } from "react-hook-form";
+import EditIcon from "@mui/icons-material/Edit";
+import {
+  clearError,
+  clearIsUpdate,
+  clearMessage,
+  updateReview,
+} from "../../../Redux/Product/ProductSlice";
+import { profile } from "../../../assets";
+
+function ProductUpdateDialog({ data }) {
+  console.log(data);
+  const dispatch = useDispatch();
+  const params = useParams();
+  const [show, setShow] = useState(false);
+  const [review, setReview] = useState({});
+  const { error, message, isUpdated } = useSelector((state) => state.products);
+  const { handleClick } = useSnackbar();
+  const { product } = useSelector((state) => state.products);
+  const { user } = useSelector((state) => state.auth);
+  const { register, handleSubmit, setValue, reset } = useForm();
+  const [avatar, setAvatar] = useState("");
+  const [avatarPreview, setAvatarPreview] = useState(profile);
+
+  const isReviewTrue = product?.reviews?.find((item) => {
+    return item.user._id === user?._id;
+  });
+
+  const onhandleChange = (e) => {
+    setReview({ ...review, [e.target.name]: e.target.value });
+  };
+  const handleClose = () => {
+    setShow(false);
+  };
+  const handleShow = () => {
+    setShow(true);
+  };
+  const onComplete = (response) => {
+    // dispatch(updateReview(response));
+    handleClick("success", response.data.message);
+  };
+  const onError = (response) => {};
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    dispatch(
+      createProductReview({
+        functions: {
+          onComplete,
+          onError,
+          formData: { ...review, productId: params.id },
+        },
+      })
+    );
+  };
+
+  const category = [
+    "Grocery",
+    "Mobiles",
+    "Fashion",
+    "Electronics",
+    "Appliances",
+  ];
+
+  // useEffect(() => {
+  //   if (isUpdated) {
+  //     handleClose();
+  //     setReview({});
+  //     setShow(false);
+  //     dispatch(clearIsUpdate());
+  //   }
+  //   if (error) {
+  //     handleClick("error", error);
+  //     dispatch(clearError());
+  //   }
+  //   if (message) {
+  //     handleClick("success", message);
+  //     dispatch(clearMessage());
+  //   }
+  //   if (isReviewTrue) {
+  //     var { comment, rating } = isReviewTrue;
+  //     console.log(comment);
+  //     console.log(rating);
+  //     setValue("comment", comment);
+  //     // setValue("rating", { test: rating });
+  //   }
+  // }, [dispatch, , error, message, isUpdated]);
+
+  useEffect(() => {
+    console.log(data);
+    // if (data) {
+    //   for (const key in data) {
+    //     console.log(key);
+    //     setValue(key, data[key]);
+    //   }
+    // }
+  }, [data]);
+
+  return (
+    <>
+      <EditIcon onClick={handleShow} />
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Update Product</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form style={{ marginTop: "2rem" }}>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Product name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter product name"
+                {...register("name", { required: true })}
+              />
+            </Form.Group>
+
+            {/* Description */}
+            <Form.Group
+              className="mb-3"
+              controlId="exampleForm.ControlTextarea1"
+            >
+              <Form.Label>Description</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                placeholder="Enter product description"
+                {...register("description", { required: true })}
+              />
+            </Form.Group>
+
+            {/* Category */}
+            <Form.Group className="mb-3" controlId="exampleForm.ControlSelect1">
+              <Form.Label>Category</Form.Label>
+              <Form.Control
+                as="select"
+                {...register("category", { required: true })}
+              >
+                {category &&
+                  ["Select", ...category].map((item) => {
+                    return <option>{item}</option>;
+                  })}
+                {/* Add more category options as needed */}
+              </Form.Control>
+            </Form.Group>
+
+            {/* Price */}
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput3">
+              <Form.Label>Price</Form.Label>
+              <Form.Control
+                type="number"
+                placeholder="Enter price"
+                {...register("price", { required: true })}
+              />
+            </Form.Group>
+
+            {/* Stock */}
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
+              <Form.Label>Stock</Form.Label>
+              <Form.Control
+                type="number"
+                placeholder="Enter stock quantity"
+                {...register("stock", { required: true })}
+              />
+            </Form.Group>
+
+            {/* File */}
+            <Form.Group className="mb-3" controlId="exampleForm.ControlFile1">
+              <Form.Label>Upload File</Form.Label>
+              <div className="fileImg">
+                <img src={avatarPreview} alt="Not found" className="preImg" />
+                <Form.Control
+                  type="file"
+                  name="image"
+                  id="image"
+                  accept="image/*"
+                  // onChange={onImageChange}
+                />
+              </div>
+            </Form.Group>
+
+            {/* Create Button */}
+            <Button
+              variant="primary"
+              type="submit"
+              // onClick={handleSubmit(getFormData)}
+            >
+              Create
+            </Button>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" type="submit" onClick={onSubmit}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
+  );
+}
+
+export default ProductUpdateDialog;

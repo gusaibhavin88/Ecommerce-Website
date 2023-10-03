@@ -18,6 +18,7 @@ import {
   deleteProductAction,
   fetchProducts,
 } from "../../Redux/Product/ProductAction";
+import ProductUpdateDialog from "../Dialogs/ProductUpdateDialog/ProductUpdateDialog";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -115,7 +116,7 @@ export default function SeeAllProducts() {
                     <StyledTableCell align="left">{row.stock}</StyledTableCell>
                     <StyledTableCell align="left">{row.price}</StyledTableCell>
                     <StyledTableCell align="center">
-                      <EditIcon />
+                      <ProductUpdateDialog data={row} />
                       <DeleteIcon onClick={() => deleteproduct(row.id)} />
                     </StyledTableCell>
                   </StyledTableRow>
