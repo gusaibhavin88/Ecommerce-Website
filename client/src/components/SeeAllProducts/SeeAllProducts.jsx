@@ -18,7 +18,7 @@ import {
   deleteProductAction,
   fetchProducts,
 } from "../../Redux/Product/ProductAction";
-import ProductUpdateDialog from "../Dialogs/ProductUpdateDialog/ProductUpdateDialog";
+import { useDialog } from "../context/dialogContext";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -46,6 +46,7 @@ export default function SeeAllProducts() {
   const dispatch = useDispatch();
   const { myOrders } = useSelector((state) => state.order);
   const { products } = useSelector((state) => state.products);
+  const { handleShow } = useDialog();
 
   function createData(id, name, stock, price) {
     return { id, name, stock, price };
@@ -62,6 +63,10 @@ export default function SeeAllProducts() {
 
     return rowData;
   }, [products]);
+
+  const openDialog = (item) => {
+    handleShow("productupdate", item);
+  };
 
   React.useEffect(() => {
     dispatch(fetchProducts({ currentPage: 1 }));
@@ -116,7 +121,7 @@ export default function SeeAllProducts() {
                     <StyledTableCell align="left">{row.stock}</StyledTableCell>
                     <StyledTableCell align="left">{row.price}</StyledTableCell>
                     <StyledTableCell align="center">
-                      <ProductUpdateDialog data={row} />
+                      <EditIcon onClick={() => openDialog(row.id)} />
                       <DeleteIcon onClick={() => deleteproduct(row.id)} />
                     </StyledTableCell>
                   </StyledTableRow>

@@ -48,7 +48,6 @@ const Shipping = () => {
       phoneNo: Number(data.phoneNo),
       pinCode: Number(data.pinCode),
     };
-    console.log(newData);
     dispatch(updateShipping(newData));
     navigate("/order/confirm");
   };

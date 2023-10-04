@@ -1,44 +1,34 @@
 import React, { createContext, useState, useContext } from "react";
-import CustomisedSnackbar from "../Snackbar/CustomisedSnackbar";
-import { useSelector } from "react-redux";
+import ProductUpdateDialog from "../Dialogs/ProductUpdateDialog/ProductUpdateDialog";
 
 const dialogContext = createContext();
 
 const DialogProvider = ({ children }) => {
-  const { error } = useSelector((state) => state.products);
-  const [open, setOpen] = useState(false);
-  const [severity, setSeverity] = useState("");
-  const [message, setMessage] = useState("");
+  const [show, setShow] = useState(false);
+  const [productId, setProductId] = useState("");
 
-  const handleClick = () => {
-    setSeverity(severity);
-    setMessage(message);
-    setOpen(true);
+  const handleClose = () => {
+    setShow(false);
+    setProductId("");
   };
-
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setOpen(false);
+  const handleShow = (dialogtype, dialogdata) => {
+    setShow(true);
+    setProductId(dialogdata);
   };
-
   const contextValue = {
-    handleClick,
+    handleShow,
     handleClose,
   };
 
   return (
-    <SnackbarContext.Provider value={contextValue}>
+    <dialogContext.Provider value={contextValue}>
       {children}
-      <CustomisedSnackbar
-        open={open}
-        severity={severity}
-        message={message}
+      <ProductUpdateDialog
+        show={show}
         handleClose={handleClose}
+        productId={productId}
       />
-    </SnackbarContext.Provider>
+    </dialogContext.Provider>
   );
 };
 

@@ -48,7 +48,6 @@ export const getAllUsesrAction = createAsyncThunk(
   async () => {
     try {
       const response = await getAllUsers(); // Call your API function here
-      console.log(response);
       return response; // Assuming the response contains the data you need
     } catch (error) {
       throw error.response.data; // Assuming the response contains error data

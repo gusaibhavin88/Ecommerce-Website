@@ -23,6 +23,9 @@
 .seeallproduct {
   cursor: pointer;
   font-size: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
 }
 .seeallproduct:hover {
   color: rgb(115, 115, 232);
@@ -54,8 +57,7 @@
 }
 
 .imageSize {
-  width: 5rem;
-  height: 20rem;
+  min-height: 30rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 

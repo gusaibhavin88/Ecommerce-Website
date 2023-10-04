@@ -23,7 +23,6 @@ export const fetchProducts = createAsyncThunk(
     rating = 0,
     category = "",
   }) => {
-    console.log(price[1]);
     let link = `/products?keyword=${keyword}&price[gte]=${price[0]}&price[lte]=${price[1]}&rating[gte]=${rating}&page=${currentPage}`;
     if (category === "Reset Filter") {
       link = `/products?keyword=${keyword}&price[gte]=${price[0]}&price[lte]=${price[1]}&rating[gte]=${rating}&page=${currentPage}`;
@@ -89,7 +88,6 @@ export const getAllReviewsAction = createAsyncThunk(
   async (id) => {
     try {
       const response = await getAllReviews(id); // Call your API function here
-      console.log(response);
       return response.data; // Assuming the response contains data field with posts
     } catch (error) {
       throw error.response.data; // Assuming the response contains data field with posts

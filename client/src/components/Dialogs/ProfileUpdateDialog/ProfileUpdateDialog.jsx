@@ -48,9 +48,7 @@ function ProfileUpdateDialog({ user }) {
   };
 
   const onComplete = (response) => {};
-  const onError = (response) => {
-    console.log(response);
-  };
+  const onError = (response) => {};
 
   const onSubmit = (data) => {
     const myForm = new FormData();
@@ -59,7 +57,7 @@ function ProfileUpdateDialog({ user }) {
       myForm.append(key, data[key]);
     }
     myForm.set("avatar", avatar);
-    console.log([...myForm.entries()]);
+    // console.log([...myForm.entries()]);
     dispatch(
       updateProfileAction({
         functions: {

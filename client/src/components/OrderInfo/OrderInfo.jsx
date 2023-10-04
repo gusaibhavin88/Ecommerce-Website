@@ -10,7 +10,6 @@ const OrderInfo = () => {
   const dispatch = useDispatch();
   const params = useParams();
   const { order } = useSelector((state) => state.order);
-  console.log(order);
   const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {

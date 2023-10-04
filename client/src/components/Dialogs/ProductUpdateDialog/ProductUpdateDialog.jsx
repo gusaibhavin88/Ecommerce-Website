@@ -1,52 +1,28 @@
+import EditIcon from "@mui/icons-material/Edit";
 import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import Rating from "@mui/material/Rating"; // Import Rating component from the correct path
+import Modal from "react-bootstrap/Modal";
+import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import {
   createProductReview,
   fetchproductDetails,
 } from "../../../Redux/Product/ProductAction";
-import { useParams } from "react-router-dom";
-import { useSnackbar } from "../../context/SnackbarContext";
-import { useForm } from "react-hook-form";
-import EditIcon from "@mui/icons-material/Edit";
-import {
-  clearError,
-  clearIsUpdate,
-  clearMessage,
-  updateReview,
-} from "../../../Redux/Product/ProductSlice";
 import { profile } from "../../../assets";
+import { getMyOrderAction } from "../../../Redux/Payment/orderAction";
 
-function ProductUpdateDialog({ data }) {
-  console.log(data);
+function ProductUpdateDialog({ show, handleClose, productId }) {
   const dispatch = useDispatch();
   const params = useParams();
-  const [show, setShow] = useState(false);
   const [review, setReview] = useState({});
-  const { error, message, isUpdated } = useSelector((state) => state.products);
-  const { handleClick } = useSnackbar();
-  const { product } = useSelector((state) => state.products);
-  const { user } = useSelector((state) => state.auth);
+  const [open, setOpen] = useState(false);
   const { register, handleSubmit, setValue, reset } = useForm();
   const [avatar, setAvatar] = useState("");
   const [avatarPreview, setAvatarPreview] = useState(profile);
 
-  const isReviewTrue = product?.reviews?.find((item) => {
-    return item.user._id === user?._id;
-  });
-
-  const onhandleChange = (e) => {
-    setReview({ ...review, [e.target.name]: e.target.value });
-  };
-  const handleClose = () => {
-    setShow(false);
-  };
-  const handleShow = () => {
-    setShow(true);
-  };
+  const { product } = useSelector((state) => state.products);
   const onComplete = (response) => {
     // dispatch(updateReview(response));
     handleClick("success", response.data.message);
@@ -73,45 +49,38 @@ function ProductUpdateDialog({ data }) {
     "Appliances",
   ];
 
-  // useEffect(() => {
-  //   if (isUpdated) {
-  //     handleClose();
-  //     setReview({});
-  //     setShow(false);
-  //     dispatch(clearIsUpdate());
-  //   }
-  //   if (error) {
-  //     handleClick("error", error);
-  //     dispatch(clearError());
-  //   }
-  //   if (message) {
-  //     handleClick("success", message);
-  //     dispatch(clearMessage());
-  //   }
-  //   if (isReviewTrue) {
-  //     var { comment, rating } = isReviewTrue;
-  //     console.log(comment);
-  //     console.log(rating);
-  //     setValue("comment", comment);
-  //     // setValue("rating", { test: rating });
-  //   }
-  // }, [dispatch, , error, message, isUpdated]);
+  const getProductInfo = () => {
+    dispatch(
+      fetchproductDetails({
+        functions: {
+          // onComplete,
+          id: productId,
+        },
+      })
+    );
+  };
 
   useEffect(() => {
-    console.log(data);
-    // if (data) {
-    //   for (const key in data) {
-    //     console.log(key);
-    //     setValue(key, data[key]);
-    //   }
-    // }
-  }, [data]);
+    setOpen(show);
+  }, [show]);
+
+  useEffect(() => {
+    for (const key in product) {
+      setValue(key, product[key]);
+    }
+  }, [product]);
+
+  useEffect(() => {
+    if (productId) {
+      getProductInfo();
+    }
+  }, [productId]);
 
   return (
     <>
-      <EditIcon onClick={handleShow} />
+      {/* <EditIcon onClick={handleShow} /> */}
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={open} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Update Product</Modal.Title>
         </Modal.Header>

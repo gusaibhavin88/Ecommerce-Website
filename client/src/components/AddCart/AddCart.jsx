@@ -71,7 +71,6 @@ export default function AddCart() {
   React.useEffect(() => {
     async function fetchData() {
       const data = await createRowsFromDatabaseData();
-      console.log(data);
       setRows(data);
     }
 

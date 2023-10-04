@@ -80,7 +80,7 @@ const AllProducts = () => {
                     style={{
                       gap: "1rem",
                       cursor: "pointer",
-                      height: "35rem",
+                      height: "40rem",
                     }}
                   >
                     <Card.Img

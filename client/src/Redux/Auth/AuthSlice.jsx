@@ -30,7 +30,6 @@ const authSlice = createSlice({
       state.message = null; // Clear the error by returning null or an empty string
     },
     updateProfile: (state, action) => {
-      console.log(action.payload);
       state.user = {
         ...state.user,
         ...action.payload.data.user,

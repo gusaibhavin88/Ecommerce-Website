@@ -74,8 +74,6 @@ function ReviewDialog() {
     }
     if (isReviewTrue) {
       var { comment, rating } = isReviewTrue;
-      console.log(comment);
-      console.log(rating);
       setValue("comment", comment);
       // setValue("rating", { test: rating });
     }

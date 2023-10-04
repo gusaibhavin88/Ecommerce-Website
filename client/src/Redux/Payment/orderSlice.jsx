@@ -28,15 +28,12 @@ const orderSlice = createSlice({
       state.isUpdated = false; // Clear the error by returning null or an empty string
     },
     addOrder: (state, action) => {
-      console.log(action);
-      state.myOrders = [...state.myOrders, ...action.payload.data.order];
+      state.myOrders = action.payload.data.order;
     },
     removeOrder: (state, action) => {
       const id = action.payload;
-      console.log(id);
       // Create a new array without the order with the specified ID
       const updatedOrders = state.myOrders.filter((order) => order._id !== id);
-      console.log(updatedOrders);
       state.myOrders = updatedOrders;
     },
   },
@@ -60,7 +57,6 @@ const orderSlice = createSlice({
         state.loading = true;
       })
       .addCase(getMyOrderAction.fulfilled, (state, action) => {
-        console.log(action);
         state.status = "succeeded";
         state.loading = false;
         state.order = action.payload.order;

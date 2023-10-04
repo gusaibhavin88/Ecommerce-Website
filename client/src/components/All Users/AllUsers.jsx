@@ -46,7 +46,6 @@ export default function AllUsers() {
   }
 
   const getOrderData = React.useCallback(async () => {
-    console.log(allUsers, "alluser");
     if (!allUsers) return [];
 
     const rowData = await Promise.all(
@@ -64,11 +63,9 @@ export default function AllUsers() {
 
   React.useEffect(() => {
     if (allUsers) {
-      console.log("huhuhuh", allUsers);
       async function fetchData() {
         const data = await getOrderData();
         setRows(data);
-        console.log(data, "data");
       }
 
       fetchData();

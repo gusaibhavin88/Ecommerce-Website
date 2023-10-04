@@ -39,8 +39,6 @@ export default function SeeAllReviews() {
   const navigate = useNavigate();
   const [rows, setRows] = React.useState([]);
   const [reviewId, setReviewId] = React.useState("");
-  console.log(reviewId);
-  console.log(rows);
   const dispatch = useDispatch();
   const { reviews } = useSelector((state) => state.products);
 
@@ -49,7 +47,6 @@ export default function SeeAllReviews() {
   }
 
   const getReviewsData = React.useCallback(async () => {
-    console.log(reviews, "myOrder");
     if (!reviews) return [];
 
     const rowData = await Promise.all(

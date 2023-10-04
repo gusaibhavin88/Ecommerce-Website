@@ -50,7 +50,6 @@ export const getMyOrderAction = createAsyncThunk(
 export const deleteOrderAction = createAsyncThunk(
   "deleteOrderAction",
   async (id, { dispatch }) => {
-    console.log(id);
     const response = await deleteOrder(id); // Call your API function here
     dispatch(removeOrder(id));
     return response.data; // Assuming the response contains data field with posts

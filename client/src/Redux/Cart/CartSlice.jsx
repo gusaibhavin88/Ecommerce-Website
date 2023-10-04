@@ -41,7 +41,6 @@ const cartSlice = createSlice({
         "shippingDetail",
         JSON.stringify(state.shippingDetail)
       );
-      console.log(state.shippingDetail);
       // state.cartList = false; // Clear the error by returning null or an empty string
     },
 

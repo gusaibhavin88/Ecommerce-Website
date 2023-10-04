@@ -36,7 +36,6 @@ const productSlice = createSlice({
     },
     updateReview: (state, action) => {
       const { review } = action.payload.data;
-      console.log(review);
       // Find the product by ID and update it
 
       const productIndex = state.product.reviews.findIndex(
@@ -70,7 +69,6 @@ const productSlice = createSlice({
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.products = action.payload.products;
-        console.log(action);
         state.loading = false;
         state.productCount = action.payload.productCount;
         state.filteredCount = action.payload.filteredProducts;
@@ -119,7 +117,6 @@ const productSlice = createSlice({
         state.loading = false;
         state.isUpdated = true;
         state.message = action.payload.message;
-        console.log(action);
         // console.log(current(state.product)); // Current required to get the value of Product
       })
       .addCase(createProductAction.rejected, (state, action) => {

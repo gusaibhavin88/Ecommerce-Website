@@ -36,7 +36,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export default function MyOrders() {
   const navigate = useNavigate();
   const [rows, setRows] = React.useState([]);
-  console.log(rows);
   const dispatch = useDispatch();
   const { myOrders } = useSelector((state) => state.order);
 
@@ -49,12 +48,10 @@ export default function MyOrders() {
   }
 
   const getOrderData = React.useCallback(async () => {
-    console.log(myOrders, "myOrder");
     if (!myOrders) return [];
 
     const rowData = await Promise.all(
       myOrders.map(async (item) => {
-        console.log(item);
         return createData(
           item._id,
           item.paymentInfo.status,
@@ -73,11 +70,9 @@ export default function MyOrders() {
 
   React.useEffect(() => {
     if (myOrders) {
-      console.log("huhuhuh", myOrders);
       async function fetchData() {
         const data = await getOrderData();
         setRows(data);
-        console.log(data, "data");
       }
 
       fetchData();
