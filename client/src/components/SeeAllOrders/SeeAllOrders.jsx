@@ -120,7 +120,9 @@ export default function SeeAllOrders() {
                     <StyledTableCell align="left">{row.qty}</StyledTableCell>
                     <StyledTableCell align="left">{row.amount}</StyledTableCell>
                     <StyledTableCell align="center">
-                      <EditIcon />
+                      <EditIcon
+                        onClick={() => navigate(`/admin/orderupdate/${row.id}`)}
+                      />
                       <DeleteIcon onClick={() => deleteOrder(row.id)} />
                     </StyledTableCell>
                   </StyledTableRow>

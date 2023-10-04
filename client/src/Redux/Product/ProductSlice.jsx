@@ -61,14 +61,12 @@ const productSlice = createSlice({
       state.products = filterProducts;
     },
     editProduct: (state, action) => {
-      console.log(action);
-      const id = action.payload._id;
-
+      const id = action.payload.data.product._id;
       // Find the product by ID and update it
       const filterProducts = state.products.filter(
         (product) => product._id !== id
       );
-      state.products = [...filterProducts, action.payload];
+      state.products = [action.payload.data.product, ...filterProducts];
     },
   },
   extraReducers: (builder) => {
@@ -156,11 +154,9 @@ const productSlice = createSlice({
         state.loading = true;
       })
       .addCase(updateProductAction.fulfilled, (state, action) => {
-        console.log(action);
         state.status = "succeeded";
         state.loading = false;
-        state.isUpdated = true;
-        state.reviews = action.payload.reviews;
+        state.message = action.payload.data.message;
       })
       .addCase(updateProductAction.rejected, (state, action) => {
         state.status = "failed";

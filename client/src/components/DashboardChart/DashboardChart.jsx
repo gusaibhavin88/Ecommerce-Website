@@ -3,7 +3,6 @@ import { Doughnut, Line } from "react-chartjs-2";
 import "chart.js/auto"; // Import this line to enable automatic scale registration
 import "./DashboardChart.css";
 import { getDashboardData } from "../../Api/OrderRequest";
-import { NavLink } from "react-router-dom";
 
 const DashboardChart = () => {
   const [dashboardData, setDashboardData] = useState("");
@@ -35,6 +34,7 @@ const DashboardChart = () => {
 
   const fetchDashboardData = async () => {
     const response = await getDashboardData();
+    console.log(response);
     setDashboardData(response.data);
   };
 

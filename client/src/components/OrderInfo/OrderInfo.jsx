@@ -1,16 +1,21 @@
 import { Button } from "@mui/material";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { getMyOrderAction } from "../../Redux/Payment/orderAction";
 import MetaData from "../Layout/MetaData";
 import "../OrderConfirm/OrderConfirm.css";
+import { Form } from "react-bootstrap";
 
 const OrderInfo = () => {
   const dispatch = useDispatch();
   const params = useParams();
   const { order } = useSelector((state) => state.order);
   const { user } = useSelector((state) => state.auth);
+  const location = useLocation();
+
+  const orderUpdate = location.pathname.includes("orderupdate");
+  console.log(orderUpdate);
 
   useEffect(() => {
     dispatch(getMyOrderAction(params.id));
@@ -94,6 +99,23 @@ const OrderInfo = () => {
               })}
           </div>
         </div>
+        {orderUpdate && (
+          <div className="rightList">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlSelect1">
+              <h2 style={{ textAlign: "center" }}>Process Order</h2>
+              <Form.Control as="select" className="updateStatus">
+                {true &&
+                  ["Select", "shipped", "delivered"].map((item) => {
+                    return <option>{item}</option>;
+                  })}
+                {/* Add more category options as needed */}
+              </Form.Control>
+              <Button variant="contained" style={{ alignSelf: "center" }}>
+                Check Out
+              </Button>
+            </Form.Group>
+          </div>
+        )}
       </div>
     </div>
   );

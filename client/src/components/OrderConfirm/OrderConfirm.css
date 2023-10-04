@@ -51,7 +51,11 @@
   justify-content: space-between;
   align-items: center;
 }
-
+.rightList {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
 .totalamount > h5 {
   font-weight: 400;
 }
@@ -106,4 +110,8 @@
   }
 }
 
+.updateStatus {
+  display: flex;
+  width: 30rem;
+}
 /* Add more media queries as needed for different screen sizes */

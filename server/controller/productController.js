@@ -74,46 +74,50 @@ export const createProduct = CatchAsyncErrors(async (req, resp, next) => {
 export const updateProduct = CatchAsyncErrors(async (req, resp, next) => {
   const { id } = req.params;
   let myCloud = null;
-  try {
-    if (req.body.avatar) {
-      console.log("first");
-      myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
-        folder: "Ecommerce-Site/Avatars",
-        width: 150,
-        crop: "scale",
-      });
-    }
-    let product = await ProductModel.findById(id);
 
-    if (!product) {
-      return next(new ErrorHandler("Product not found", 401));
-    }
-    if (req.body.avatar) {
-      var { avatar, ...otherData } = req.body;
-      otherData.image = {
-        public_id: myCloud.public_id,
-        url: myCloud.secure_url,
-      };
-
-      var updatedProduct = await ProductModel.findByIdAndUpdate(id, otherData, {
-        new: true, // Return the updated document
-        runValidators: true, // Validate the updated data against the model's schema
-      });
-    } else {
-      var updatedProduct = await ProductModel.findByIdAndUpdate(id, req.body, {
-        new: true, // Return the updated document
-        runValidators: true, // Validate the updated data against the model's schema
-      });
-    }
-
-    resp.status(200).json({
-      success: true,
-      product: updatedProduct,
-      message: "Product updated successfully",
+  if (req.body.avatar) {
+    myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+      folder: "Ecommerce-Site/Avatars",
+      width: 150,
+      crop: "scale",
     });
-  } catch (error) {
-    resp.status(500).json({ success: false, message: error.message });
   }
+
+  let product = await ProductModel.findById(id);
+
+  if (!product) {
+    return next(new ErrorHandler("Product not found", 404)); // Change status code to 404 for resource not found
+  }
+
+  let updatedProduct;
+
+  if (req.body.avatar) {
+    console.log("fds");
+    const { avatar, ...otherData } = req.body;
+    otherData.image = {
+      public_id: myCloud.public_id,
+      url: myCloud.secure_url,
+    };
+
+    updatedProduct = await ProductModel.findByIdAndUpdate(id, otherData, {
+      new: true, // Return the updated document
+      runValidators: true, // Validate the updated data against the model's schema
+    });
+  } else {
+    const { image, reviews, ...otherData } = req.body;
+    updatedProduct = await ProductModel.findByIdAndUpdate(id, otherData, {
+      new: true, // Return the updated document
+      runValidators: true, // Validate the updated data against the model's schema
+    });
+  }
+
+  console.log("first"); // Not sure why you have this log here
+
+  resp.status(200).json({
+    success: true,
+    product: updatedProduct,
+    message: "Product updated successfully",
+  });
 });
 
 export const getProduct = CatchAsyncErrors(async (req, resp, next) => {

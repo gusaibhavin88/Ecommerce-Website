@@ -8,7 +8,7 @@ import {
   updateProduct,
 } from "../../Api/ProductRequest";
 import axios from "axios";
-import { updateProducts, updateReview, editProduct } from "./ProductSlice";
+import { editProduct, updateProducts, updateReview } from "./ProductSlice";
 
 const API = axios.create({
   baseURL: "http://localhost:5000/api/v1",
@@ -120,7 +120,9 @@ export const updateProductAction = createAsyncThunk(
         },
       };
       const response = await updateProduct(id, formData, config); // Call your API function here
-      onComplete(response);
+      console.log(response);
+      dispatch(editProduct(response));
+      // onComplete(response);
       return response; // Assuming the response contains data field with posts
     } catch (error) {
       throw error.response.data; // Assuming the response contains data field with posts

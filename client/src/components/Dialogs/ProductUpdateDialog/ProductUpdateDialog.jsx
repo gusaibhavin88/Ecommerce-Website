@@ -24,6 +24,7 @@ function ProductUpdateDialog({ show, handleClose, productId }) {
   const { product } = useSelector((state) => state.products);
 
   const onComplete = (response) => {
+    console.log("FKok");
     // dispatch(updateReview(response));
     handleClick("success", response.data.message);
   };
@@ -33,7 +34,9 @@ function ProductUpdateDialog({ show, handleClose, productId }) {
     for (const key in data) {
       myForm.append(key, data[key]);
     }
-    myForm.set("avatar", avatar);
+    if (avatar) {
+      myForm.set("avatar", avatar);
+    }
     // console.log([...myForm.entries()]);
 
     dispatch(

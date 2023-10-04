@@ -168,6 +168,15 @@ const App = () => {
           />
           <Route
             exact
+            path="/admin/orderupdate/:id"
+            element={
+              <WebLayout>
+                <OrderInfo />
+              </WebLayout>
+            }
+          />
+          <Route
+            exact
             path="/admin/dashboard"
             element={
               <WebLayout>
