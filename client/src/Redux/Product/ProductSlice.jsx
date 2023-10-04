@@ -5,6 +5,7 @@ import {
   fetchProducts,
   fetchproductDetails,
   getAllReviewsAction,
+  updateProductAction,
 } from "./ProductAction";
 
 // Define the initial state
@@ -58,6 +59,16 @@ const productSlice = createSlice({
         (product) => product._id !== id
       );
       state.products = filterProducts;
+    },
+    editProduct: (state, action) => {
+      console.log(action);
+      const id = action.payload._id;
+
+      // Find the product by ID and update it
+      const filterProducts = state.products.filter(
+        (product) => product._id !== id
+      );
+      state.products = [...filterProducts, action.payload];
     },
   },
   extraReducers: (builder) => {
@@ -139,6 +150,22 @@ const productSlice = createSlice({
         state.status = "failed";
         state.loading = false;
         state.error = action.error.message;
+      })
+      .addCase(updateProductAction.pending, (state) => {
+        state.status = "loading";
+        state.loading = true;
+      })
+      .addCase(updateProductAction.fulfilled, (state, action) => {
+        console.log(action);
+        state.status = "succeeded";
+        state.loading = false;
+        state.isUpdated = true;
+        state.reviews = action.payload.reviews;
+      })
+      .addCase(updateProductAction.rejected, (state, action) => {
+        state.status = "failed";
+        state.loading = false;
+        state.error = action.error.message;
       });
   },
 });
@@ -150,5 +177,6 @@ export const {
   clearIsUpdate,
   updateReview,
   updateProducts,
+  editProduct,
 } = productSlice.actions; // Export the clearError action
 // Export the async thunks to use in components

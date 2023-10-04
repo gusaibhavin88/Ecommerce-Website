@@ -4,10 +4,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-image: url("../../../assets/shoes.jpg");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  background-color: #8fb3ff;
   text-align: center;
   gap: 1rem;
 }
@@ -38,8 +35,9 @@
   height: 100vh;
   top: 0;
   left: 0;
+  background-color: white;
   -webkit-clip-path: polygon(100% 66%, 0% 100%, 100% 100%);
-  clip-path: polygon(100% 68%, 0 100%, 100% 100%);
+          clip-path: polygon(100% 66%, 0% 100%, 100% 100%);
 }
 
 .homeHeading {
@@ -50,36 +48,6 @@
   text-align: center;
 }
 .homeHeading h2 {
-  border-bottom: 2px solid #8fb3ff;
+  border-bottom: 1px solid #8fb3ff;
   padding: 1rem;
-} /*# sourceMappingURL=Home.css.map */
-
-.conatiner {
-  display: flex;
-  flex-direction: row;
-  padding: 2rem;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  gap: 1rem;
-}
-
-.loginloading {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  z-index: 9999;
-}
-
-.productNF {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  color: red;
-  align-items: center;
-}
+}/*# sourceMappingURL=Home.css.map */

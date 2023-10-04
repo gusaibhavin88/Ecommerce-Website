@@ -14,3 +14,6 @@ export const getAllReviews = (id) =>
   API.get(`getallreviews/${id}`, { withCredentials: true });
 export const deleteProduct = (id) =>
   API.delete(`/product/${id}`, { withCredentials: true });
+export const updateProduct = async (id, formData) => {
+  return API.put(`/product/${id}`, formData, { withCredentials: true });
+};

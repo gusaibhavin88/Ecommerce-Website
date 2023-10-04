@@ -5,9 +5,10 @@ import {
   getAllReviews,
   getProductDetails,
   productReview,
+  updateProduct,
 } from "../../Api/ProductRequest";
 import axios from "axios";
-import { updateProducts, updateReview } from "./ProductSlice";
+import { updateProducts, updateReview, editProduct } from "./ProductSlice";
 
 const API = axios.create({
   baseURL: "http://localhost:5000/api/v1",
@@ -102,6 +103,25 @@ export const deleteProductAction = createAsyncThunk(
       const response = await deleteProduct(id); // Call your API function here
       dispatch(updateProducts(id));
       return response.data; // Assuming the response contains data field with posts
+    } catch (error) {
+      throw error.response.data; // Assuming the response contains data field with posts
+    }
+  }
+);
+
+export const updateProductAction = createAsyncThunk(
+  "updateProductAction",
+  async ({ functions }, { dispatch }) => {
+    const { formData, id, onError, onComplete } = functions;
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+      const response = await updateProduct(id, formData, config); // Call your API function here
+      onComplete(response);
+      return response; // Assuming the response contains data field with posts
     } catch (error) {
       throw error.response.data; // Assuming the response contains data field with posts
     }

@@ -9,9 +9,9 @@ import { useParams } from "react-router-dom";
 import {
   createProductReview,
   fetchproductDetails,
+  updateProductAction,
 } from "../../../Redux/Product/ProductAction";
 import { profile } from "../../../assets";
-import { getMyOrderAction } from "../../../Redux/Payment/orderAction";
 
 function ProductUpdateDialog({ show, handleClose, productId }) {
   const dispatch = useDispatch();
@@ -21,21 +21,28 @@ function ProductUpdateDialog({ show, handleClose, productId }) {
   const { register, handleSubmit, setValue, reset } = useForm();
   const [avatar, setAvatar] = useState("");
   const [avatarPreview, setAvatarPreview] = useState(profile);
-
   const { product } = useSelector((state) => state.products);
+
   const onComplete = (response) => {
     // dispatch(updateReview(response));
     handleClick("success", response.data.message);
   };
   const onError = (response) => {};
-  const onSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
+    const myForm = new FormData();
+    for (const key in data) {
+      myForm.append(key, data[key]);
+    }
+    myForm.set("avatar", avatar);
+    // console.log([...myForm.entries()]);
+
     dispatch(
-      createProductReview({
+      updateProductAction({
         functions: {
-          onComplete,
-          onError,
-          formData: { ...review, productId: params.id },
+          id: productId,
+          formData: myForm,
+          onComplete: onComplete,
+          onError: onError,
         },
       })
     );
@@ -60,6 +67,22 @@ function ProductUpdateDialog({ show, handleClose, productId }) {
     );
   };
 
+  const onImageChange = async (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const img = await e.target.files[0];
+      if (img) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            setAvatarPreview(reader.result);
+            setAvatar(reader.result);
+          }
+        };
+        reader.readAsDataURL(e.target.files[0]);
+      }
+    }
+  };
+
   useEffect(() => {
     setOpen(show);
   }, [show]);
@@ -67,6 +90,9 @@ function ProductUpdateDialog({ show, handleClose, productId }) {
   useEffect(() => {
     for (const key in product) {
       setValue(key, product[key]);
+      if (key === "image") {
+        setAvatarPreview(product.image[0].url);
+      }
     }
   }, [product]);
 
@@ -154,7 +180,7 @@ function ProductUpdateDialog({ show, handleClose, productId }) {
                   name="image"
                   id="image"
                   accept="image/*"
-                  // onChange={onImageChange}
+                  onChange={onImageChange}
                 />
               </div>
             </Form.Group>
@@ -173,7 +199,11 @@ function ProductUpdateDialog({ show, handleClose, productId }) {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" type="submit" onClick={onSubmit}>
+          <Button
+            variant="primary"
+            type="submit"
+            onClick={handleSubmit(onSubmit)}
+          >
             Save Changes
           </Button>
         </Modal.Footer>
