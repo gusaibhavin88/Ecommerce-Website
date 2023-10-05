@@ -4,6 +4,8 @@ import ProductModel from "../model/productModel.js";
 import UserModel from "../model/userModel.js";
 import ErrorHandler from "../utilities/errorHandler.js";
 
+// ---------------------  createNewOrder  ---------------------
+
 export const createNewOrder = CatchAsyncErrors(async (req, resp, next) => {
   const {
     shippingInfo,
@@ -33,6 +35,8 @@ export const createNewOrder = CatchAsyncErrors(async (req, resp, next) => {
   });
 });
 
+// ---------------------  myOrder  ---------------------
+
 export const myOrder = CatchAsyncErrors(async (req, resp, next) => {
   const order = await OrderModel.find({ user: req.user._id }).populate(
     "user",
@@ -43,6 +47,8 @@ export const myOrder = CatchAsyncErrors(async (req, resp, next) => {
   }
   resp.status(200).json({ success: true, order, message: "My orders fetched" });
 });
+
+// ---------------------  getAllOrders  ---------------------
 
 export const getAllOrders = CatchAsyncErrors(async (req, resp, next) => {
   const orders = await OrderModel.find();
@@ -61,6 +67,8 @@ export const getAllOrders = CatchAsyncErrors(async (req, resp, next) => {
     .json({ success: true, orders, totalAmount, message: "My orders fetched" });
 });
 
+// ---------------------  findMyOrder  ---------------------
+
 export const findMyOrder = CatchAsyncErrors(async (req, resp, next) => {
   const { id } = req.params;
   const myOrder = await OrderModel.findById(id);
@@ -73,7 +81,7 @@ export const findMyOrder = CatchAsyncErrors(async (req, resp, next) => {
     .json({ success: true, order: myOrder, message: "My order fetched" });
 });
 
-//Update Order Status -- Admin
+// ---------------------  findMyOrder  --------------------- Admin
 
 export const updateOrder = CatchAsyncErrors(async (req, resp, next) => {
   const order = await OrderModel.findById(req.params.id);
@@ -107,6 +115,8 @@ export const updateOrder = CatchAsyncErrors(async (req, resp, next) => {
     .json({ success: true, message: "Order updated successfuly" });
 });
 
+// ---------------------  deleteOrder  --------------------- Admin
+
 export const deleteOrder = CatchAsyncErrors(async (req, res, next) => {
   const order = await OrderModel.findByIdAndDelete(req.params.id);
 
@@ -118,6 +128,8 @@ export const deleteOrder = CatchAsyncErrors(async (req, res, next) => {
     .status(200)
     .json({ success: true, message: "Order deleted successfully" });
 });
+
+// ---------------------  DashboardDetails  --------------------- Admin
 
 export const DashboardDetails = CatchAsyncErrors(async (req, resp, next) => {
   const orderCount = await OrderModel.countDocuments();

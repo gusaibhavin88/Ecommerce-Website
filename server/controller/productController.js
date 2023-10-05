@@ -4,6 +4,8 @@ import CatchAsyncErrors from "../middleware/catchAsyncErrors.js";
 import Apifeatures from "../utilities/apiFeatures.js";
 import cloudinary from "cloudinary";
 
+// ---------------------  getAllProduct  ---------------------
+
 export const getAllProduct = CatchAsyncErrors(async (req, resp, next) => {
   const resultPerPages = 8;
   const productCount = await ProductModel.countDocuments();
@@ -31,6 +33,8 @@ export const getAllProduct = CatchAsyncErrors(async (req, resp, next) => {
     });
   }
 });
+
+// ---------------------  createProduct  ---------------------
 
 export const createProduct = CatchAsyncErrors(async (req, resp, next) => {
   req.body.user = req.user;
@@ -70,6 +74,8 @@ export const createProduct = CatchAsyncErrors(async (req, resp, next) => {
     resp.status(500).json({ success: false, message: error.message });
   }
 });
+
+// ---------------------  updateProduct  --------------------- Admin
 
 export const updateProduct = CatchAsyncErrors(async (req, resp, next) => {
   const { id } = req.params;
@@ -120,6 +126,8 @@ export const updateProduct = CatchAsyncErrors(async (req, resp, next) => {
   });
 });
 
+// ---------------------  getProduct  ---------------------
+
 export const getProduct = CatchAsyncErrors(async (req, resp, next) => {
   const productId = await ProductModel.findById(req.params.id);
   try {
@@ -139,6 +147,8 @@ export const getProduct = CatchAsyncErrors(async (req, resp, next) => {
   }
 });
 
+// ---------------------  deleteProduct  ---------------------
+
 export const deleteProduct = CatchAsyncErrors(async (req, resp, next) => {
   const { id } = req.params;
 
@@ -157,7 +167,7 @@ export const deleteProduct = CatchAsyncErrors(async (req, resp, next) => {
   });
 });
 
-// createProductReview
+// ---------------------  createProductReview  ---------------------
 
 export const createProductReview = CatchAsyncErrors(async (req, resp, next) => {
   const { rating, comment, productId } = req.body;
@@ -209,6 +219,8 @@ export const createProductReview = CatchAsyncErrors(async (req, resp, next) => {
   });
 });
 
+// ---------------------  deleteReview  ---------------------
+
 export const deleteReview = CatchAsyncErrors(async (req, resp, next) => {
   const product = await ProductModel.findById(req.query.productId);
   if (!product) {
@@ -249,6 +261,8 @@ export const deleteReview = CatchAsyncErrors(async (req, resp, next) => {
     .status(200)
     .json({ success: true, message: "Review deleted successfully" });
 });
+
+// ---------------------  getAllReviews  ---------------------
 
 export const getAllReviews = CatchAsyncErrors(async (req, resp, next) => {
   const productId = await ProductModel.findById(req.params.id);

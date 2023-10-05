@@ -6,6 +6,8 @@ import { sendMail } from "../utilities/sendMail.js";
 import crypto from "crypto";
 import cloudinary from "cloudinary";
 
+// createUser
+
 export const createUser = CatchAsyncErrors(async (req, resp, next) => {
   const { name, email, password, avatar } = req.body;
 
@@ -42,6 +44,8 @@ export const createUser = CatchAsyncErrors(async (req, resp, next) => {
   }
 });
 
+// getUserDetails
+
 export const getUserDetails = CatchAsyncErrors(async (req, resp, next) => {
   const id = req.user._id;
   let user = await UserModel.findById(id);
@@ -56,6 +60,8 @@ export const getUserDetails = CatchAsyncErrors(async (req, resp, next) => {
     message: "User fetched successfully",
   });
 });
+
+// loginUser
 
 export const loginUser = CatchAsyncErrors(async (req, resp, next) => {
   const { email, password } = req.body;
@@ -75,6 +81,8 @@ export const loginUser = CatchAsyncErrors(async (req, resp, next) => {
   }
 });
 
+// logoutUser
+
 export const logoutUser = CatchAsyncErrors(async (req, resp, next) => {
   resp.cookie("token", null, {
     httpOnly: true,
@@ -82,6 +90,8 @@ export const logoutUser = CatchAsyncErrors(async (req, resp, next) => {
   });
   resp.status(200).json({ success: true, message: "Logged out successfully" });
 });
+
+// forgotPassword
 
 export const forgotPassword = CatchAsyncErrors(async (req, resp, next) => {
   const { email } = req.body;
@@ -111,6 +121,8 @@ export const forgotPassword = CatchAsyncErrors(async (req, resp, next) => {
     next(new ErrorHandler(error.message, 500));
   }
 });
+
+// resetPassword
 
 export const resetPassword = CatchAsyncErrors(async (req, res, next) => {
   const { token } = req.params;
@@ -145,6 +157,8 @@ export const resetPassword = CatchAsyncErrors(async (req, res, next) => {
   sendToken(res, 200, user, "User password has been successfully reset");
 });
 
+// updatePassword
+
 export const updatePassword = CatchAsyncErrors(async (req, res, next) => {
   const user = await UserModel.findById(req.user._id);
 
@@ -161,7 +175,7 @@ export const updatePassword = CatchAsyncErrors(async (req, res, next) => {
   sendToken(res, 200, user, "User password has been successfully updated");
 });
 
-// Update Profile
+// updateProfile
 
 export const updateProfile = CatchAsyncErrors(async (req, resp, next) => {
   const { avatar } = req.body;
@@ -199,7 +213,7 @@ export const updateProfile = CatchAsyncErrors(async (req, resp, next) => {
   });
 });
 
-//Get Single User
+// getUser
 
 export const getUser = CatchAsyncErrors(async (req, resp, next) => {
   const user = await UserModel.findById(req.params.id);
@@ -211,7 +225,7 @@ export const getUser = CatchAsyncErrors(async (req, resp, next) => {
   });
 });
 
-//Get All User
+// getAllUsers
 
 export const getAllUsers = CatchAsyncErrors(async (req, resp, next) => {
   const users = await UserModel.find();
@@ -223,7 +237,7 @@ export const getAllUsers = CatchAsyncErrors(async (req, resp, next) => {
   });
 });
 
-// Update User -- Admin
+// deleteUser
 
 export const deleteUser = CatchAsyncErrors(async (req, resp, next) => {
   const user = await UserModel.findById(req.params.id);
