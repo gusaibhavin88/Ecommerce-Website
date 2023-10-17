@@ -34,6 +34,7 @@ const AddProducts = () => {
 
     dispatch(createProductAction(myForm));
     reset();
+    setAvatarPreview("");
   };
 
   const onImageChange = async (e) => {
@@ -70,6 +71,7 @@ const AddProducts = () => {
         <Form.Label>Product name</Form.Label>
         <Form.Control
           type="text"
+          maxLength={20}
           placeholder="Enter product name"
           {...register("name", { required: true })}
         />

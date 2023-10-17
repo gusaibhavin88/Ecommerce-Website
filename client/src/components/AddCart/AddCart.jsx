@@ -127,8 +127,9 @@ export default function AddCart() {
                       align="center"
                       style={{
                         display: "flex",
-                        justifyContent: "center",
                         alignItems: "center",
+                        justifyContent: "center",
+                        gap: "2rem",
                       }}
                     >
                       <Typography>

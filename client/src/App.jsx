@@ -28,6 +28,8 @@ import OrderSuccess from "./components/OrderSuccess/OrderSuccess";
 import MyOrders from "./components/MyOrders/MyOrders";
 import OrderInfo from "./components/OrderInfo/OrderInfo";
 import Dashboard from "./components/Pages/Dashboard/Dashboard";
+import ContactPage from "./components/contactPage/contactPage";
+import ContactInfo from "./components/contactPage/contactPage";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -181,6 +183,15 @@ const App = () => {
             element={
               <WebLayout>
                 <Dashboard />
+              </WebLayout>
+            }
+          />
+          <Route
+            exact
+            path="/contact"
+            element={
+              <WebLayout>
+                <ContactInfo />
               </WebLayout>
             }
           />

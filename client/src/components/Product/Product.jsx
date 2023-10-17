@@ -40,9 +40,10 @@ const Product = ({ products }) => {
                 style={{
                   gap: "1rem",
                   cursor: "pointer",
-                  height: "40rem",
+                  height: "25rem",
                   display: "flex",
                   textAlign: "left",
+                  padding: "1rem",
                 }}
               >
                 <Card.Img

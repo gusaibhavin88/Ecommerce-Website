@@ -45,7 +45,7 @@ const AllProducts = () => {
       dispatch(clearError());
     }
     if (currentPage) {
-      dispatch(fetchProducts({ currentPage: 1 }));
+      dispatch(fetchProducts({ currentPage: currentPage }));
     }
   }, [dispatch, currentPage, error]);
 
@@ -57,10 +57,11 @@ const AllProducts = () => {
       <div
         style={{
           width: "100%",
-          padding: "1rem",
+          padding: "2rem 6rem",
           justifyContent: "center",
           display: "flex",
           gap: "1rem",
+          display: "flex",
         }}
       >
         <ProductFilter />
@@ -80,7 +81,8 @@ const AllProducts = () => {
                     style={{
                       gap: "1rem",
                       cursor: "pointer",
-                      height: "40rem",
+                      height: "25rem",
+                      padding: "1rem",
                     }}
                   >
                     <Card.Img

@@ -80,8 +80,21 @@ export default function MyOrders() {
   }, [getOrderData]);
   return (
     <div className="tableCont">
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 700 }} aria-label="customized table">
+      <TableContainer
+        component={Paper}
+        style={{
+          alignItems: "center",
+          justifyContent: "center",
+          display: "flex",
+          width: "85%",
+          padding: "2rem 1rem",
+        }}
+      >
+        <Table
+          aria-label="customized table"
+          className="table"
+          sx={{ width: "100%" }}
+        >
           <TableHead style={{ color: "red" }}>
             <TableRow>
               <StyledTableCell style={{ fontSize: "1.2rem" }}>

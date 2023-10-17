@@ -1,1 +1,10 @@
 /*# sourceMappingURL=ProductDetails.css.map */
+.detailImg {
+  display: block;
+  width: 12vw;
+  height: 20vw;
+  max-width: 100%;
+  min-width: 100px;
+  min-height: 100px;
+  object-fit: contain;
+}

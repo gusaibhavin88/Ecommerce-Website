@@ -78,14 +78,14 @@ const ProductDetails = () => {
     >
       <Row xs={1} md={1} className="g-4">
         <Col>
-          <Card style={{ gap: "0.5rem" }}>
+          <Card style={{ gap: "0.5rem", padding: "1rem" }}>
             <Carousel data-bs-theme="dark">
               {product.image &&
                 product.image.map((img) => {
                   return (
                     <Carousel.Item>
                       <img
-                        className="d-block w-100"
+                        className="d-block w-100 detailImg"
                         src={img.url}
                         alt="First slide"
                       />
