@@ -187,15 +187,6 @@ function ProductUpdateDialog({ show, handleClose, productId }) {
                 />
               </div>
             </Form.Group>
-
-            {/* Create Button */}
-            <Button
-              variant="primary"
-              type="submit"
-              // onClick={handleSubmit(getFormData)}
-            >
-              Create
-            </Button>
           </Form>
         </Modal.Body>
         <Modal.Footer>

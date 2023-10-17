@@ -16,9 +16,11 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
   deleteProductAction,
-  fetchProducts,
+  fetchAllProducts,
 } from "../../Redux/Product/ProductAction";
 import { useDialog } from "../context/dialogContext";
+import { useSnackbar } from "../context/SnackbarContext";
+import { clearError, clearMessage } from "../../Redux/Product/ProductSlice";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -44,9 +46,10 @@ export default function SeeAllProducts() {
   const navigate = useNavigate();
   const [rows, setRows] = React.useState([]);
   const dispatch = useDispatch();
-  const { myOrders } = useSelector((state) => state.order);
-  const { products } = useSelector((state) => state.products);
-  const { handleShow } = useDialog();
+  const products = useSelector((state) => state.products.allProducts);
+  const { error, message } = useSelector((state) => state.products);
+  const { handleShow, handleClose } = useDialog();
+  const { handleClick } = useSnackbar();
 
   function createData(id, name, stock, price) {
     return { id, name, stock, price };
@@ -69,7 +72,7 @@ export default function SeeAllProducts() {
   };
 
   React.useEffect(() => {
-    dispatch(fetchProducts({ currentPage: 1 }));
+    dispatch(fetchAllProducts());
   }, [dispatch]);
 
   React.useEffect(() => {
@@ -86,49 +89,61 @@ export default function SeeAllProducts() {
   const deleteproduct = (id) => {
     dispatch(deleteProductAction(id));
   };
+
+  React.useEffect(() => {
+    if (error) {
+      handleClick("error", error);
+      dispatch(clearError());
+      handleClose();
+    }
+    if (message) {
+      handleClick("success", message);
+      dispatch(clearMessage());
+      handleClose();
+    }
+  }, [dispatch, , error, message]);
+
   return (
     <div className="tableCont">
       <TableContainer component={Paper}>
-        <div style={{ maxHeight: "100vh", overflowY: "auto" }}>
-          <Table sx={{ minWidth: 700 }} aria-label="customized table">
-            <TableHead style={{ color: "red" }}>
-              <TableRow>
-                <StyledTableCell style={{ fontSize: "1.2rem" }}>
-                  Product ID
-                </StyledTableCell>
-                <StyledTableCell style={{ fontSize: "1.2rem" }} align="left">
-                  Name
-                </StyledTableCell>
-                <StyledTableCell style={{ fontSize: "1.2rem" }} align="left">
-                  Stock
-                </StyledTableCell>
-                <StyledTableCell style={{ fontSize: "1.2rem" }} align="left">
-                  Price
-                </StyledTableCell>
-                <StyledTableCell style={{ fontSize: "1.2rem" }} align="center">
-                  Actions
-                </StyledTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows &&
-                rows.map((row) => (
-                  <StyledTableRow key={row.id}>
-                    <StyledTableCell component="th" scope="row">
-                      {row.id}
-                    </StyledTableCell>
-                    <StyledTableCell align="left">{row.name}</StyledTableCell>
-                    <StyledTableCell align="left">{row.stock}</StyledTableCell>
-                    <StyledTableCell align="left">{row.price}</StyledTableCell>
-                    <StyledTableCell align="center">
-                      <EditIcon onClick={() => openDialog(row.id)} />
-                      <DeleteIcon onClick={() => deleteproduct(row.id)} />
-                    </StyledTableCell>
-                  </StyledTableRow>
-                ))}
-            </TableBody>
-          </Table>
-        </div>
+        <Table sx={{ minWidth: 700 }} aria-label="customized table">
+          <TableHead style={{ color: "red" }}>
+            <TableRow>
+              <StyledTableCell style={{ fontSize: "1.2rem" }}>
+                Product ID
+              </StyledTableCell>
+              <StyledTableCell style={{ fontSize: "1.2rem" }} align="left">
+                Name
+              </StyledTableCell>
+              <StyledTableCell style={{ fontSize: "1.2rem" }} align="left">
+                Stock
+              </StyledTableCell>
+              <StyledTableCell style={{ fontSize: "1.2rem" }} align="left">
+                Price
+              </StyledTableCell>
+              <StyledTableCell style={{ fontSize: "1.2rem" }} align="center">
+                Actions
+              </StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows &&
+              rows.map((row) => (
+                <StyledTableRow key={row.id}>
+                  <StyledTableCell component="th" scope="row">
+                    {row.id}
+                  </StyledTableCell>
+                  <StyledTableCell align="left">{row.name}</StyledTableCell>
+                  <StyledTableCell align="left">{row.stock}</StyledTableCell>
+                  <StyledTableCell align="left">{row.price}</StyledTableCell>
+                  <StyledTableCell align="center">
+                    <EditIcon onClick={() => openDialog(row.id)} />
+                    <DeleteIcon onClick={() => deleteproduct(row.id)} />
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))}
+          </TableBody>
+        </Table>
       </TableContainer>
     </div>
   );

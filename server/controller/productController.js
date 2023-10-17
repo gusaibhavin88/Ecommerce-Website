@@ -4,10 +4,27 @@ import CatchAsyncErrors from "../middleware/catchAsyncErrors.js";
 import Apifeatures from "../utilities/apiFeatures.js";
 import cloudinary from "cloudinary";
 
-// ---------------------  getAllProduct  ---------------------
+// ---------------------  getAllProducts  ---------------------
 
-export const getAllProduct = CatchAsyncErrors(async (req, resp, next) => {
-  const resultPerPages = 8;
+export const getAllProducts = CatchAsyncErrors(async (req, resp, next) => {
+  const products = await ProductModel.find();
+  console.log(products);
+
+  if (!products) {
+    return next(new ErrorHandler("Products Not Found", 401));
+  } else {
+    resp.status(200).json({
+      success: true,
+      products: products,
+      message: "All Products fetched successfully",
+    });
+  }
+});
+
+// ---------------------  getProducts  ---------------------
+
+export const getProducts = CatchAsyncErrors(async (req, resp, next) => {
+  const resultPerPages = 9;
   const productCount = await ProductModel.countDocuments();
 
   const apifeatures = new Apifeatures(ProductModel.find(), req.query)
@@ -79,6 +96,9 @@ export const createProduct = CatchAsyncErrors(async (req, resp, next) => {
 
 export const updateProduct = CatchAsyncErrors(async (req, resp, next) => {
   const { id } = req.params;
+
+  const existProduct = await ProductModel.findById(id);
+  const imgPublicId = existProduct.image[0].public_id;
   let myCloud = null;
 
   if (req.body.avatar) {
@@ -87,8 +107,15 @@ export const updateProduct = CatchAsyncErrors(async (req, resp, next) => {
       width: 150,
       crop: "scale",
     });
-  }
 
+    cloudinary.v2.uploader.destroy(imgPublicId, (error, result) => {
+      if (error) {
+        console.error(error);
+      } else {
+        console.log("Image deleted:", result);
+      }
+    });
+  }
   let product = await ProductModel.findById(id);
 
   if (!product) {
@@ -97,27 +124,23 @@ export const updateProduct = CatchAsyncErrors(async (req, resp, next) => {
 
   let updatedProduct;
 
+  const { image, reviews, ...otherData } = req.body;
+  updatedProduct = await ProductModel.findByIdAndUpdate(id, otherData, {
+    new: true, // Return the updated document
+    runValidators: true, // Validate the updated data against the model's schema
+  });
+
   if (req.body.avatar) {
-    console.log("fds");
-    const { avatar, ...otherData } = req.body;
+    const { avatar, reviews, ...otherData } = req.body;
     otherData.image = {
       public_id: myCloud.public_id,
       url: myCloud.secure_url,
     };
-
-    updatedProduct = await ProductModel.findByIdAndUpdate(id, otherData, {
-      new: true, // Return the updated document
-      runValidators: true, // Validate the updated data against the model's schema
-    });
-  } else {
-    const { image, reviews, ...otherData } = req.body;
     updatedProduct = await ProductModel.findByIdAndUpdate(id, otherData, {
       new: true, // Return the updated document
       runValidators: true, // Validate the updated data against the model's schema
     });
   }
-
-  console.log("first"); // Not sure why you have this log here
 
   resp.status(200).json({
     success: true,

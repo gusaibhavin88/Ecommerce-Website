@@ -17,3 +17,6 @@ export const deleteProduct = (id) =>
 export const updateProduct = async (id, formData) => {
   return API.put(`/product/${id}`, formData, { withCredentials: true });
 };
+export const getAllProductsAdmin = () => {
+  return API.get("allproducts", { withCredentials: true });
+};

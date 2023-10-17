@@ -4,9 +4,10 @@ import {
   createProductReview,
   deleteProduct,
   deleteReview,
-  getAllProduct,
+  getAllProducts,
   getAllReviews,
   getProduct,
+  getProducts,
   updateProduct,
 } from "../controller/productController.js";
 import {
@@ -16,7 +17,8 @@ import {
 
 const router = express.Router();
 
-router.get("/products", getAllProduct);
+router.get("/products", getProducts);
+router.get("/allproducts", isAuthenticated, getAllProducts);
 router.post(
   "/product/new",
   isAuthenticated,

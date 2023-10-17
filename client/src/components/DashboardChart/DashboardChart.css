@@ -62,10 +62,10 @@
 
 .totalAmount {
   color: white;
+  height: 6rem;
   font-weight: 600;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   background-color: #6688ed;
   width: 100%;

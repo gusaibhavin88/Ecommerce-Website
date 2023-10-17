@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   createProduct,
   deleteProduct,
+  getAllProductsAdmin,
   getAllReviews,
   getProductDetails,
   productReview,
@@ -127,5 +128,14 @@ export const updateProductAction = createAsyncThunk(
     } catch (error) {
       throw error.response.data; // Assuming the response contains data field with posts
     }
+  }
+);
+
+// fetchAllProducts;
+export const fetchAllProducts = createAsyncThunk(
+  "fetchAllProducts",
+  async () => {
+    const response = await getAllProductsAdmin(); // Call your API function here
+    return response.data; // Assuming the response contains data field with posts
   }
 );

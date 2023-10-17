@@ -2,6 +2,8 @@ import { createSlice, current } from "@reduxjs/toolkit";
 import {
   createProductAction,
   createProductReview,
+  deleteProductAction,
+  fetchAllProducts,
   fetchProducts,
   fetchproductDetails,
   getAllReviewsAction,
@@ -11,6 +13,7 @@ import {
 // Define the initial state
 const initialState = {
   products: [],
+  allProducts: [],
   product: {},
   status: "idle",
   error: null,
@@ -55,13 +58,18 @@ const productSlice = createSlice({
     updateProducts: (state, action) => {
       const id = action.payload;
       // Find the product by ID and update it
-      const filterProducts = state.products.filter(
+      const filterProducts = state.allProducts.filter(
         (product) => product._id !== id
       );
-      state.products = filterProducts;
+      state.allProducts = filterProducts;
     },
     editProduct: (state, action) => {
       const id = action.payload.data.product._id;
+      // Find the product by ID and update it
+      const filterProductsAdmin = state.allProducts.filter(
+        (product) => product._id !== id
+      );
+      state.allProducts = [action.payload.data.product, ...filterProductsAdmin];
       // Find the product by ID and update it
       const filterProducts = state.products.filter(
         (product) => product._id !== id
@@ -162,6 +170,36 @@ const productSlice = createSlice({
         state.status = "failed";
         state.loading = false;
         state.error = action.error.message;
+      })
+      .addCase(fetchAllProducts.pending, (state) => {
+        state.status = "loading";
+        state.loading = true;
+      })
+      .addCase(fetchAllProducts.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.allProducts = action.payload.products;
+        state.loading = false;
+      })
+      .addCase(fetchAllProducts.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+        state.loading = false;
+        state.message = action.payload.message;
+      })
+      .addCase(deleteProductAction.pending, (state) => {
+        state.status = "loading";
+        state.loading = true;
+      })
+      .addCase(deleteProductAction.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.allProducts = action.payload.products;
+        state.loading = false;
+        state.message = action.payload.message;
+      })
+      .addCase(deleteProductAction.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+        state.loading = false;
       });
   },
 });

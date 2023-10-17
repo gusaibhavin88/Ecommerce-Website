@@ -141,7 +141,7 @@ export const DashboardDetails = CatchAsyncErrors(async (req, resp, next) => {
   let totalAmount = 0;
   allOrders.map((item) => {
     const addAmount = item.totalPrice;
-    return (totalAmount = totalAmount + addAmount);
+    totalAmount = totalAmount + addAmount;
   });
 
   let outOfStock = 0;
@@ -151,16 +151,6 @@ export const DashboardDetails = CatchAsyncErrors(async (req, resp, next) => {
       outOfStock++;
     }
   });
-
-  if (
-    !orderCount ||
-    !productCount ||
-    !userCount ||
-    !outOfStock ||
-    !totalAmount
-  ) {
-    return next(new ErrorHandler("dashboard data not found", 400));
-  }
 
   resp.status(200).json({
     success: true,
