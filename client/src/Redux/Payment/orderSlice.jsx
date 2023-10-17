@@ -7,6 +7,7 @@ import {
 
 // Define the initial state
 const initialState = {
+  allOrders: [],
   myOrders: [],
   order: null,
   error: null,

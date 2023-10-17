@@ -56,7 +56,7 @@ export default function SeeAllOrders() {
       myOrders.map(async (item) => {
         return createData(
           item._id,
-          item.paymentInfo.status,
+          item.orderStatus,
           item.itemsPrice,
           item.itemsPrice
         );

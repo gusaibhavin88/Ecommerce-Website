@@ -7,6 +7,7 @@ import {
   getAllOrders,
   myOrder,
   updateOrder,
+  updateOrderStatus,
 } from "../controller/orderController.js";
 import {
   authorizeRoles,
@@ -42,5 +43,7 @@ router.get(
   authorizeRoles("admin"),
   DashboardDetails
 );
+
+router.post("/updateOrderStatus/:id", isAuthenticated, updateOrderStatus);
 
 export default router;

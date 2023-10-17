@@ -14,3 +14,5 @@ export const getDashboardData = () =>
   API.get("dashboard/data", { withCredentials: true });
 export const deleteOrder = (id) =>
   API.delete(`/order/delete/${id}`, { withCredentials: true });
+export const updateOrderStatus = (id, formData) =>
+  API.post(`/updateOrderStatus/${id}`, formData, { withCredentials: true });

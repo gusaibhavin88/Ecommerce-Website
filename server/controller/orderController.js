@@ -162,3 +162,19 @@ export const DashboardDetails = CatchAsyncErrors(async (req, resp, next) => {
     outOfStock: outOfStock,
   });
 });
+
+export const updateOrderStatus = CatchAsyncErrors(async (req, res, next) => {
+  console.log(req.body);
+  const order = await OrderModel.findByIdAndUpdate(req.params.id, req.body, {
+    new: true, // Return the updated document
+    runValidators: true, // Validate the updated data against the model's schema
+  });
+
+  if (!order) {
+    return next(new ErrorHandler("Order not found", 404)); // 404 for "Not Found"
+  }
+
+  res
+    .status(200)
+    .json({ success: true, message: "Order status updated successfully" });
+});

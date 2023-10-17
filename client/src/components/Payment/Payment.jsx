@@ -19,6 +19,7 @@ import { useSnackbar } from "../context/SnackbarContext";
 import "./payment.css";
 import { createNewOrderAction } from "../../Redux/Payment/orderAction";
 import { useForm } from "react-hook-form";
+import { clearCart } from "../../Redux/Cart/CartSlice";
 
 const Payment = () => {
   const orderDetail = JSON.parse(sessionStorage.getItem("orderInfo"));
@@ -106,7 +107,7 @@ const Payment = () => {
           }));
 
           newOrder.paymentInfo.id = result.paymentIntent.id;
-          newOrder.paymentInfo.status = "Processing";
+          newOrder.paymentInfo.status = "succeeded";
           newOrder.orderItems = filterCart;
           dispatch(
             createNewOrderAction({
@@ -119,6 +120,7 @@ const Payment = () => {
           );
 
           payBtn.current.disabled = false;
+          clearCart();
           navigate("/success");
         } else {
           handleClick("error", "There's some issue while processing payment");

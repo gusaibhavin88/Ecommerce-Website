@@ -54,7 +54,7 @@ export default function MyOrders() {
       myOrders.map(async (item) => {
         return createData(
           item._id,
-          item.paymentInfo.status,
+          item.orderStatus,
           item.orderItems,
           item.itemsPrice
         );
@@ -101,7 +101,7 @@ export default function MyOrders() {
                 Order ID
               </StyledTableCell>
               <StyledTableCell style={{ fontSize: "1.2rem" }} align="right">
-                Name
+                Status
               </StyledTableCell>
               <StyledTableCell style={{ fontSize: "1.2rem" }} align="right">
                 Stock

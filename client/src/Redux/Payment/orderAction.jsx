@@ -5,6 +5,7 @@ import {
   deleteOrder,
   getMyOrder,
   getMyOrders,
+  updateOrderStatus,
 } from "../../Api/OrderRequest";
 import { addOrder, removeOrder } from "./orderSlice";
 import { clearCart } from "../Cart/CartSlice";
