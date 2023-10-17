@@ -14,6 +14,8 @@ import { useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { getAllUsesrAction } from "../../Redux/User/UserAction";
+import { deleteuser } from "../../Api/ProductRequest";
+import { deleteUser } from "../../../../server/controller/userController";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -56,6 +58,14 @@ export default function AllUsers() {
 
     return rowData;
   }, [allUsers]);
+
+  const removeUser = async (id) => {
+    const response = await deleteUser(id);
+    if (response) {
+      handleClick("success", "User deleted successfully");
+      navigate("/admin/dashboard");
+    }
+  };
 
   React.useEffect(() => {
     dispatch(getAllUsesrAction());
@@ -110,7 +120,7 @@ export default function AllUsers() {
                       onClick={() => navigate(`/orderinfo/${row.id}`)}
                     >
                       <EditIcon />
-                      <DeleteIcon />
+                      <DeleteIcon onClick={() => removeUser(row._id)} />
                     </StyledTableCell>
                   </StyledTableRow>
                 ))}

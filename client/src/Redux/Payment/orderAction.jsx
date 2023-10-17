@@ -3,6 +3,7 @@ import axios from "axios";
 import {
   createNewOrder,
   deleteOrder,
+  getAllOrders,
   getMyOrder,
   getMyOrders,
   updateOrderStatus,
@@ -53,6 +54,13 @@ export const deleteOrderAction = createAsyncThunk(
   async (id, { dispatch }) => {
     const response = await deleteOrder(id); // Call your API function here
     dispatch(removeOrder(id));
+    return response.data; // Assuming the response contains data field with posts
+  }
+);
+export const getAllOrdersAction = createAsyncThunk(
+  "getAllOrdersAction",
+  async (_, { dispatch }) => {
+    const response = await getAllOrders(); // Call your API function here
     return response.data; // Assuming the response contains data field with posts
   }
 );

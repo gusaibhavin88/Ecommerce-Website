@@ -10,3 +10,6 @@ export const updateUserPassword = (formData) =>
   API.put("/updatepassword", formData, { withCredentials: true });
 export const getAllUsers = () =>
   API.get("/getusers", { withCredentials: true });
+export const deleteuser = () => {
+  return API.delete(`/deleteuser/${id}`, { withCredentials: true });
+};

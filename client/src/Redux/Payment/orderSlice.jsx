@@ -2,6 +2,7 @@ import { createSlice, current } from "@reduxjs/toolkit";
 import {
   createNewOrderAction,
   deleteOrderAction,
+  getAllOrdersAction,
   getMyOrderAction,
 } from "./orderAction";
 
@@ -77,6 +78,21 @@ const orderSlice = createSlice({
         state.message = action.payload.message;
       })
       .addCase(deleteOrderAction.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+        state.loading = false;
+      })
+      .addCase(getAllOrdersAction.pending, (state) => {
+        state.status = "loading";
+        state.loading = true;
+      })
+      .addCase(getAllOrdersAction.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.loading = false;
+        state.message = action.payload.message;
+        state.allOrders = action.payload.orders;
+      })
+      .addCase(getAllOrdersAction.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
         state.loading = false;

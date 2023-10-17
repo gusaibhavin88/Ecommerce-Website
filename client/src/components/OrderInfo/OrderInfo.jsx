@@ -1,12 +1,18 @@
 import { Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useParams } from "react-router-dom";
+import {
+  Navigate,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import { getMyOrderAction } from "../../Redux/Payment/orderAction";
 import MetaData from "../Layout/MetaData";
 import "../OrderConfirm/OrderConfirm.css";
 import { Form } from "react-bootstrap";
 import { updateOrderStatus } from "../../Api/OrderRequest";
+import { useSnackbar } from "../context/SnackbarContext";
 
 const OrderInfo = () => {
   const dispatch = useDispatch();
@@ -15,14 +21,23 @@ const OrderInfo = () => {
   const { order } = useSelector((state) => state.order);
   const { user } = useSelector((state) => state.auth);
   const location = useLocation();
+  const { handleClick } = useSnackbar();
+  const navigate = useNavigate();
 
   const orderUpdate = location.pathname.includes("orderupdate");
+  const StatusInfo = [
+    "Select",
+    order?.orderStatus === "Processing" ? "Shipped" : "Delivered",
+  ];
   const handleSubmit = async () => {
     console.log("first");
     const response = await updateOrderStatus(params.id, {
       orderStatus: status,
     });
-    console.log(response);
+    if (response) {
+      handleClick("success", "Order status updated");
+      navigate("/admin/dashboard");
+    }
   };
 
   useEffect(() => {
@@ -107,7 +122,7 @@ const OrderInfo = () => {
               })}
           </div>
         </div>
-        {orderUpdate && (
+        {orderUpdate && order?.orderStatus !== "Delivered" && (
           <div className="rightList">
             <Form.Group className="mb-3" controlId="exampleForm.ControlSelect1">
               <h2 style={{ textAlign: "center" }}>Process Order</h2>
@@ -115,9 +130,10 @@ const OrderInfo = () => {
                 as="select"
                 className="updateStatus"
                 onChange={(e) => setStatus(e.target.value)}
+                defaultValue={order?.orderStatus}
               >
-                {true &&
-                  ["Select", "Shipped", "Delivered"].map((item) => {
+                {order &&
+                  StatusInfo.map((item) => {
                     return <option>{item}</option>;
                   })}
                 {/* Add more category options as needed */}

@@ -11,6 +11,7 @@ import "./SeeAllOrders.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteOrderAction,
+  getAllOrdersAction,
   getMyOrdersAction,
 } from "../../Redux/Payment/orderAction";
 import LaunchIcon from "@mui/icons-material/Launch";
@@ -43,7 +44,7 @@ export default function SeeAllOrders() {
   const navigate = useNavigate();
   const [rows, setRows] = React.useState([]);
   const dispatch = useDispatch();
-  const { myOrders } = useSelector((state) => state.order);
+  const myOrders = useSelector((state) => state.order.allOrders);
 
   function createData(id, status, qty, amount) {
     return { id, status, qty, amount };
@@ -67,7 +68,7 @@ export default function SeeAllOrders() {
   }, [myOrders]);
 
   React.useEffect(() => {
-    dispatch(getMyOrdersAction());
+    dispatch(getAllOrdersAction());
   }, [dispatch]);
 
   React.useEffect(() => {
