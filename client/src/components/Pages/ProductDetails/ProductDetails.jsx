@@ -93,7 +93,13 @@ const ProductDetails = () => {
                   );
                 })}
             </Carousel>
-            <Card.Body>
+            <Card.Body
+              style={{
+                gap: "0.5rem",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
               <Card.Title className="fs-3" style={{ fontWeight: "bold" }}>
                 {product.name}
               </Card.Title>

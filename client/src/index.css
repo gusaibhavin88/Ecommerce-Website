@@ -20,6 +20,22 @@ body {
   height: 3.5vmax;
 }
 
+.loginloading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 9999;
+  height: 100vh;
+}
+
 /* Media Query for Mobile Devices */
 @media (max-width: 480px) {
   html {
