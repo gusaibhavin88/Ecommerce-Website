@@ -126,11 +126,10 @@ export default function MyOrders() {
                     {row.totalQty}
                   </StyledTableCell>
                   <StyledTableCell align="right">{row.amount}</StyledTableCell>
-                  <StyledTableCell
-                    align="right"
-                    onClick={() => navigate(`/orderinfo/${row.id}`)}
-                  >
-                    <LaunchIcon />
+                  <StyledTableCell align="right">
+                    <LaunchIcon
+                      onClick={() => navigate(`/orderinfo/${row.id}`)}
+                    />
                   </StyledTableCell>
                 </StyledTableRow>
               ))}

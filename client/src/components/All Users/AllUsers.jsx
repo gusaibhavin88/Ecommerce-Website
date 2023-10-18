@@ -14,8 +14,8 @@ import { useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { getAllUsesrAction } from "../../Redux/User/UserAction";
-import { deleteuser } from "../../Api/ProductRequest";
-import { deleteUser } from "../../../../server/controller/userController";
+import { deleteUser } from "../../Api/UserRequest";
+import { useSnackbar } from "../context/SnackbarContext";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -42,6 +42,7 @@ export default function AllUsers() {
   const [rows, setRows] = React.useState([]);
   const dispatch = useDispatch();
   const { allUsers } = useSelector((state) => state.user);
+  const { handleClick } = useSnackbar();
 
   function createData(id, email, name, role) {
     return { id, email, name, role };
@@ -116,11 +117,14 @@ export default function AllUsers() {
                     <StyledTableCell align="left">{row.name}</StyledTableCell>
                     <StyledTableCell align="left">{row.role}</StyledTableCell>
                     <StyledTableCell
+                      style={{ gap: "1rem", display: "flex" }}
                       align="center"
-                      onClick={() => navigate(`/orderinfo/${row.id}`)}
                     >
-                      <EditIcon />
-                      <DeleteIcon onClick={() => removeUser(row._id)} />
+                      <EditIcon style={{ cursor: "pointer" }} />
+                      <DeleteIcon
+                        style={{ cursor: "pointer" }}
+                        onClick={() => removeUser(row.id)}
+                      />
                     </StyledTableCell>
                   </StyledTableRow>
                 ))}

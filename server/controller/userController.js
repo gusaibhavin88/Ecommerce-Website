@@ -3,7 +3,7 @@ import CatchAsyncErrors from "../middleware/catchAsyncErrors.js";
 import UserModel from "../model/userModel.js";
 import { sendToken } from "../utilities/sendToken.js";
 import { sendMail } from "../utilities/sendMail.js";
-import crypto from "crypto";
+import CryptoJS from "crypto-js";
 import cloudinary from "cloudinary";
 
 // createUser
@@ -128,10 +128,12 @@ export const resetPassword = CatchAsyncErrors(async (req, res, next) => {
   const { token } = req.params;
 
   // Creating token hash
-  const resetPasswordToken = crypto
-    .createHash("sha256")
-    .update(token)
-    .digest("hex");
+  // const resetPasswordToken = crypto
+  //   .createHash("sha256")
+  //   .update(token)
+  //   .digest("hex");
+
+  const resetPasswordToken = CryptoJS.SHA256(data).toString(CryptoJS.enc.Hex);
 
   const user = await UserModel.findOne({
     resetPasswordToken: resetPasswordToken,
@@ -240,11 +242,11 @@ export const getAllUsers = CatchAsyncErrors(async (req, resp, next) => {
 // deleteUser
 
 export const deleteUser = CatchAsyncErrors(async (req, resp, next) => {
-  const user = await UserModel.findById(req.params.id);
+  const user = await UserModel.findByIdAndDelete(req.params.id);
+  console.log(user);
   if (!user) {
     return next(new ErrorHandler("User not Found", 400));
   }
-  await user.remove();
   resp
     .status(200)
     .json({ message: true, message: "User deleted successfully" });
