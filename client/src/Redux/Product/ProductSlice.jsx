@@ -22,6 +22,7 @@ const initialState = {
   isUpdated: false,
   productCount: 0,
   reviews: [],
+  allReviews: [],
 };
 
 // Create a slice

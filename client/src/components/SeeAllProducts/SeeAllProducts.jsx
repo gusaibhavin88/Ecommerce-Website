@@ -121,7 +121,7 @@ export default function SeeAllProducts() {
               <StyledTableCell style={{ fontSize: "1.2rem" }} align="left">
                 Price
               </StyledTableCell>
-              <StyledTableCell style={{ fontSize: "1.2rem" }} align="center">
+              <StyledTableCell style={{ fontSize: "1.2rem" }} align="right">
                 Actions
               </StyledTableCell>
             </TableRow>
@@ -136,7 +136,10 @@ export default function SeeAllProducts() {
                   <StyledTableCell align="left">{row.name}</StyledTableCell>
                   <StyledTableCell align="left">{row.stock}</StyledTableCell>
                   <StyledTableCell align="left">{row.price}</StyledTableCell>
-                  <StyledTableCell align="center">
+                  <StyledTableCell
+                    align="right"
+                    style={{ gap: "1rem", display: "flex" }}
+                  >
                     <EditIcon onClick={() => openDialog(row.id)} />
                     <DeleteIcon onClick={() => deleteproduct(row.id)} />
                   </StyledTableCell>

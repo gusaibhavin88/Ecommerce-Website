@@ -101,7 +101,7 @@ export default function AllUsers() {
                 <StyledTableCell style={{ fontSize: "1.2rem" }} align="left">
                   Role
                 </StyledTableCell>
-                <StyledTableCell style={{ fontSize: "1.2rem" }} align="center">
+                <StyledTableCell style={{ fontSize: "1.2rem" }} align="right">
                   Actions
                 </StyledTableCell>
               </TableRow>
@@ -118,7 +118,7 @@ export default function AllUsers() {
                     <StyledTableCell align="left">{row.role}</StyledTableCell>
                     <StyledTableCell
                       style={{ gap: "1rem", display: "flex" }}
-                      align="center"
+                      align="right"
                     >
                       <EditIcon style={{ cursor: "pointer" }} />
                       <DeleteIcon

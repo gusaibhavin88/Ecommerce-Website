@@ -105,7 +105,7 @@ export default function SeeAllOrders() {
                 <StyledTableCell style={{ fontSize: "1.2rem" }} align="left">
                   Amount
                 </StyledTableCell>
-                <StyledTableCell style={{ fontSize: "1.2rem" }} align="center">
+                <StyledTableCell style={{ fontSize: "1.2rem" }} align="right">
                   Actions
                 </StyledTableCell>
               </TableRow>
@@ -120,7 +120,10 @@ export default function SeeAllOrders() {
                     <StyledTableCell align="left">{row.status}</StyledTableCell>
                     <StyledTableCell align="left">{row.qty}</StyledTableCell>
                     <StyledTableCell align="left">{row.amount}</StyledTableCell>
-                    <StyledTableCell align="center">
+                    <StyledTableCell
+                      align="right"
+                      style={{ gap: "1rem", display: "flex" }}
+                    >
                       <EditIcon
                         onClick={() => navigate(`/admin/orderupdate/${row.id}`)}
                       />

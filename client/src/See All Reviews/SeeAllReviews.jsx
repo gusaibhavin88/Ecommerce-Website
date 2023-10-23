@@ -112,7 +112,7 @@ export default function SeeAllReviews() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows &&
+              {rows ? (
                 rows.map((row) => (
                   <StyledTableRow key={row.id}>
                     <StyledTableCell component="th" scope="row">
@@ -130,7 +130,20 @@ export default function SeeAllReviews() {
                       <DeleteIcon />
                     </StyledTableCell>
                   </StyledTableRow>
-                ))}
+                ))
+              ) : (
+                <StyledTableRow>
+                  <StyledTableCell component="th" scope="row">
+                    jjfjj
+                  </StyledTableCell>
+                  <StyledTableCell align="left">gjgj</StyledTableCell>
+                  <StyledTableCell align="left">jg</StyledTableCell>
+                  <StyledTableCell align="left">hfhfhfh</StyledTableCell>
+                  <StyledTableCell align="center">
+                    <DeleteIcon />
+                  </StyledTableCell>
+                </StyledTableRow>
+              )}
             </TableBody>
           </Table>
         </div>
