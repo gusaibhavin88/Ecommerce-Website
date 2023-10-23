@@ -34,7 +34,7 @@ const Product = ({ products }) => {
     >
       <Row xs={2} md={4} className="g-4">
         {products &&
-          products.map((item, idx) => (
+          products.slice(0, 8).map((item, idx) => (
             <Col key={idx} onClick={() => handleProductDetails(item._id)}>
               <Card
                 style={{

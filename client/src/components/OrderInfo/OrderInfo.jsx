@@ -124,7 +124,10 @@ const OrderInfo = () => {
         </div>
         {orderUpdate && order?.orderStatus !== "Delivered" && (
           <div className="rightList">
-            <Form.Group className="mb-3" controlId="exampleForm.ControlSelect1">
+            <Form.Group
+              className="mb-3 homeHeading"
+              controlId="exampleForm.ControlSelect1"
+            >
               <h2 style={{ textAlign: "center" }}>Process Order</h2>
               <Form.Control
                 as="select"

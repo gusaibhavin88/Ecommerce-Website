@@ -16,6 +16,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { getAllUsesrAction } from "../../Redux/User/UserAction";
 import { deleteUser } from "../../Api/UserRequest";
 import { useSnackbar } from "../context/SnackbarContext";
+import { useDialog } from "../context/dialogContext";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -43,6 +44,7 @@ export default function AllUsers() {
   const dispatch = useDispatch();
   const { allUsers } = useSelector((state) => state.user);
   const { handleClick } = useSnackbar();
+  const { handleShow, handleClose } = useDialog();
 
   function createData(id, email, name, role) {
     return { id, email, name, role };
@@ -66,6 +68,10 @@ export default function AllUsers() {
       handleClick("success", "User deleted successfully");
       navigate("/admin/dashboard");
     }
+  };
+
+  const openDialog = (item) => {
+    handleShow("productupdate", item);
   };
 
   React.useEffect(() => {
@@ -120,7 +126,10 @@ export default function AllUsers() {
                       style={{ gap: "1rem", display: "flex" }}
                       align="right"
                     >
-                      <EditIcon style={{ cursor: "pointer" }} />
+                      <EditIcon
+                        style={{ cursor: "pointer" }}
+                        onClick={() => openDialog()}
+                      />
                       <DeleteIcon
                         style={{ cursor: "pointer" }}
                         onClick={() => removeUser(row.id)}

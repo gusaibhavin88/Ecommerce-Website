@@ -36,6 +36,18 @@ body {
   height: 100vh;
 }
 
+.homeHeading {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+  align-items: center;
+  text-align: center;
+}
+.homeHeading h2 {
+  border-bottom: 1px solid #8fb3ff;
+  padding: 1rem;
+} /*# sourceMappingURL=Home.css.map */
+
 /* Media Query for Mobile Devices */
 @media (max-width: 480px) {
   html {
