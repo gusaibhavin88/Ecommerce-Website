@@ -13,3 +13,9 @@ export const getAllUsers = () =>
 export const deleteUser = (id) => {
   return API.delete(`/deleteuser/${id}`, { withCredentials: true });
 };
+export const findUserData = (id) => {
+  return API.get(`/getuser/${id}`, { withCredentials: true });
+};
+export const updateUserRole = (id, formData) => {
+  return API.put(`/update/user/${id}`, formData, { withCredentials: true });
+};

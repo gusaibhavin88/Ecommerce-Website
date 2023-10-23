@@ -2,6 +2,7 @@ import express from "express";
 import {
   createUser,
   deleteUser,
+  findUser,
   forgotPassword,
   getAllUsers,
   getUser,
@@ -11,6 +12,7 @@ import {
   resetPassword,
   updatePassword,
   updateProfile,
+  updateUser,
 } from "../controller/userController.js";
 import {
   authorizeRoles,
@@ -29,6 +31,13 @@ router.get("/me", isAuthenticated, getUserDetails);
 router.put("/updateassword", isAuthenticated, updatePassword);
 router.put("/updateprofile", isAuthenticated, updateProfile);
 router.get("/getusers", isAuthenticated, authorizeRoles("admin"), getAllUsers);
+router.get("/getuser/:id", isAuthenticated, authorizeRoles("admin"), findUser);
+router.put(
+  "/update/user/:id",
+  isAuthenticated,
+  authorizeRoles("admin"),
+  updateUser
+);
 router.get(
   "/admin/users/:id",
   isAuthenticated,

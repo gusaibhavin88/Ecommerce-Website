@@ -13,7 +13,7 @@ import {
 } from "../../../Redux/Product/ProductAction";
 import { profile } from "../../../assets";
 
-function UserUpdateDialog({ show, handleClose, productId }) {
+function ProductUpdateDialog({ show, handleClose, productId }) {
   const dispatch = useDispatch();
   const params = useParams();
   const [review, setReview] = useState({});
@@ -206,4 +206,4 @@ function UserUpdateDialog({ show, handleClose, productId }) {
   );
 }
 
-export default UserUpdateDialog;
+export default ProductUpdateDialog;

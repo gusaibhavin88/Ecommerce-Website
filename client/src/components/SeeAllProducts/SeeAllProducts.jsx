@@ -68,7 +68,7 @@ export default function SeeAllProducts() {
   }, [products]);
 
   const openDialog = (item) => {
-    handleShow("productupdate", item);
+    handleShow("productUpdate", item);
   };
 
   React.useEffect(() => {

@@ -239,6 +239,34 @@ export const getAllUsers = CatchAsyncErrors(async (req, resp, next) => {
   });
 });
 
+// findUser
+
+export const findUser = CatchAsyncErrors(async (req, resp, next) => {
+  const { id } = req.params;
+  const user = await UserModel.findById(id);
+
+  resp.status(200).json({
+    success: true,
+    user: user,
+    message: "User fetched successfully",
+  });
+});
+// updateuser
+
+export const updateUser = CatchAsyncErrors(async (req, resp, next) => {
+  const { id } = req.params;
+  const user = await UserModel.findByIdAndUpdate(id, req.body, {
+    new: true, // Return the updated document
+    runValidators: true, // Validate the updated data against the model's schema
+  });
+
+  resp.status(200).json({
+    success: true,
+    user: user,
+    message: "User fetched successfully",
+  });
+});
+
 // deleteUser
 
 export const deleteUser = CatchAsyncErrors(async (req, resp, next) => {

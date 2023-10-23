@@ -70,8 +70,8 @@ export default function AllUsers() {
     }
   };
 
-  const openDialog = (item) => {
-    handleShow("productupdate", item);
+  const openDialog = (id) => {
+    handleShow("userUpdate", id);
   };
 
   React.useEffect(() => {
@@ -128,7 +128,7 @@ export default function AllUsers() {
                     >
                       <EditIcon
                         style={{ cursor: "pointer" }}
-                        onClick={() => openDialog()}
+                        onClick={() => openDialog(row.id)}
                       />
                       <DeleteIcon
                         style={{ cursor: "pointer" }}

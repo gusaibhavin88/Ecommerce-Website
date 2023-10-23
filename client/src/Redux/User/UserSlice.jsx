@@ -44,6 +44,9 @@ const userSlice = createSlice({
         };
       }
     },
+    updateUser: (state, action) => {
+      state.message = action.payload.data.message;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -95,5 +98,5 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
-export const { clearError, clearMessage } = userSlice.actions; // Export the clearError action
+export const { clearError, clearMessage, updateUser } = userSlice.actions; // Export the clearError action
 // Export the async thunks to use in components

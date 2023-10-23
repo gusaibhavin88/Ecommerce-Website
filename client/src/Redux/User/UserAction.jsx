@@ -3,10 +3,12 @@ import {
   getAllUsers,
   updateUserPassword,
   updateUserProfile,
+  updateUserRole,
 } from "../../Api/UserRequest";
 import { updateProfile } from "../Auth/AuthSlice";
 import { logOutProfile } from "../Auth/AuthAction";
 import { logOut } from "../../Api/AuthRequest";
+import { updateUser } from "./UserSlice";
 
 export const updateProfileAction = createAsyncThunk(
   "updateProfile",
@@ -48,6 +50,20 @@ export const getAllUsesrAction = createAsyncThunk(
   async () => {
     try {
       const response = await getAllUsers(); // Call your API function here
+      return response; // Assuming the response contains the data you need
+    } catch (error) {
+      throw error.response.data; // Assuming the response contains error data
+    }
+  }
+);
+
+export const updateUserAction = createAsyncThunk(
+  "updateUserAction",
+  async ({ functions }, { dispatch }) => {
+    const { formData, id, onError, onComplete } = functions;
+    try {
+      const response = await updateUserRole(id, formData); // Call your API function here
+      dispatch(updateUser(response));
       return response; // Assuming the response contains the data you need
     } catch (error) {
       throw error.response.data; // Assuming the response contains error data
