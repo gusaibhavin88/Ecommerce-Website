@@ -16,6 +16,7 @@ import Review from "../../Review/Review";
 import { getProductDetails } from "../../../Api/ProductRequest";
 import { useSnackbar } from "../../context/SnackbarContext";
 import { fetchproductDetailsForCart } from "../../../Redux/Cart/CartAction";
+import { clearProductBack } from "../../../Redux/Product/ProductSlice";
 
 const ProductDetails = () => {
   const [quantity, setQuantity] = useState(0);
@@ -35,6 +36,9 @@ const ProductDetails = () => {
         },
       })
     );
+    return () => {
+      dispatch(clearProductBack());
+    };
   }, [dispatch, params.id]);
 
   const handleIncrement = () => {

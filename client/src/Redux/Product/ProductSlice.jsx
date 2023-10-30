@@ -31,13 +31,16 @@ const productSlice = createSlice({
   initialState,
   reducers: {
     clearError: (state) => {
-      state.error = null; // Clear the error by returning null or an empty string
+      state.error = null;
     },
     clearMessage: (state) => {
-      state.message = null; // Clear the error by returning null or an empty string
+      state.message = null;
     },
     clearIsUpdate: (state) => {
-      state.isUpdated = false; // Clear the error by returning null or an empty string
+      state.isUpdated = false;
+    },
+    clearProductBack: (state) => {
+      state.product = {};
     },
     updateReview: (state, action) => {
       const { review } = action.payload.data;
@@ -213,5 +216,6 @@ export const {
   updateReview,
   updateProducts,
   editProduct,
+  clearProductBack,
 } = productSlice.actions; // Export the clearError action
 // Export the async thunks to use in components
