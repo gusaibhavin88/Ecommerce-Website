@@ -3,7 +3,7 @@ import CustomizedSteppers from "../Shopping/CheckOutSteps/CheckOutSteps";
 import MetaData from "../Layout/MetaData";
 import "./OrderConfirm.css";
 import { logo } from "../../assets";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";

@@ -64,7 +64,7 @@ export const checkout = async (req, res) => {
 };
 
 
-// ---------------------  RezoprocessPayment  ---------------------
+// ---------------------  Rezoprocess Payment  ---------------------
 
 export const paymentVarification = async (req, res) => {
   console.log("first")
