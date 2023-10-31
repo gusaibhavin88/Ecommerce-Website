@@ -85,14 +85,14 @@ const isAuthentic = expectedSignature === razorpay_signature;
 if (isAuthentic) {
 // Database comes here
 
-await order.create({
-  razorpay_order_id,
-  razorpay_payment_id,
-  razorpay_signature,
-});
+// await order.create({
+//   razorpay_order_id,
+//   razorpay_payment_id,    // This will update database
+//   razorpay_signature,
+// });
 
 res.redirect(
-  `http://localhost:5000/paymentsuccess?reference=${razorpay_payment_id}`
+  `http://localhost:5173/success?reference=${razorpay_payment_id}`
 );
 } else {
 res.status(400).json({
@@ -101,5 +101,7 @@ res.status(400).json({
 }
 
 };
+
+
 
 
