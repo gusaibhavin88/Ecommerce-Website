@@ -1,6 +1,7 @@
 import stripePackage from "stripe";
 import CatchAsyncErrors from "../middleware/catchAsyncErrors.js";
-// import Razorpay from "raz";
+import Razorpay from "razorpay";
+import crypto from "crypto"
 
 const stripe = stripePackage(process.env.SECRET_KEY);
 
@@ -29,44 +30,76 @@ export const sendStripApiKey = CatchAsyncErrors(async (req, resp, next) => {
   });
 });
 
+
+// ---------------------  RezoApiKeySend ---------------------
+
+export const getRezoKey = CatchAsyncErrors(async (req, resp, next) => {
+  resp.status(200).json({
+    sendStripApiKey: process.env.REZO_API_KEY,
+  });
+});
+
+
+// // ---------------------  Create Order  ---------------------
+
+
+export const checkout = async (req, res) => {
+
+  const razorpayInstance = new Razorpay({
+    key_id: process.env.REZO_API_KEY,
+    key_secret:  process.env.REZO_SECRET_KEY
+});
+
+
+  const options = {
+    amount: Number(req.body.amount * 100),
+    currency: "INR",
+  };
+  const order = await razorpayInstance.orders.create(options);
+
+  res.status(200).json({
+    success: true,
+    order,
+  });
+};
+
+
 // ---------------------  RezoprocessPayment  ---------------------
 
-// export const rezoPayCreateOrder = async (req, res) => {
-//   try {
-//     const amount = req.body.amount * 100;
-//     const options = {
-//       amount: amount,
-//       currency: "INR",
-//       receipt: "razorUser@gmail.com",
-//     };
+export const paymentVarification = async (req, res) => {
+  console.log("first")
+  console.log(req.body)
 
-//     razorpayInstance.orders.create(options, (err, order) => {
-//       if (!err) {
-//         res.status(200).send({
-//           success: true,
-//           msg: "Order Created",
-//           order_id: order.id,
-//           amount: amount,
-//           key_id: RAZORPAY_ID_KEY,
-//           product_name: req.body.name,
-//           description: req.body.description,
-//           contact: "8567345632",
-//           name: "Sandeep Sharma",
-//           email: "sandeep@gmail.com",
-//         });
-//       } else {
-//         res.status(400).send({ success: false, msg: "Something went wrong!" });
-//       }
-//     });
-//   } catch (error) {
-//     console.log(error.message);
-//   }
-// };
+const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
+req.body;
 
-// // ---------------------  sendStripApiKey  ---------------------
+const body = razorpay_order_id + "|" + razorpay_payment_id;
 
-// export const sendRezoApiKey = CatchAsyncErrors(async (req, resp, next) => {
-//   resp.status(200).json({
-//     sendStripApiKey: process.env.STRIPE_API_KEY,
-//   });
-// });
+const expectedSignature = crypto
+.createHmac("sha256", process.env.REZO_SECRET_KEY)
+.update(body.toString())
+.digest("hex");
+
+const isAuthentic = expectedSignature === razorpay_signature;
+
+if (isAuthentic) {
+// Database comes here
+
+await order.create({
+  razorpay_order_id,
+  razorpay_payment_id,
+  razorpay_signature,
+});
+
+res.redirect(
+  `http://localhost:5000/paymentsuccess?reference=${razorpay_payment_id}`
+);
+} else {
+res.status(400).json({
+  success: false,
+});
+}
+
+};
+
+

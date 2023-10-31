@@ -17,3 +17,4 @@ export const paymentRequest = (formData) =>
   );
 export const getStripapikey = () =>
   API.get("/stripapikey", { withCredentials: true });
+

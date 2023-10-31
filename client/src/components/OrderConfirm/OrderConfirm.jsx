@@ -3,9 +3,10 @@ import CustomizedSteppers from "../Shopping/CheckOutSteps/CheckOutSteps";
 import MetaData from "../Layout/MetaData";
 import "./OrderConfirm.css";
 import { logo } from "../../assets";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const OrderConfirm = () => {
   const navigate = useNavigate();
@@ -28,6 +29,48 @@ const OrderConfirm = () => {
     sessionStorage.setItem("orderInfo", JSON.stringify(data));
     navigate("/process/payment");
   };
+
+
+  // Rezopay section
+
+  const checkoutHandler = async (amount) => {
+
+    const { data: { key } } = await axios.get("http://localhost:5000/api/v1/rezokey")
+
+    const { data: { order } } = await axios.post("http://localhost:5000/api/v1/rezoapikey/checkout", {
+      amount : 1
+    })
+
+    const options = {
+        key,
+        amount: order.amount,
+        currency: "INR",
+        name: "Bag",
+        description: "Products",
+        image: "",
+        image: "https://avatars.githubusercontent.com/u/25058652?v=4",
+        order_id: order.id,
+        callback_url: "http://localhost:5000/api/v1/rezopayment/paymentverification",
+        prefill: {
+            name: "Gaurav Kumar",
+            email: "gaurav.kumar@example.com",
+            contact: "9999999999"
+        },
+        notes: {
+            "address": "Razorpay Corporate Office"
+        },
+        theme: {
+            "color": "#121212"
+        }
+    };
+    const razor = new window.Razorpay(options);
+    razor.open();
+}
+
+
+
+
+
 
   useEffect(() => {
     let total = 0;
@@ -109,7 +152,8 @@ const OrderConfirm = () => {
           <Button
             style={{ marginTop: "1rem" }}
             variant="contained"
-            onClick={processPayment}
+            // onClick={processPayment}
+            onClick={checkoutHandler}
           >
             Proceed To Payment
           </Button>
